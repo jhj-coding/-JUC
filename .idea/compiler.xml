@@ -8,9 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ThreadDemo" />
+        <module name="Leetcode" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Leetcode" target="1.5" />
       <module name="ThreadDemo" target="8" />
     </bytecodeTargetLevel>
   </component>
