@@ -7,12 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="17test" />
         <module name="ThreadDemo" />
         <module name="Leetcode" />
+        <module name="review" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="17test" target="17" />
       <module name="Leetcode" target="1.5" />
+      <module name="review" target="1.5" />
       <module name="ThreadDemo" target="8" />
     </bytecodeTargetLevel>
   </component>
