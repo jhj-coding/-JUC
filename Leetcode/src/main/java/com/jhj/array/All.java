@@ -1,8 +1,6 @@
 package com.jhj.array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class All {
     //1 两数之和
@@ -301,11 +299,11 @@ public class All {
             boolean[][] dp = new boolean[m][n];
             dp[0][0] = true;
             // 初始化首行 相当于把前面的给消掉
-            for(int j = 2; j < n; j += 2)
+            for (int j = 2; j < n; j += 2)
                 dp[0][j] = dp[0][j - 2] && p.charAt(j - 1) == '*';
             // 状态转移
-            for(int i = 1; i < m; i++) {
-                for(int j = 1; j < n; j++) {
+            for (int i = 1; i < m; i++) {
+                for (int j = 1; j < n; j++) {
                     if (p.charAt(j - 1) == '*') {
                         if (dp[i][j - 2]) dp[i][j] = true;                                            // 1.
                         else if (dp[i - 1][j] && s.charAt(i - 1) == p.charAt(j - 2)) dp[i][j] = true; // 2.
@@ -323,14 +321,14 @@ public class All {
     //11 盛最多水的容器
     class Solution11 {
         public int maxArea(int[] height) {
-            int i=0;
-            int j=height.length-1;
-            int res=0;
-            while(i<=j){
-                res=Math.max(res,Math.min(height[j],height[i])*(j-i));
-                if(height[j]<height[i]){
+            int i = 0;
+            int j = height.length - 1;
+            int res = 0;
+            while (i <= j) {
+                res = Math.max(res, Math.min(height[j], height[i]) * (j - i));
+                if (height[j] < height[i]) {
                     j--;
-                }else{
+                } else {
                     i++;
                 }
             }
@@ -341,57 +339,57 @@ public class All {
     //12 整数转罗马数字
     class Solution12 {
         public String intToRoman(int num) {
-            StringBuilder res=new StringBuilder();
-            while(num!=0) {
+            StringBuilder res = new StringBuilder();
+            while (num != 0) {
                 if (num >= 1000) {
-                    num-=1000;
+                    num -= 1000;
                     res.append("M");
                 } else if (num >= 500) {
-                    if(num>=900){
-                        num-=900;
+                    if (num >= 900) {
+                        num -= 900;
                         res.append("CM");
-                    }else{
-                        num-=500;
+                    } else {
+                        num -= 500;
                         res.append("D");
                     }
                 } else if (num >= 100) {
-                    if(num>=400){
-                        num-=400;
+                    if (num >= 400) {
+                        num -= 400;
                         res.append("CD");
-                    }else{
-                        num-=100;
+                    } else {
+                        num -= 100;
                         res.append("C");
                     }
                 } else if (num >= 50) {
-                    if(num>=90){
-                        num-=90;
+                    if (num >= 90) {
+                        num -= 90;
                         res.append("XC");
-                    }else{
-                        num-=50;
+                    } else {
+                        num -= 50;
                         res.append("L");
                     }
                 } else if (num >= 10) {
-                    if(num>=40){
-                        num-=40;
+                    if (num >= 40) {
+                        num -= 40;
                         res.append("XL");
-                    }else{
-                        num-=10;
+                    } else {
+                        num -= 10;
                         res.append("X");
                     }
                 } else if (num >= 5) {
-                    if(num>=9){
-                        num-=9;
+                    if (num >= 9) {
+                        num -= 9;
                         res.append("IX");
-                    }else{
-                        num-=5;
+                    } else {
+                        num -= 5;
                         res.append("V");
                     }
-                }else if (num >= 1) {
-                    if(num>=4){
-                        num-=4;
+                } else if (num >= 1) {
+                    if (num >= 4) {
+                        num -= 4;
                         res.append("IV");
-                    }else{
-                        num-=1;
+                    } else {
+                        num -= 1;
                         res.append("I");
                     }
                 }
@@ -404,30 +402,30 @@ public class All {
     class Solution13 {
         public int romanToInt(String s) {
             HashMap<String, Integer> stringIntegerHashMap = new HashMap<String, Integer>();
-            stringIntegerHashMap.put("I",1);
-            stringIntegerHashMap.put("IV",4);
-            stringIntegerHashMap.put("V",5);
-            stringIntegerHashMap.put("IX",9);
-            stringIntegerHashMap.put("X",10);
-            stringIntegerHashMap.put("XL",40);
-            stringIntegerHashMap.put("L",50);
-            stringIntegerHashMap.put("XC",90);
-            stringIntegerHashMap.put("C",100);
-            stringIntegerHashMap.put("CD",400);
-            stringIntegerHashMap.put("D",500);
-            stringIntegerHashMap.put("CM",900);
-            stringIntegerHashMap.put("M",1000);
-            int res=0;
-            for(int i=0;i<s.length();i++){
-                Integer integer =null;
-                if(i+2<=s.length()) {
+            stringIntegerHashMap.put("I", 1);
+            stringIntegerHashMap.put("IV", 4);
+            stringIntegerHashMap.put("V", 5);
+            stringIntegerHashMap.put("IX", 9);
+            stringIntegerHashMap.put("X", 10);
+            stringIntegerHashMap.put("XL", 40);
+            stringIntegerHashMap.put("L", 50);
+            stringIntegerHashMap.put("XC", 90);
+            stringIntegerHashMap.put("C", 100);
+            stringIntegerHashMap.put("CD", 400);
+            stringIntegerHashMap.put("D", 500);
+            stringIntegerHashMap.put("CM", 900);
+            stringIntegerHashMap.put("M", 1000);
+            int res = 0;
+            for (int i = 0; i < s.length(); i++) {
+                Integer integer = null;
+                if (i + 2 <= s.length()) {
                     integer = stringIntegerHashMap.get(s.substring(i, i + 2));
                 }
-                if(integer!=null){
-                    res+=integer;
+                if (integer != null) {
+                    res += integer;
                     i++;
-                }else{
-                    res+=stringIntegerHashMap.get(s.substring(i, i + 1));
+                } else {
+                    res += stringIntegerHashMap.get(s.substring(i, i + 1));
                 }
             }
             return res;
@@ -435,30 +433,98 @@ public class All {
     }
 
     //14 最长公共前缀
-    class Solution {
+    class Solution14 {
         public String longestCommonPrefix(String[] strs) {
-            int i=0;
+            int i = 0;
             HashSet<Character> characters = new HashSet<Character>();
-            int j=0;
-            char size=' ';
-            while(j<strs.length){
-                if(i==strs[j].length()){
+            int j = 0;
+            char size = ' ';
+            while (j < strs.length) {
+                if (i == strs[j].length()) {
                     break;
                 }
-                if(j==0){
-                    size=strs[j].charAt(i);
-                }else{
-                    if(size!=strs[j].charAt(i)){
+                if (j == 0) {
+                    size = strs[j].charAt(i);
+                } else {
+                    if (size != strs[j].charAt(i)) {
                         break;
                     }
                 }
                 j++;
-                if(j==strs.length){
-                    j=0;
+                if (j == strs.length) {
+                    j = 0;
                     i++;
                 }
             }
-            return strs[0].substring(0,i);
+            return strs[0].substring(0, i);
+        }
+    }
+
+    //15 三数之和
+    class Solution15 {
+        public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> res = new ArrayList<List<Integer>>();
+            Arrays.sort(nums);
+            for (int i = 0; i < nums.length; i++) {
+                if (i > 0 && nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                int j = i + 1;
+                int r = nums.length - 1;
+                while (j < r) {
+                    if (nums[i] + nums[j] + nums[r] == 0) {
+                        ArrayList<Integer> integers = new ArrayList<Integer>();
+                        integers.add(nums[i]);
+                        integers.add(nums[j]);
+                        integers.add(nums[r]);
+                        res.add(integers);
+                        while (j < r && nums[r] == nums[r - 1]) {
+                            r--;
+                        }
+                        while (j < r && nums[j] == nums[j + 1]) {
+                            j++;
+                        }
+                        r--;
+                        j++;
+                    } else if (nums[i] + nums[j] + nums[r] > 0) {
+                        r--;
+                    } else {
+                        j++;
+                    }
+                }
+            }
+            return res;
+        }
+    }
+
+    //16 最接近的三数之和
+    class Solution16 {
+        public int threeSumClosest(int[] nums, int target) {
+            Arrays.sort(nums);
+            int res=Integer.MAX_VALUE;
+            int res1=0;
+            for(int i=0;i<nums.length;i++){
+                int l=i+1;
+                int r=nums.length-1;
+                while(l<r){
+                    if(nums[i]+nums[l]+nums[r]-target==0){
+                        return nums[i]+nums[l]+nums[r];
+                    }else if(nums[i]+nums[l]+nums[r]-target>0){
+                        res=Math.min(res,Math.abs(nums[i]+nums[l]+nums[r]-target));
+                        if(res==Math.abs(nums[i]+nums[l]+nums[r]-target)){
+                            res1=nums[i]+nums[l]+nums[r];
+                        }
+                        r--;
+                    }else{
+                        res=Math.min(res,Math.abs(nums[i]+nums[l]+nums[r]-target));
+                        if(res==Math.abs(nums[i]+nums[l]+nums[r]-target)){
+                            res1=nums[i]+nums[l]+nums[r];
+                        }
+                        l++;
+                    }
+                }
+            }
+            return res1;
         }
     }
 }
