@@ -469,27 +469,24 @@ public class All {
                 if (i > 0 && nums[i] == nums[i - 1]) {
                     continue;
                 }
-                int j = i + 1;
-                int r = nums.length - 1;
-                while (j < r) {
-                    if (nums[i] + nums[j] + nums[r] == 0) {
-                        ArrayList<Integer> integers = new ArrayList<Integer>();
-                        integers.add(nums[i]);
-                        integers.add(nums[j]);
-                        integers.add(nums[r]);
-                        res.add(integers);
-                        while (j < r && nums[r] == nums[r - 1]) {
-                            r--;
-                        }
-                        while (j < r && nums[j] == nums[j + 1]) {
-                            j++;
-                        }
-                        r--;
-                        j++;
-                    } else if (nums[i] + nums[j] + nums[r] > 0) {
-                        r--;
+                int left = i + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    if (nums[i] + nums[left] + nums[right] > 0) {
+                        right--;
+                    } else if (nums[i] + nums[left] + nums[right] < 0) {
+                        left++;
                     } else {
-                        j++;
+                        List<Integer> ints = Arrays.asList(new Integer[]{nums[i], nums[left], nums[right]});
+                        res.add(ints);
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        while (nums[right] == nums[right - 1] && left < right) {
+                            right--;
+                        }
+                        left++;
+                        right--;
                     }
                 }
             }
@@ -501,30 +498,249 @@ public class All {
     class Solution16 {
         public int threeSumClosest(int[] nums, int target) {
             Arrays.sort(nums);
-            int res=Integer.MAX_VALUE;
-            int res1=0;
-            for(int i=0;i<nums.length;i++){
-                int l=i+1;
-                int r=nums.length-1;
-                while(l<r){
-                    if(nums[i]+nums[l]+nums[r]-target==0){
-                        return nums[i]+nums[l]+nums[r];
-                    }else if(nums[i]+nums[l]+nums[r]-target>0){
-                        res=Math.min(res,Math.abs(nums[i]+nums[l]+nums[r]-target));
-                        if(res==Math.abs(nums[i]+nums[l]+nums[r]-target)){
-                            res1=nums[i]+nums[l]+nums[r];
+            int res = Integer.MAX_VALUE;
+            int res1 = 0;
+            for (int i = 0; i < nums.length; i++) {
+                int l = i + 1;
+                int r = nums.length - 1;
+                while (l < r) {
+                    if (nums[i] + nums[l] + nums[r] - target == 0) {
+                        return nums[i] + nums[l] + nums[r];
+                    } else if (nums[i] + nums[l] + nums[r] - target > 0) {
+                        res = Math.min(res, Math.abs(nums[i] + nums[l] + nums[r] - target));
+                        if (res == Math.abs(nums[i] + nums[l] + nums[r] - target)) {
+                            res1 = nums[i] + nums[l] + nums[r];
                         }
                         r--;
-                    }else{
-                        res=Math.min(res,Math.abs(nums[i]+nums[l]+nums[r]-target));
-                        if(res==Math.abs(nums[i]+nums[l]+nums[r]-target)){
-                            res1=nums[i]+nums[l]+nums[r];
+                    } else {
+                        res = Math.min(res, Math.abs(nums[i] + nums[l] + nums[r] - target));
+                        if (res == Math.abs(nums[i] + nums[l] + nums[r] - target)) {
+                            res1 = nums[i] + nums[l] + nums[r];
                         }
                         l++;
                     }
                 }
             }
             return res1;
+        }
+    }
+
+    //17 电话号码的字母组合
+    class Solution17 {
+        List<String> res = new ArrayList<String>();
+
+        public List<String> letterCombinations(String digits) {
+            if (digits.length() == 0) {
+                return res;
+            }
+            HashMap<Character, String> characterStringHashMap = new HashMap<Character, String>();
+            characterStringHashMap.put('2', "abc");
+            characterStringHashMap.put('3', "def");
+            characterStringHashMap.put('4', "ghi");
+            characterStringHashMap.put('5', "jkl");
+            characterStringHashMap.put('6', "mno");
+            characterStringHashMap.put('7', "pqrs");
+            characterStringHashMap.put('8', "tuv");
+            characterStringHashMap.put('9', "wxyz");
+            huisu(digits, 0, characterStringHashMap, new StringBuilder());
+            return res;
+        }
+
+        public void huisu(String digits, int index, HashMap<Character, String> characterStringHashMap, StringBuilder stringBuilder) {
+            if (index == digits.length()) {
+                res.add(stringBuilder.toString());
+                return;
+            }
+            String s = characterStringHashMap.get(digits.charAt(index));
+            for (int i = 0; i < s.length(); i++) {
+                stringBuilder.append(s.charAt(i));
+                huisu(digits, index + 1, characterStringHashMap, stringBuilder);
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
+        }
+
+        ;
+    }
+
+    //18 四数之和
+    class Solution18 {
+        public List<List<Integer>> fourSum(int[] nums, int target) {
+            List<List<Integer>> res = new ArrayList<List<Integer>>();
+            Arrays.sort(nums);
+            for (int i = 0; i < nums.length; i++) {
+                if (i > 0 && nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                for (int j = i + 1; j < nums.length; j++) {
+                    if (j > i + 1 && nums[j] == nums[j - 1]) {
+                        continue;
+                    }
+                    int left = j + 1;
+                    int right = nums.length - 1;
+                    while (left < right) {
+                        long i1 = (long) nums[i] + nums[j] + nums[left] + nums[right];
+                        if (i1 == target) {
+                            res.add(Arrays.asList(new Integer[]{nums[i], nums[j], nums[left], nums[right]}));
+                            while (left < right && nums[left] == nums[left + 1]) {
+                                left++;
+                            }
+                            while (left < right && nums[right] == nums[right - 1]) {
+                                right--;
+                            }
+                            left++;
+                            right--;
+                        } else if (i1 < target) {
+                            left++;
+                        } else {
+                            right--;
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+    }
+
+    //19 删除链表的倒数第 N 个结点
+    class Solution19 {
+        public class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode() {
+            }
+
+            ListNode(int val) {
+                this.val = val;
+            }
+
+            ListNode(int val, ListNode next) {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            ListNode vhead = new ListNode(-1, head);
+            ListNode first = head;
+            ListNode second = head;
+            ListNode pre = vhead;
+            for (int i = 0; i < n; i++) {
+                first = first.next;
+            }
+            while (first != null) {
+                pre = pre.next;
+                second = second.next;
+                first = first.next;
+            }
+            pre.next = second.next;
+            return vhead.next;
+        }
+    }
+
+    //20 有效的括号
+    class Solution20 {
+
+        public boolean isValid(String s) {
+            Deque<Character> characters = new ArrayDeque<Character>();
+            for (char c : s.toCharArray()) {
+                if (c == '(') {
+                    characters.addFirst(')');
+                } else if (c == '{') {
+                    characters.addFirst('}');
+                } else if (c == '[') {
+                    characters.addFirst(']');
+                } else {
+                    if (characters.peekFirst() != null && c == characters.peekFirst()) {
+                        characters.removeFirst();
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            return characters.isEmpty();
+        }
+    }
+
+    //21 合并两个有序链表
+    class Solution21 {
+        public class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode() {
+            }
+
+            ListNode(int val) {
+                this.val = val;
+            }
+
+            ListNode(int val, ListNode next) {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+            ListNode res = new ListNode();
+            ListNode curList1 = list1;
+            ListNode curList2 = list2;
+            ListNode curres = res;
+            while (curList1 != null || curList2 != null) {
+                if (curList1 != null && curList2 != null) {
+                    if (curList1.val < curList2.val) {
+                        curres.next = new ListNode(curList1.val);
+                        curList1 = curList1.next;
+                        curres = curres.next;
+                    } else if (curList1.val > curList2.val) {
+                        curres.next = new ListNode(curList2.val);
+                        curList2 = curList2.next;
+                        curres = curres.next;
+                    } else {
+                        curres.next = new ListNode(curList1.val);
+                        curList1 = curList1.next;
+                        curres = curres.next;
+                        curres.next = new ListNode(curList2.val);
+                        curList2 = curList2.next;
+                        curres = curres.next;
+                    }
+                } else if (curList1 != null && curList2 == null) {
+                    curres.next = new ListNode(curList1.val);
+                    curList1 = curList1.next;
+                    curres = curres.next;
+                } else if (curList1 == null && curList2 != null) {
+                    curres.next = new ListNode(curList2.val);
+                    curList2 = curList2.next;
+                    curres = curres.next;
+                }
+            }
+            return res.next;
+        }
+    }
+
+    //22 括号生成
+    class Solution22 {
+        public List<String> generateParenthesis(int n) {
+            List<String> res = new ArrayList<>();
+            huisu(res, new StringBuilder(), 0, 0, n);
+            return res;
+        }
+
+        public void huisu(List<String> res, StringBuilder stringBuilder, int left, int right, int n) {
+            if (left + right == 2 * n) {
+                res.add(stringBuilder.toString());
+            }
+            if (left < n) {
+                stringBuilder.append('(');
+                huisu(res, stringBuilder, left + 1, right, n);
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
+
+            if (right < left) {
+                stringBuilder.append(')');
+                huisu(res, stringBuilder, left, right + 1, n);
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
         }
     }
 }

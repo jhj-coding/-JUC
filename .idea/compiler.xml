@@ -15,7 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="17test" target="17" />
-      <module name="Leetcode" target="1.5" />
+      <module name="Leetcode" target="8" />
       <module name="review" target="1.5" />
       <module name="ThreadDemo" target="8" />
     </bytecodeTargetLevel>
