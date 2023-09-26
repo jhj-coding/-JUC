@@ -743,4 +743,97 @@ public class All {
             }
         }
     }
+
+    //23 合并k个升序链表
+    class Solution23 {
+        public class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode() {
+            }
+
+            ListNode(int val) {
+                this.val = val;
+            }
+
+            ListNode(int val, ListNode next) {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public ListNode mergeKLists(ListNode[] lists) {
+            return merge(lists, 0, lists.length - 1);
+        }
+
+        public ListNode merge(ListNode[] lists, int left, int right) {
+            if (left == right) {
+                return lists[left];
+            }
+            if (left > right) {
+                return null;
+            }
+            int mid = (left + right) / 2;
+            return twoMerge(merge(lists, left, mid), merge(lists, mid + 1, right));
+        }
+
+        public ListNode twoMerge(ListNode first, ListNode second) {
+            if (first == null || second == null) {
+                return first != null ? first : second;
+            }
+            ListNode res = new ListNode();
+            ListNode cur1 = first, cur2 = second, cur3 = res;
+            while (cur1 != null && cur2 != null) {
+
+                if (cur1.val < cur2.val) {
+                    cur3.next = new ListNode(cur1.val);
+                    cur1 = cur1.next;
+                } else {
+                    cur3.next = new ListNode(cur2.val);
+                    cur2 = cur2.next;
+                }
+                cur3 = cur3.next;
+            }
+            cur3.next = cur1 != null ? cur1 : cur2;
+            return res.next;
+        }
+
+
+    }
+
+    //24 两两交换链表中的节点
+    class Solution {
+        public class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode() {
+            }
+
+            ListNode(int val) {
+                this.val = val;
+            }
+
+            ListNode(int val, ListNode next) {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public ListNode swapPairs(ListNode head) {
+            ListNode phead = new ListNode(-1, head);
+            ListNode cur = phead;
+            while (cur.next != null && cur.next.next != null) {
+                ListNode next = cur.next;
+                ListNode next1 = cur.next.next.next;
+                cur.next = cur.next.next;
+                cur.next.next = next;
+                cur.next.next.next = next1;
+                cur = cur.next.next;
+            }
+            return phead.next;
+        }
+    }
+
 }
