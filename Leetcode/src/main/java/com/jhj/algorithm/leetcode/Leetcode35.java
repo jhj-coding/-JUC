@@ -1,4 +1,4 @@
-package com.jhj.array;
+package com.jhj.algorithm.leetcode;
 
 public class Leetcode35 {
 

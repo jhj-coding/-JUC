@@ -1,4 +1,4 @@
-package com.jhj.array;
+package com.jhj.algorithm.leetcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
