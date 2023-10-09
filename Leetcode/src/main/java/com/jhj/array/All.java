@@ -803,7 +803,7 @@ public class All {
     }
 
     //24 两两交换链表中的节点
-    class Solution {
+    class Solution24 {
         public class ListNode {
             int val;
             ListNode next;
@@ -836,4 +836,49 @@ public class All {
         }
     }
 
+    //25 K 个一组翻转链表 画图写谁变为谁
+    class Solution25 {
+        public class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode() {
+            }
+
+            ListNode(int val) {
+                this.val = val;
+            }
+
+            ListNode(int val, ListNode next) {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        public ListNode reverseKGroup(ListNode head, int k) {
+            ListNode listNode = new ListNode(0, head);
+            ListNode cur=head;
+            int count=0;
+            while(cur!=null){
+                cur=cur.next;
+                count++;
+            }
+            ListNode pre=null;
+            ListNode curr=head;
+            ListNode p0=listNode;
+            for(int i=count;count>=k;count-=k){
+                for (int j=0;j<k;j++) {
+                    ListNode currr = curr.next;
+                    curr.next = pre;
+                    pre = curr;
+                    curr = currr;
+                }
+                ListNode next = p0.next;
+                p0.next.next=curr;
+                p0.next=pre;
+                p0=next;
+            }
+            return listNode.next;
+        }
+    }
 }
