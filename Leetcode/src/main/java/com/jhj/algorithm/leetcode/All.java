@@ -881,4 +881,20 @@ public class All {
             return listNode.next;
         }
     }
+
+    //26 删除有序数组中的重复项
+    class Solution26 {
+        public int removeDuplicates(int[] nums) {
+            int j=0;
+            for(int i=1;i<nums.length;i++){
+                if(nums[i]==nums[j]){
+
+                }else{
+                    nums[j+1]=nums[i];
+                    j++;
+                }
+            }
+            return j+1;
+        }
+    }
 }
