@@ -1,5 +1,7 @@
 package com.jhj.algorithm.nowcoder;
 
+import java.util.ArrayDeque;
+
 public class all {
 
     //NC1 大数加法
@@ -44,6 +46,70 @@ public class all {
                 stringBuilder.insert(0, res);
             }
             return stringBuilder.toString();
+        }
+    }
+
+    //NC2 重排链表
+    public class Solution {
+        class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode(int x) {
+                val = x;
+                next = null;
+            }
+        }
+
+        public void reorderList1(ListNode head) {
+            ArrayDeque<ListNode> listNodes = new ArrayDeque<>();
+            ListNode cur = head;
+            while (cur != null) {
+                listNodes.addFirst(cur);
+                cur = cur.next;
+            }
+            int size = listNodes.size();
+            int i = size / 2;
+            int i1 = size % 2;
+            for (int j = 0; j < i; j++) {
+                listNodes.removeLast().next = listNodes.peekFirst();
+                listNodes.removeFirst().next = listNodes.peekLast();
+            }
+            if (i1 == 1) {
+                listNodes.removeFirst().next = null;
+            }
+        }
+
+        public void reorderList2(ListNode head) {
+            if (head == null) {
+                return;
+            }
+            ListNode low = head;
+            ListNode fast = head;
+            while (fast.next != null && fast.next.next != null) {
+                low = low.next;
+                fast = fast.next.next;
+            }
+            ListNode fir = head;
+            ListNode sec = low.next;
+            low.next = null;
+            ListNode pre = null;
+            while (sec != null) {
+                ListNode next = sec.next;
+                sec.next = pre;
+                pre = sec;
+                sec = next;
+            }
+
+            while (pre != null && fir != null) {
+                ListNode next1 = fir.next;
+                ListNode next2 = pre.next;
+                fir.next = pre;
+                pre.next = next1;
+                fir = next1;
+                pre = next2;
+            }
+
         }
     }
 }
