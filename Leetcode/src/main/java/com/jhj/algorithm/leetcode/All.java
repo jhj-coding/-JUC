@@ -899,7 +899,7 @@ public class All {
     }
 
     //27 移除元素
-    class Solution {
+    class Solution27 {
         public int removeElement(int[] nums, int val) {
             int j=0;
             for(int i=0;i<nums.length;i++){

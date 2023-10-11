@@ -50,7 +50,7 @@ public class all {
     }
 
     //NC2 重排链表
-    public class Solution {
+    public class Solution2 {
         class ListNode {
             int val;
             ListNode next;
@@ -110,6 +110,35 @@ public class all {
                 pre = next2;
             }
 
+        }
+    }
+
+    //NC3 链表中环的入口结点
+    public class Solution3 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            ListNode(int val) {
+                this.val = val;
+            }
+        }
+        public ListNode EntryNodeOfLoop(ListNode pHead) {
+            ListNode low=pHead;
+            ListNode fast=pHead;
+            while (fast!=null&&fast.next!=null){
+                low=low.next;
+                fast=fast.next.next;
+                if(low==fast){
+                    ListNode low1=pHead;
+                    while (low1!=fast){
+                        low1=low1.next;
+                        fast=fast.next;
+                    }
+                    return low1;
+                }
+            }
+            return null;
         }
     }
 }
