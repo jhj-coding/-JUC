@@ -913,4 +913,68 @@ public class All {
             return j;
         }
     }
+
+    //28 找出字符串中第一个匹配项的下标 KMP
+    static class Solution28 {
+        public int strStr(String haystack, String needle) {
+            int needlength = needle.length();
+            int[] next = new int[needlength];
+            int j=0;
+            next[0]=j;
+            for(int i=1;i<needlength;i++){
+                while (j>0&&needle.charAt(i)!=needle.charAt(j)){
+                    j=next[j-1];
+                }
+                if(needle.charAt(i)==needle.charAt(j)){
+                    j++;
+                }
+                next[i]=j;
+            }
+            int i=0;
+            j=0;
+            while (i<haystack.length()){
+                while (j>0&&haystack.charAt(i)!=needle.charAt(j)){
+                    j=next[j-1];
+                }
+                if(haystack.charAt(i)==needle.charAt(j)){
+                    j++;
+                }
+                if(j==needlength){
+                    return i-j+1;
+                }
+                i++;
+            }
+            return -1;
+        }
+    }
+
+    //29 两数相除 减最大 两倍两倍 减少时间复杂度 倍增法 奇数加
+    class Solution29 {
+        public int divide(int dividend, int divisor) {
+            boolean flag=false;
+            if(dividend>0){
+                flag=!flag;
+                dividend=-dividend;
+            }
+            if(divisor>0){
+                flag=!flag;
+                divisor=-divisor;
+            }
+            int count=0;
+            while (dividend<=divisor){
+                int temp=divisor;
+                int times=1;
+                while (temp>=(Integer.MIN_VALUE>>1)&&dividend<=(temp<<1)){
+                    temp<<=1;
+                    times<<=1;
+                }
+                dividend-=temp;
+                count-=times;
+            }
+            if(count==Integer.MIN_VALUE && !flag){
+                return Integer.MAX_VALUE;
+            }
+            return flag?count:-count;
+        }
+    }
 }
