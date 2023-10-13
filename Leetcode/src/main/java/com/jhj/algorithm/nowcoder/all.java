@@ -123,17 +123,18 @@ public class all {
                 this.val = val;
             }
         }
+
         public ListNode EntryNodeOfLoop(ListNode pHead) {
-            ListNode low=pHead;
-            ListNode fast=pHead;
-            while (fast!=null&&fast.next!=null){
-                low=low.next;
-                fast=fast.next.next;
-                if(low==fast){
-                    ListNode low1=pHead;
-                    while (low1!=fast){
-                        low1=low1.next;
-                        fast=fast.next;
+            ListNode low = pHead;
+            ListNode fast = pHead;
+            while (fast != null && fast.next != null) {
+                low = low.next;
+                fast = fast.next.next;
+                if (low == fast) {
+                    ListNode low1 = pHead;
+                    while (low1 != fast) {
+                        low1 = low1.next;
+                        fast = fast.next;
                     }
                     return low1;
                 }
@@ -141,4 +142,68 @@ public class all {
             return null;
         }
     }
-}
+
+    //NC4 判断链表中是否有环
+    public class Solution4 {
+        class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode(int x) {
+                val = x;
+                next = null;
+            }
+        }
+
+        public boolean hasCycle(ListNode head) {
+            ListNode low = head;
+            ListNode fast = head;
+
+            while (fast != null && fast.next != null) {
+                low = low.next;
+                fast = fast.next.next;
+                if (low == fast) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public class Solution {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+
+            /**
+             * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+             *
+             * @param root TreeNode类
+             * @return int整型
+             */
+            int res=0;
+            public int sumNumbers(TreeNode root) {
+                // write code here
+                tt(root,0);
+                return res;
+            }
+
+            public void tt(TreeNode root,int num){
+                num*=10;
+                num+=root.val;
+                if(root.left!=null){
+                    tt(root.left,num);
+                }
+                if(root.right!=null){
+                    tt(root.right,num);
+                }
+                res+=num;
+            }
+        }
+        }
+    }
