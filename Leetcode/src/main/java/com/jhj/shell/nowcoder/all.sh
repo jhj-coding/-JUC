@@ -16,3 +16,11 @@ while [ $b -le 500 ]
         echo $b
         let b+=7;
     done
+
+# SHELL4 输出第5行的内容
+head -n 5  nowcoder.txt  | tail -n 1
+sed -n 5p
+
+#SHELL5 打印空行的行号 grep 搜索 -n 显示行号 不过有个： awk-F 加符号 通过什么分割 awk NR 行号
+grep -n '^$' nowcoder.txt | awk -F: '{print $1}'
+awk '/^$/ {print NR}'
