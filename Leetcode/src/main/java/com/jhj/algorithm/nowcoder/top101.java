@@ -175,7 +175,7 @@ public class top101 {
         }
     }
 
-    public class Solution {
+    public class Solution5 {
         public class ListNode {
             int val;
             ListNode next = null;
