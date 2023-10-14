@@ -289,18 +289,20 @@ public class top101 {
         class ListNode {
             int val;
             ListNode next;
+
             ListNode(int x) {
                 val = x;
                 next = null;
             }
         }
+
         public boolean hasCycle(ListNode head) {
-            ListNode low=head;
-            ListNode fast=head;
-            while (fast!=null&&fast.next!=null){
-                low=low.next;
-                fast=fast.next.next;
-                if(low==fast){
+            ListNode low = head;
+            ListNode fast = head;
+            while (fast != null && fast.next != null) {
+                low = low.next;
+                fast = fast.next.next;
+                if (low == fast) {
                     return true;
                 }
             }
@@ -309,7 +311,7 @@ public class top101 {
     }
 
     //BM7 链表中环的入口结点
-    public class Solution {
+    public class Solution7 {
         public class ListNode {
             int val;
             ListNode next = null;
@@ -318,24 +320,60 @@ public class top101 {
                 this.val = val;
             }
         }
+
         public ListNode EntryNodeOfLoop(ListNode pHead) {
-            ListNode low=pHead;
-            ListNode fast=pHead;
-            while(fast!=null&&fast.next!=null){
-                low=low.next;
-                fast= fast.next.next;
-                if (low==fast){
-                    fast=pHead;
-                    while (fast!=null){
-                        if(fast==low){
+            ListNode low = pHead;
+            ListNode fast = pHead;
+            while (fast != null && fast.next != null) {
+                low = low.next;
+                fast = fast.next.next;
+                if (low == fast) {
+                    fast = pHead;
+                    while (fast != null) {
+                        if (fast == low) {
                             return fast;
                         }
-                        fast=fast.next;
-                        low=low.next;
+                        fast = fast.next;
+                        low = low.next;
                     }
                 }
             }
             return null;
+        }
+    }
+
+    public class Solution8 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pHead ListNode类
+         * @param k     int整型
+         * @return ListNode类
+         */
+        public ListNode FindKthToTail(ListNode pHead, int k) {
+            // write code here
+            ListNode curr=pHead;
+            ListNode cur=pHead;
+            for(int i=0;i<k;i++){
+                if(curr==null){
+                    return null;
+                }
+                curr=curr.next;
+            }
+            while(curr!=null){
+                curr=curr.next;
+                cur=cur.next;
+            }
+            return cur;
         }
     }
 }
