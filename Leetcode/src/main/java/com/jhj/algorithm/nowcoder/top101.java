@@ -285,7 +285,7 @@ public class top101 {
     }
 
     //BM6 判断链表中是否有环
-    public class Solution {
+    public class Solution6 {
         class ListNode {
             int val;
             ListNode next;
@@ -308,10 +308,34 @@ public class top101 {
         }
     }
 
+    //BM7 链表中环的入口结点
     public class Solution {
+        public class ListNode {
+            int val;
+            ListNode next = null;
 
+            ListNode(int val) {
+                this.val = val;
+            }
+        }
         public ListNode EntryNodeOfLoop(ListNode pHead) {
-
+            ListNode low=pHead;
+            ListNode fast=pHead;
+            while(fast!=null&&fast.next!=null){
+                low=low.next;
+                fast= fast.next.next;
+                if (low==fast){
+                    fast=pHead;
+                    while (fast!=null){
+                        if(fast==low){
+                            return fast;
+                        }
+                        fast=fast.next;
+                        low=low.next;
+                    }
+                }
+            }
+            return null;
         }
     }
 }
