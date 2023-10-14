@@ -170,7 +170,8 @@ public class all {
         }
     }
 
-    public class Solution {
+    //NC5 二叉树根节点到叶子节点的所有路径和
+    public class Solution5 {
         public class TreeNode {
             int val = 0;
             TreeNode left = null;
@@ -186,24 +187,70 @@ public class all {
              * @param root TreeNode类
              * @return int整型
              */
-            int res=0;
+            int res = 0;
+
             public int sumNumbers(TreeNode root) {
                 // write code here
-                tt(root,0);
+                tt(root, 0);
                 return res;
             }
 
-            public void tt(TreeNode root,int num){
-                num*=10;
-                num+=root.val;
-                if(root.left!=null){
-                    tt(root.left,num);
+            public void tt(TreeNode root, int num) {
+                num *= 10;
+                num += root.val;
+                if (root.left != null) {
+                    tt(root.left, num);
                 }
-                if(root.right!=null){
-                    tt(root.right,num);
+                if (root.right != null) {
+                    tt(root.right, num);
                 }
-                res+=num;
+                res += num;
             }
         }
-        }
     }
+
+    //NC6 二叉树中的最大路径和
+    public class Solution6 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @return int整型
+         */
+        int max = Integer.MIN_VALUE;
+
+        public int maxPathSum(TreeNode root) {
+            // write code here
+            if (root == null) {
+                return 0;
+            }
+            maxPath(root);
+            return max;
+        }
+
+        public int maxPath(TreeNode root) {
+            // write code here
+            if (root == null) {
+                return 0;
+            }
+            int left = Math.max(maxPath(root.left), 0);
+            int right = Math.max(maxPath(root.right), 0);
+            max = Math.max(max, root.val + left + right);
+            return root.val + Math.max(left, right);
+        }
+
+    }
+
+}
+
+
