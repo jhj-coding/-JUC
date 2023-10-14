@@ -175,6 +175,7 @@ public class top101 {
         }
     }
 
+    //BM5 合并k个已排序的链表
     public class Solution5 {
         public class ListNode {
             int val;
@@ -280,6 +281,37 @@ public class top101 {
                 }
             }
             return head.next;
+        }
+    }
+
+    //BM6 判断链表中是否有环
+    public class Solution {
+        class ListNode {
+            int val;
+            ListNode next;
+            ListNode(int x) {
+                val = x;
+                next = null;
+            }
+        }
+        public boolean hasCycle(ListNode head) {
+            ListNode low=head;
+            ListNode fast=head;
+            while (fast!=null&&fast.next!=null){
+                low=low.next;
+                fast=fast.next.next;
+                if(low==fast){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public class Solution {
+
+        public ListNode EntryNodeOfLoop(ListNode pHead) {
+
         }
     }
 }
