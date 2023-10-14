@@ -977,4 +977,37 @@ public class All {
             return flag?count:-count;
         }
     }
+
+    //30 串联所有单词的子串
+    class Solution {
+        public List<Integer> findSubstring(String s, String[] words) {
+            HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+            for (int i = 0; i < words.length; i++) {
+                stringIntegerHashMap.put(words[i], stringIntegerHashMap.getOrDefault(words[i], 0) + 1);
+            }
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < s.length(); i++) {
+                int i1 = words[0].length() * words.length;
+                if (s.length() - i < i1) {
+                    break;
+                }
+                HashMap<String, Integer> stringIntegerHashMap1 = new HashMap<>(stringIntegerHashMap);
+                boolean flag = true;
+                for (int j = i; j < i1 + i; j += words[0].length()) {
+                    Integer integer = stringIntegerHashMap1.get(s.substring(j, j + words[0].length()));
+                    if (integer == null || integer == 0) {
+                        flag = false;
+                        break;
+                    } else {
+                        stringIntegerHashMap1.put(s.substring(j, j + words[0].length()), integer - 1);
+                    }
+                }
+                if (flag) {
+                    res.add(i);
+                }
+            }
+
+            return res;
+        }
+    }
 }
