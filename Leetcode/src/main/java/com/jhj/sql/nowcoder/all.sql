@@ -8,3 +8,5 @@ select salaries.emp_no, salaries.salary, salaries.from_date, salaries.to_date, d
 select employees.last_name,employees.first_name,dept_emp.dept_no   from employees,dept_emp where employees.emp_no = dept_emp.emp_no;
 #SQL199 查找所有员工的last_name和first_name以及对应部门编号dept_no
 select employees.last_name,employees.first_name,dept_emp.dept_no  from employees left join dept_emp on employees.emp_no =dept_emp.emp_no
+#SQL201 查找薪水记录超过15条的员工号emp_no以及其对应的记录次数t
+select salaries.emp_no,count(salaries.emp_no) from salaries group by salaries.emp_no having count(salaries.emp_no)>15
