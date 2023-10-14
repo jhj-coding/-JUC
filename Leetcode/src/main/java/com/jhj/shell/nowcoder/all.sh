@@ -24,3 +24,7 @@ sed -n 5p
 #SHELL5 打印空行的行号 grep 搜索 -n 显示行号 不过有个： awk-F 加符号 通过什么分割 awk NR 行号
 grep -n '^$' nowcoder.txt | awk -F: '{print $1}'
 awk '/^$/ {print NR}'
+
+#SHELL6 去掉空行 grep https://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856896.html
+awk NF
+grep -v '^$'
