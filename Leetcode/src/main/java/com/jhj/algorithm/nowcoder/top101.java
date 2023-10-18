@@ -362,19 +362,105 @@ public class top101 {
          */
         public ListNode FindKthToTail(ListNode pHead, int k) {
             // write code here
-            ListNode curr=pHead;
-            ListNode cur=pHead;
-            for(int i=0;i<k;i++){
-                if(curr==null){
+            ListNode curr = pHead;
+            ListNode cur = pHead;
+            for (int i = 0; i < k; i++) {
+                if (curr == null) {
                     return null;
                 }
-                curr=curr.next;
+                curr = curr.next;
             }
-            while(curr!=null){
-                curr=curr.next;
-                cur=cur.next;
+            while (curr != null) {
+                curr = curr.next;
+                cur = cur.next;
             }
             return cur;
+        }
+    }
+
+    //BM9 删除链表的倒数第n个节点
+    public class Solution9 {
+
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            // write code here
+            ListNode listNode = new ListNode(-1);
+            listNode.next = head;
+            ListNode cur = head;
+            ListNode curr = head;
+            ListNode pre = listNode;
+            for (int i = 0; i < n; i++) {
+                cur = cur.next;
+            }
+            while (cur != null) {
+                curr = curr.next;
+                cur = cur.next;
+                pre = pre.next;
+            }
+            pre.next = curr.next;
+            return listNode.next;
+        }
+    }
+
+    //BM10 两个链表的第一个公共结点
+    public class Solution10 {
+
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+            ListNode cur1=pHead1;
+            ListNode cur2=pHead2;
+            int cur1l=0;
+            int cur2l=0;
+            while(cur1!=null){
+                cur1l++;
+                cur1=cur1.next;
+            }
+            while(cur2!=null){
+                cur2l++;
+                cur2=cur2.next;
+            }
+            cur1=pHead1;
+            cur2=pHead2;
+            if(cur1l>cur2l){
+                for(int i=0;i<cur1l-cur2l;i++){
+                    cur1=cur1.next;
+                }
+                while (cur1!=null&&cur2!=null){
+                    if(cur1==cur2){
+                        return cur1;
+                    }
+                    cur1=cur1.next;
+                    cur2=cur2.next;
+                }
+            }else{
+                for(int i=0;i<cur2l-cur1l;i++){
+                    cur2=cur2.next;
+                }
+                while (cur1!=null&&cur2!=null){
+                    if(cur1==cur2){
+                        return cur1;
+                    }
+                    cur1=cur1.next;
+                    cur2=cur2.next;
+                }
+            }
+            return null;
         }
     }
 }
