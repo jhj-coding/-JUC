@@ -10,3 +10,5 @@ select employees.last_name,employees.first_name,dept_emp.dept_no   from employee
 select employees.last_name,employees.first_name,dept_emp.dept_no  from employees left join dept_emp on employees.emp_no =dept_emp.emp_no
 #SQL201 查找薪水记录超过15条的员工号emp_no以及其对应的记录次数t
 select salaries.emp_no,count(salaries.emp_no) from salaries group by salaries.emp_no having count(salaries.emp_no)>15
+#SQL202 找出所有员工当前薪水salary情况
+select distinct salaries.salary from salaries order by salaries.salary desc;
