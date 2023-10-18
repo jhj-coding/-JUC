@@ -28,3 +28,6 @@ awk '/^$/ {print NR}'
 #SHELL6 去掉空行 grep https://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856896.html
 awk NF
 grep -v '^$'
+
+#SHELL7 打印字母数小于8的单词
+awk -F" " '{for(i=1;i<=NF;i++){if(length($i) < 8){print $i}}}' nowcoder.txt
