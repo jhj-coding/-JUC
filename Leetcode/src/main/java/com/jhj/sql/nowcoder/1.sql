@@ -15,3 +15,6 @@ select device_id as user_infos_example from user_profile limit 2;
 
 #SQL36 查找后排序
 select user_profile.device_id,user_profile.age from user_profile order by age
+
+#SQL37 查找后多列排序
+select user_profile.device_id,user_profile.gpa,user_profile.age from user_profile order by user_profile.gpa,user_profile.age;
