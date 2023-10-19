@@ -979,7 +979,7 @@ public class All {
     }
 
     //30 串联所有单词的子串
-    class Solution {
+    class Solution30 {
         public List<Integer> findSubstring(String s, String[] words) {
             HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
             for (int i = 0; i < words.length; i++) {
@@ -1010,4 +1010,38 @@ public class All {
             return res;
         }
     }
+
+    //31. 下一个排列 todo 不会 多看几遍
+    class Solution31 {
+        public void nextPermutation(int[] nums) {
+            int i = nums.length - 2;
+            while (i >= 0 && nums[i] >= nums[i + 1]) {
+                i--;
+            }
+            if (i >= 0) {
+                int j = nums.length - 1;
+                while (j >= 0 && nums[i] >= nums[j]) {
+                    j--;
+                }
+                swap(nums, i, j);
+            }
+            reverse(nums, i + 1);
+        }
+
+        public void swap(int[] nums, int i, int j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+
+        public void reverse(int[] nums, int start) {
+            int left = start, right = nums.length - 1;
+            while (left < right) {
+                swap(nums, left, right);
+                left++;
+                right--;
+            }
+        }
+    }
+
 }
