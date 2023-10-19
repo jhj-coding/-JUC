@@ -12,3 +12,5 @@ select employees.last_name,employees.first_name,dept_emp.dept_no  from employees
 select salaries.emp_no,count(salaries.emp_no) from salaries group by salaries.emp_no having count(salaries.emp_no)>15
 #SQL202 找出所有员工当前薪水salary情况
 select distinct salaries.salary from salaries order by salaries.salary desc;
+#SQL204 获取所有非manager的员工emp_no
+select employees.emp_no from employees where employees.emp_no not in (select dept_manager.emp_no from dept_manager);
