@@ -31,3 +31,6 @@ grep -v '^$'
 
 #SHELL7 打印字母数小于8的单词
 awk -F" " '{for(i=1;i<=NF;i++){if(length($i) < 8){print $i}}}' nowcoder.txt
+
+#SHELL8 统计所有进程占用内存百分比的和
+awk '{SUM+=$4}END{print SUM}' nowcoder.txt
