@@ -18,3 +18,6 @@ select user_profile.device_id,user_profile.age from user_profile order by age
 
 #SQL37 查找后多列排序
 select user_profile.device_id,user_profile.gpa,user_profile.age from user_profile order by user_profile.gpa,user_profile.age;
+
+#SQL38 查找后降序排列
+select user_profile.device_id,user_profile.gpa,user_profile.age from user_profile order by user_profile.gpa desc, user_profile.age desc;
