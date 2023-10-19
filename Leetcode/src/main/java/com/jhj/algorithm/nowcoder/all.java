@@ -303,7 +303,7 @@ public class all {
             // number更新
             number -= root.val;
             // 如果递归当前节点为叶子节点且该条路径的值已经达到了expectNumber，则更新ret
-            if(root.left == null && root.right == null && number == 0) {
+            if (root.left == null && root.right == null && number == 0) {
                 ret.add(new ArrayList<>(path));
             }
             // 左右子树递归
@@ -312,12 +312,90 @@ public class all {
             path.removeLast();
         }
 
-        public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int expectNumber) {
+        public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int expectNumber) {
             dfs(root, expectNumber);
             return ret;
         }
     }
 
+    //NC9 二叉树中和为某一值的路径(一)
+    public class Solution9 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @param sum  int整型
+         * @return bool布尔型
+         */
+        public boolean hasPathSum(TreeNode root, int sum) {
+            // write code here
+            if(root==null){
+                return false;
+            }
+            sum-=root.val;
+            if(sum==0 && root.left==null && root.right==null){
+                return true;
+            }
+            boolean b = hasPathSum(root.left, sum);
+            boolean a=hasPathSum(root.right,sum);
+            return a||b;
+        }
+    }
+
+    //NC10 大数乘法
+    public class Solution10 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串 第一个整数
+         * @param t string字符串 第二个整数
+         * @return string字符串
+         */
+        public String solve (String s, String t) {
+            // write code here
+            int[] ints = new int[s.length()];
+            int[] ints1 = new int[t.length()];
+            for(int i=0;i<s.length();i++){
+                ints[i]=s.charAt(i)-'0';
+            }
+            for (int i=0;i<t.length();i++){
+                ints1[i]=t.charAt(i)-'0';
+            }
+            int[] ints2 = new int[s.length() + t.length()];
+            for(int i=0;i<s.length();i++){
+                for(int j=0;j<t.length();j++){
+                    int i1 = ints[i] * ints1[j];
+                    ints2[i+j+1]+=i1;
+                }
+            }
+            int m=0;
+            for (int i=s.length()+t.length()-1;i>=0;i--){
+                int i1 = ints2[i] + m;
+                ints2[i]=i1%10;
+                m=i1/10;
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            int j=0;
+            while (j<s.length()+t.length() && ints2[j]==0){
+                j++;
+            }
+            for (int i=j;i<s.length()+t.length();i++){
+                stringBuilder.append(ints2[i]);
+            }
+            return stringBuilder.length()==0?"0":stringBuilder.toString();
+        }
+    }
 }
 
 
