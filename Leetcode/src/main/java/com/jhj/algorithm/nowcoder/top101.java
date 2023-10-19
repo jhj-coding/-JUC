@@ -423,44 +423,166 @@ public class top101 {
         }
 
         public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
-            ListNode cur1=pHead1;
-            ListNode cur2=pHead2;
-            int cur1l=0;
-            int cur2l=0;
-            while(cur1!=null){
+            ListNode cur1 = pHead1;
+            ListNode cur2 = pHead2;
+            int cur1l = 0;
+            int cur2l = 0;
+            while (cur1 != null) {
                 cur1l++;
-                cur1=cur1.next;
+                cur1 = cur1.next;
             }
-            while(cur2!=null){
+            while (cur2 != null) {
                 cur2l++;
-                cur2=cur2.next;
+                cur2 = cur2.next;
             }
-            cur1=pHead1;
-            cur2=pHead2;
-            if(cur1l>cur2l){
-                for(int i=0;i<cur1l-cur2l;i++){
-                    cur1=cur1.next;
+            cur1 = pHead1;
+            cur2 = pHead2;
+            if (cur1l > cur2l) {
+                for (int i = 0; i < cur1l - cur2l; i++) {
+                    cur1 = cur1.next;
                 }
-                while (cur1!=null&&cur2!=null){
-                    if(cur1==cur2){
+                while (cur1 != null && cur2 != null) {
+                    if (cur1 == cur2) {
                         return cur1;
                     }
-                    cur1=cur1.next;
-                    cur2=cur2.next;
+                    cur1 = cur1.next;
+                    cur2 = cur2.next;
                 }
-            }else{
-                for(int i=0;i<cur2l-cur1l;i++){
-                    cur2=cur2.next;
+            } else {
+                for (int i = 0; i < cur2l - cur1l; i++) {
+                    cur2 = cur2.next;
                 }
-                while (cur1!=null&&cur2!=null){
-                    if(cur1==cur2){
+                while (cur1 != null && cur2 != null) {
+                    if (cur1 == cur2) {
                         return cur1;
                     }
-                    cur1=cur1.next;
-                    cur2=cur2.next;
+                    cur1 = cur1.next;
+                    cur2 = cur2.next;
                 }
             }
             return null;
+        }
+    }
+
+    //BM11 链表相加(二)
+    public class Solution11 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head1 ListNode类
+         * @param head2 ListNode类
+         * @return ListNode类
+         */
+        public ListNode addInList(ListNode head1, ListNode head2) {
+            // write code here
+            ListNode cur1 = head1;
+            ListNode pre1 = null;
+            while (cur1 != null) {
+                ListNode next = cur1.next;
+                cur1.next = pre1;
+                pre1 = cur1;
+                cur1 = next;
+            }
+
+            ListNode cur2 = head2;
+            ListNode pre2 = null;
+            while (cur2 != null) {
+                ListNode next = cur2.next;
+                cur2.next = pre2;
+                pre2 = cur2;
+                cur2 = next;
+            }
+            int i = 0;
+            ListNode res = new ListNode(1);
+            ListNode curr = res;
+            while (pre1 != null || pre2 != null) {
+                if (pre1 != null && pre2 != null) {
+                    int i1 = pre1.val + pre2.val + i;
+                    i = i1 / 10;
+                    ListNode listNode = new ListNode(i1 % 10);
+                    curr.next = listNode;
+                    pre1 = pre1.next;
+                    pre2 = pre2.next;
+                } else if (pre1 != null && pre2 == null) {
+                    int i1 = pre1.val + i;
+                    i = i1 / 10;
+                    ListNode listNode = new ListNode(i1 % 10);
+                    curr.next = listNode;
+                    pre1 = pre1.next;
+                } else if (pre1 == null && pre2 != null) {
+                    int i1 = pre2.val + i;
+                    i = i1 / 10;
+                    ListNode listNode = new ListNode(i1 % 10);
+                    curr.next = listNode;
+                    pre2 = pre2.next;
+                }
+                curr = curr.next;
+            }
+            if (i != 0) {
+                curr.next = new ListNode(i);
+            }
+            ListNode next = res.next;
+            ListNode pre = null;
+            ListNode cur = next;
+            while (cur != null) {
+                ListNode next1 = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = next1;
+            }
+            return pre;
+        }
+    }
+
+    //BM12 单链表的排序
+    public class Solution12 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类 the head node
+         * @return ListNode类
+         */
+        public ListNode sortInList(ListNode head) {
+            // write code here
+            ArrayList<Integer> integers = new ArrayList<>();
+            ListNode cur=head;
+            while (cur!=null){
+                integers.add(cur.val);
+                cur=cur.next;
+            }
+            integers.sort(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o1-o2;
+                }
+            });
+            ListNode res=new ListNode(1);
+            ListNode cur1=res;
+            for (int i=0;i<integers.size();i++){
+                Integer integer = integers.get(i);
+                ListNode listNode = new ListNode(integer);
+                cur1.next=listNode;
+                cur1=cur1.next;
+            }
+            return res.next;
         }
     }
 }
