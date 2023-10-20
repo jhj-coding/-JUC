@@ -563,26 +563,111 @@ public class top101 {
         public ListNode sortInList(ListNode head) {
             // write code here
             ArrayList<Integer> integers = new ArrayList<>();
-            ListNode cur=head;
-            while (cur!=null){
+            ListNode cur = head;
+            while (cur != null) {
                 integers.add(cur.val);
-                cur=cur.next;
+                cur = cur.next;
             }
             integers.sort(new Comparator<Integer>() {
                 @Override
                 public int compare(Integer o1, Integer o2) {
-                    return o1-o2;
+                    return o1 - o2;
                 }
             });
-            ListNode res=new ListNode(1);
-            ListNode cur1=res;
-            for (int i=0;i<integers.size();i++){
+            ListNode res = new ListNode(1);
+            ListNode cur1 = res;
+            for (int i = 0; i < integers.size(); i++) {
                 Integer integer = integers.get(i);
                 ListNode listNode = new ListNode(integer);
-                cur1.next=listNode;
-                cur1=cur1.next;
+                cur1.next = listNode;
+                cur1 = cur1.next;
             }
             return res.next;
+        }
+    }
+
+    //BM13 判断一个链表是否为回文结构
+    public class Solution13 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类 the head
+         * @return bool布尔型
+         */
+        public boolean isPail(ListNode head) {
+            // write code here
+            ListNode pre = null;
+            ListNode cur = head;
+            ListNode listNode = new ListNode(-1);
+            ListNode cur3 = listNode;
+            while (cur != null) {
+                cur3.next = new ListNode(cur.val);
+                ListNode next = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = next;
+                cur3 = cur3.next;
+            }
+            ListNode cur1 = pre;
+            ListNode cur2 = listNode.next;
+            while (cur1 != null) {
+                if (cur1.val != cur2.val) {
+                    return false;
+                }
+                cur1 = cur1.next;
+                cur2 = cur2.next;
+            }
+            return true;
+        }
+    }
+
+    //BM14 链表的奇偶重排
+    public class Solution14 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @return ListNode类
+         */
+        public ListNode oddEvenList(ListNode head) {
+            // write code here
+            ListNode ji=new ListNode(-1);
+            ListNode ou=new ListNode(-1);
+            int count=1;
+            ListNode cur=head;
+            ListNode curji=ji;
+            ListNode curou=ou;
+            while (cur!=null){
+                if(count%2==1){
+                    curji.next=new ListNode(cur.val);
+                    curji=curji.next;
+                }else {
+                    curou.next=new ListNode(cur.val);
+                    curou=curou.next;
+                }
+                cur=cur.next;
+                count++;
+            }
+            curji.next=ou.next;
+            return ji.next;
         }
     }
 }
