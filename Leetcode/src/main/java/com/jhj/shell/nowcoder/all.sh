@@ -34,3 +34,11 @@ awk -F" " '{for(i=1;i<=NF;i++){if(length($i) < 8){print $i}}}' nowcoder.txt
 
 #SHELL8 统计所有进程占用内存百分比的和
 awk '{SUM+=$4}END{print SUM}' nowcoder.txt
+
+#SHELL9 统计每个单词出现的个数
+#xargs 转为单行输出
+#sort 将结果按照字符大小排序
+#uniq 统计重复行
+#sort 对第 1 列统计结果排序
+#awk 换行输出
+cat nowcoder.txt | xargs -n1 | sort | uniq -c | sort -n | awk '{print $2, $1}'
