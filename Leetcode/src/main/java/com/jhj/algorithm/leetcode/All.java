@@ -1044,4 +1044,26 @@ public class All {
         }
     }
 
+    //32. 最长有效括号
+    class Solution32 {
+        public int longestValidParentheses(String s) {
+            int res=0;
+            //每次记录的都是右的位置
+            ArrayDeque<Integer> objects = new ArrayDeque<Integer>();
+            objects.addFirst(-1);
+            for(int i=0;i<s.length();i++){
+                if(s.charAt(i)=='('){
+                    objects.addFirst(i);
+                }else{
+                    objects.removeFirst();
+                    if(objects.isEmpty()){
+                        objects.addFirst(i);
+                    }else {
+                        res = Math.max(res, i - objects.peekFirst().intValue());
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
