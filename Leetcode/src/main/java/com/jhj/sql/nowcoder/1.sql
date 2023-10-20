@@ -21,3 +21,6 @@ select user_profile.device_id,user_profile.gpa,user_profile.age from user_profil
 
 #SQL38 查找后降序排列
 select user_profile.device_id,user_profile.gpa,user_profile.age from user_profile order by user_profile.gpa desc, user_profile.age desc;
+
+#SQL6 查找学校是北大的学生信息
+select user_profile.device_id,user_profile.university from user_profile where user_profile.university="北京大学";
