@@ -451,26 +451,125 @@ public class all {
          * @param vinOrder int整型一维数组
          * @return TreeNode类
          */
-        HashMap<Integer,Integer> map= new HashMap<Integer,Integer>();
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
         public TreeNode reConstructBinaryTree(int[] preOrder, int[] vinOrder) {
             // write code here
-            for(int i=0;i<vinOrder.length;i++){
-                map.put(vinOrder[i],i);
+            for (int i = 0; i < vinOrder.length; i++) {
+                map.put(vinOrder[i], i);
             }
-            return build(preOrder,0,preOrder.length,vinOrder,0,vinOrder.length);
+            return build(preOrder, 0, preOrder.length, vinOrder, 0, vinOrder.length);
         }
-        public TreeNode build(int[] preOrder,int pres,int preend, int[] vinOrder,int vstart,int vend){
-            if(pres>=preend||vstart>=vend){
+
+        public TreeNode build(int[] preOrder, int pres, int preend, int[] vinOrder, int vstart, int vend) {
+            if (pres >= preend || vstart >= vend) {
                 return null;
             }
-            TreeNode root=new TreeNode(preOrder[pres]);
+            TreeNode root = new TreeNode(preOrder[pres]);
             Integer integer = map.get(preOrder[pres]);
-            root.left=build(preOrder,pres+1,integer-vstart+pres+1,vinOrder,vstart,integer);
-            root.right=build(preOrder,pres+integer-vstart+1,preend,vinOrder,integer+1,vend);
+            root.left = build(preOrder, pres + 1, integer - vstart + pres + 1, vinOrder, vstart, integer);
+            root.right = build(preOrder, pres + integer - vstart + 1, preend, vinOrder, integer + 1, vend);
             return root;
         }
     }
 
+    //NC13 二叉树的最大深度
+    public class Solution13 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @return int整型
+         */
+        public int maxDepth(TreeNode root) {
+            // write code here
+            ArrayDeque<TreeNode> objects = new ArrayDeque<TreeNode>();
+            if (root == null) {
+                return 0;
+            }
+            objects.addLast(root);
+            int count = 0;
+            while (!objects.isEmpty()) {
+                int size = objects.size();
+                while (size > 0) {
+                    TreeNode treeNode = objects.removeFirst();
+                    if (treeNode.left != null) {
+                        objects.addLast(treeNode.left);
+                    }
+                    if (treeNode.right != null) {
+                        objects.addLast(treeNode.right);
+                    }
+                    size--;
+                }
+                count += 1;
+            }
+            return count;
+        }
+    }
+
+    //NC14 按之字形顺序打印二叉树
+    public class Solution14 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pRoot TreeNode类
+         * @return int整型ArrayList<ArrayList <>>
+         */
+
+        public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
+            if(pRoot==null){
+                return res;
+            }
+            ArrayDeque<TreeNode> objects = new ArrayDeque<TreeNode>();
+            objects.addLast(pRoot);
+            int count=0;
+            while (!objects.isEmpty()){
+                int size = objects.size();
+                ArrayDeque<Integer> objects1 = new ArrayDeque<>();
+                while (size>0){
+                    TreeNode treeNode = objects.removeFirst();
+                    //反转
+                    if(count%2==0){
+                        objects1.addLast(treeNode.val);
+                    }else{
+                        objects1.addFirst(treeNode.val);
+                    }
+                    if(treeNode.left!=null){
+                        objects.addLast(treeNode.left);
+                    }
+                    if(treeNode.right!=null){
+                        objects.addLast(treeNode.right);
+                    }
+                    size--;
+                }
+                res.add(new ArrayList<>(objects1));
+                count++;
+            }
+            return res;
+        }
+    }
 }
 
 
