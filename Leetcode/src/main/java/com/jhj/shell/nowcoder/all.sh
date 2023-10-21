@@ -42,3 +42,12 @@ awk '{SUM+=$4}END{print SUM}' nowcoder.txt
 #sort 对第 1 列统计结果排序
 #awk 换行输出
 cat nowcoder.txt | xargs -n1 | sort | uniq -c | sort -n | awk '{print $2, $1}'
+
+#SHELL10 第二列是否有重复
+#先用awk提取文本的第二列信息
+# 对之进行排序，
+# 排序后才能用uniq进行去重统计（先去重统计在排序会造成统计不准确），
+# 再用grep把没有重复的取反求出（没有重复数值就是1），最后按题目要求再次按数值排序！！！
+# uniq https://baike.baidu.com/item/uniq/10654799
+cat nowcoder.txt | awk '{print $2}' | sort | uniq -c | grep -v '1' | sort -n
+
