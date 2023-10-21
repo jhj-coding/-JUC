@@ -433,7 +433,7 @@ public class all {
     }
 
     //NC12 重建二叉树
-    public class Solution {
+    public class Solution12 {
         public class TreeNode {
             int val = 0;
             TreeNode left = null;

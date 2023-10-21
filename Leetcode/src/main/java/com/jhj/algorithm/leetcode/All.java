@@ -1132,7 +1132,7 @@ public class All {
     }
 
     //35. 搜索插入位置
-    class Solution {
+    class Solution35 {
         public int searchInsert(int[] nums, int target) {
             int left=0;
             int right=nums.length-1;
@@ -1147,6 +1147,32 @@ public class All {
                 }
             }
             return left;
+        }
+    }
+
+    //36. 有效的数独
+    class Solution {
+        public boolean isValidSudoku(char[][] board) {
+            int[][] hang = new int[9][9];
+            int[][] lie = new int[9][9];
+            int[][][] th = new int[3][3][9];
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    char c = board[i][j];
+                    if (c != '.') {
+                        int i1 = c - '0' - 1;
+                        hang[i][i1]++;
+                        lie[j][i1]++;
+                        th[i / 3][j / 3][i1]++;
+                        if (hang[i][i1] > 1 ||
+                                lie[j][i1] > 1 ||
+                                th[i / 3][j / 3][i1] > 1) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }
