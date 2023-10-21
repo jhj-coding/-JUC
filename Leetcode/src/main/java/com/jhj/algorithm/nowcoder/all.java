@@ -2,6 +2,7 @@ package com.jhj.algorithm.nowcoder;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class all {
@@ -339,16 +340,16 @@ public class all {
          */
         public boolean hasPathSum(TreeNode root, int sum) {
             // write code here
-            if(root==null){
+            if (root == null) {
                 return false;
             }
-            sum-=root.val;
-            if(sum==0 && root.left==null && root.right==null){
+            sum -= root.val;
+            if (sum == 0 && root.left == null && root.right == null) {
                 return true;
             }
             boolean b = hasPathSum(root.left, sum);
-            boolean a=hasPathSum(root.right,sum);
-            return a||b;
+            boolean a = hasPathSum(root.right, sum);
+            return a || b;
         }
     }
 
@@ -357,43 +358,42 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param s string字符串 第一个整数
          * @param t string字符串 第二个整数
          * @return string字符串
          */
-        public String solve (String s, String t) {
+        public String solve(String s, String t) {
             // write code here
             int[] ints = new int[s.length()];
             int[] ints1 = new int[t.length()];
-            for(int i=0;i<s.length();i++){
-                ints[i]=s.charAt(i)-'0';
+            for (int i = 0; i < s.length(); i++) {
+                ints[i] = s.charAt(i) - '0';
             }
-            for (int i=0;i<t.length();i++){
-                ints1[i]=t.charAt(i)-'0';
+            for (int i = 0; i < t.length(); i++) {
+                ints1[i] = t.charAt(i) - '0';
             }
             int[] ints2 = new int[s.length() + t.length()];
-            for(int i=0;i<s.length();i++){
-                for(int j=0;j<t.length();j++){
+            for (int i = 0; i < s.length(); i++) {
+                for (int j = 0; j < t.length(); j++) {
                     int i1 = ints[i] * ints1[j];
-                    ints2[i+j+1]+=i1;
+                    ints2[i + j + 1] += i1;
                 }
             }
-            int m=0;
-            for (int i=s.length()+t.length()-1;i>=0;i--){
+            int m = 0;
+            for (int i = s.length() + t.length() - 1; i >= 0; i--) {
                 int i1 = ints2[i] + m;
-                ints2[i]=i1%10;
-                m=i1/10;
+                ints2[i] = i1 % 10;
+                m = i1 / 10;
             }
             StringBuilder stringBuilder = new StringBuilder();
-            int j=0;
-            while (j<s.length()+t.length() && ints2[j]==0){
+            int j = 0;
+            while (j < s.length() + t.length() && ints2[j] == 0) {
                 j++;
             }
-            for (int i=j;i<s.length()+t.length();i++){
+            for (int i = j; i < s.length() + t.length(); i++) {
                 stringBuilder.append(ints2[i]);
             }
-            return stringBuilder.length()==0?"0":stringBuilder.toString();
+            return stringBuilder.length() == 0 ? "0" : stringBuilder.toString();
         }
     }
 
@@ -408,29 +408,70 @@ public class all {
                 this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param nums int整型一维数组
          * @return TreeNode类
          */
-        public TreeNode sortedArrayToBST (int[] nums) {
+        public TreeNode sortedArrayToBST(int[] nums) {
             // write code here
-            return hebing(nums,0,nums.length-1);
+            return hebing(nums, 0, nums.length - 1);
         }
 
-        public TreeNode hebing(int[] nums,int left,int right){
-            if(left>right){
+        public TreeNode hebing(int[] nums, int left, int right) {
+            if (left > right) {
                 return null;
             }
             int mid = left + ((right - left) / 2);
             TreeNode treeNode = new TreeNode(nums[mid]);
-            treeNode.left=hebing(nums,left,mid-1);
-            treeNode.right=hebing(nums,mid+1,right);
+            treeNode.left = hebing(nums, left, mid - 1);
+            treeNode.right = hebing(nums, mid + 1, right);
             return treeNode;
         }
     }
+
+    //NC12 重建二叉树
+    public class Solution {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param preOrder int整型一维数组
+         * @param vinOrder int整型一维数组
+         * @return TreeNode类
+         */
+        HashMap<Integer,Integer> map= new HashMap<Integer,Integer>();
+        public TreeNode reConstructBinaryTree(int[] preOrder, int[] vinOrder) {
+            // write code here
+            for(int i=0;i<vinOrder.length;i++){
+                map.put(vinOrder[i],i);
+            }
+            return build(preOrder,0,preOrder.length,vinOrder,0,vinOrder.length);
+        }
+        public TreeNode build(int[] preOrder,int pres,int preend, int[] vinOrder,int vstart,int vend){
+            if(pres>=preend||vstart>=vend){
+                return null;
+            }
+            TreeNode root=new TreeNode(preOrder[pres]);
+            Integer integer = map.get(preOrder[pres]);
+            root.left=build(preOrder,pres+1,integer-vstart+pres+1,vinOrder,vstart,integer);
+            root.right=build(preOrder,pres+integer-vstart+1,preend,vinOrder,integer+1,vend);
+            return root;
+        }
+    }
+
+
 }
 
 
