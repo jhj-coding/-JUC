@@ -649,25 +649,102 @@ public class top101 {
          */
         public ListNode oddEvenList(ListNode head) {
             // write code here
-            ListNode ji=new ListNode(-1);
-            ListNode ou=new ListNode(-1);
-            int count=1;
-            ListNode cur=head;
-            ListNode curji=ji;
-            ListNode curou=ou;
-            while (cur!=null){
-                if(count%2==1){
-                    curji.next=new ListNode(cur.val);
-                    curji=curji.next;
-                }else {
-                    curou.next=new ListNode(cur.val);
-                    curou=curou.next;
+            ListNode ji = new ListNode(-1);
+            ListNode ou = new ListNode(-1);
+            int count = 1;
+            ListNode cur = head;
+            ListNode curji = ji;
+            ListNode curou = ou;
+            while (cur != null) {
+                if (count % 2 == 1) {
+                    curji.next = new ListNode(cur.val);
+                    curji = curji.next;
+                } else {
+                    curou.next = new ListNode(cur.val);
+                    curou = curou.next;
                 }
-                cur=cur.next;
+                cur = cur.next;
                 count++;
             }
-            curji.next=ou.next;
+            curji.next = ou.next;
             return ji.next;
+        }
+    }
+
+    //BM15 删除有序链表中重复的元素-I
+    public class Solution15 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @return ListNode类
+         */
+        public ListNode deleteDuplicates(ListNode head) {
+            // write code here
+            ListNode cur = head;
+            if (cur == null) {
+                return head;
+            }
+            ListNode cur1 = head.next;
+            while (cur1 != null) {
+                if (cur.val == cur1.val) {
+                    cur1 = cur1.next;
+                } else {
+                    cur.next = cur1;
+                    cur = cur.next;
+                    cur1 = cur1.next;
+                }
+            }
+            cur.next = null;
+            return head;
+        }
+    }
+
+    //BM16 删除有序链表中重复的元素-II
+    public class Solution16 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @return ListNode类
+         */
+        public ListNode deleteDuplicates(ListNode head) {
+            // write code here
+            if(head==null){
+                return head;
+            }
+            ListNode listNode=new ListNode(-1);
+            listNode.next=head;
+            ListNode cur=listNode;
+            while (cur.next!=null&&cur.next.next!=null){
+                if(cur.next.val==cur.next.next.val){
+                    int temp=cur.next.val;
+                    while (cur.next!=null && cur.next.val==temp){
+                        cur.next=cur.next.next;
+                    }
+                }else{
+                    cur=cur.next;
+                }
+            }
+            return listNode.next;
         }
     }
 }
