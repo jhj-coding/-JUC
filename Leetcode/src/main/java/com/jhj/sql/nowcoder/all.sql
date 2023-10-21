@@ -16,3 +16,5 @@ select distinct salaries.salary from salaries order by salaries.salary desc;
 select employees.emp_no from employees where employees.emp_no not in (select dept_manager.emp_no from dept_manager);
 #SQL205 获取所有员工当前的manager
 select dept_emp.emp_no,dept_manager.emp_no as manager from dept_emp,dept_manager where dept_emp.dept_no =dept_manager.dept_no and dept_emp.emp_no not in (select dept_manager.emp_no from dept_manager);
+#SQL206 获取每个部门中当前员工薪水最高的相关信息
+select t2.dept_no, t2.emp_no,t2.salary from (select dept_emp.dept_no, max(salaries.salary) as maxSalary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no group by dept_emp.dept_no) t1,(select dept_emp.dept_no, dept_emp.emp_no,salaries.salary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no) t2 where t1.dept_no=t2.dept_no and t1.maxSalary=t2.salary order by t2.dept_no;

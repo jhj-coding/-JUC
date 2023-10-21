@@ -396,6 +396,41 @@ public class all {
             return stringBuilder.length()==0?"0":stringBuilder.toString();
         }
     }
+
+    //NC11 将升序数组转化为平衡二叉搜索树 找中间 然后左右
+    public class Solution11 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return TreeNode类
+         */
+        public TreeNode sortedArrayToBST (int[] nums) {
+            // write code here
+            return hebing(nums,0,nums.length-1);
+        }
+
+        public TreeNode hebing(int[] nums,int left,int right){
+            if(left>right){
+                return null;
+            }
+            int mid = left + ((right - left) / 2);
+            TreeNode treeNode = new TreeNode(nums[mid]);
+            treeNode.left=hebing(nums,left,mid-1);
+            treeNode.right=hebing(nums,mid+1,right);
+            return treeNode;
+        }
+    }
 }
 
 
