@@ -24,3 +24,6 @@ select user_profile.device_id,user_profile.gpa,user_profile.age from user_profil
 
 #SQL6 查找学校是北大的学生信息
 select user_profile.device_id,user_profile.university from user_profile where user_profile.university="北京大学";
+
+SQL7 查找年龄大于24岁的用户信息
+select user_profile.device_id, user_profile.gender, user_profile.age, user_profile.university from user_profile where user_profile.age>24;
