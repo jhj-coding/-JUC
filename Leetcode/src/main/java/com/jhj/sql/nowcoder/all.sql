@@ -18,3 +18,5 @@ select employees.emp_no from employees where employees.emp_no not in (select dep
 select dept_emp.emp_no,dept_manager.emp_no as manager from dept_emp,dept_manager where dept_emp.dept_no =dept_manager.dept_no and dept_emp.emp_no not in (select dept_manager.emp_no from dept_manager);
 #SQL206 获取每个部门中当前员工薪水最高的相关信息
 select t2.dept_no, t2.emp_no,t2.salary from (select dept_emp.dept_no, max(salaries.salary) as maxSalary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no group by dept_emp.dept_no) t1,(select dept_emp.dept_no, dept_emp.emp_no,salaries.salary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no) t2 where t1.dept_no=t2.dept_no and t1.maxSalary=t2.salary order by t2.dept_no;
+#SQL209 查找employees表emp_no与last_name的员工信息
+select * from employees where employees.emp_no%2=1 && last_name !="Mary" order by hire_date desc;

@@ -27,3 +27,6 @@ select user_profile.device_id,user_profile.university from user_profile where us
 
 SQL7 查找年龄大于24岁的用户信息
 select user_profile.device_id, user_profile.gender, user_profile.age, user_profile.university from user_profile where user_profile.age>24;
+
+#SQL8 查找某个年龄段的用户信息
+select device_id,gender,age from user_profile where user_profile.age>=20 and user_profile.age<=23;
