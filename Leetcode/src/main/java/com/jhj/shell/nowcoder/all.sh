@@ -51,3 +51,18 @@ cat nowcoder.txt | xargs -n1 | sort | uniq -c | sort -n | awk '{print $2, $1}'
 # uniq https://baike.baidu.com/item/uniq/10654799
 cat nowcoder.txt | awk '{print $2}' | sort | uniq -c | grep -v '1' | sort -n
 
+#SHELL11 转置文件的内容
+awk '{
+    for(i=1;i<=NF;i++){
+      if(NR==1){
+        row[i] = $i;
+      }else{
+        row[i] = row[i]" "$i;
+      }
+    }
+}END{
+  for(i=1;i<=NF;i++){
+    print row[i]
+  }
+}
+' ./nowcoder.txt
