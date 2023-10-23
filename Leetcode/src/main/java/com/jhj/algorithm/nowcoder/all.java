@@ -538,28 +538,28 @@ public class all {
 
         public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
             // write code here
-            ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
-            if(pRoot==null){
+            ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+            if (pRoot == null) {
                 return res;
             }
             ArrayDeque<TreeNode> objects = new ArrayDeque<TreeNode>();
             objects.addLast(pRoot);
-            int count=0;
-            while (!objects.isEmpty()){
+            int count = 0;
+            while (!objects.isEmpty()) {
                 int size = objects.size();
                 ArrayDeque<Integer> objects1 = new ArrayDeque<>();
-                while (size>0){
+                while (size > 0) {
                     TreeNode treeNode = objects.removeFirst();
                     //反转
-                    if(count%2==0){
+                    if (count % 2 == 0) {
                         objects1.addLast(treeNode.val);
-                    }else{
+                    } else {
                         objects1.addFirst(treeNode.val);
                     }
-                    if(treeNode.left!=null){
+                    if (treeNode.left != null) {
                         objects.addLast(treeNode.left);
                     }
-                    if(treeNode.right!=null){
+                    if (treeNode.right != null) {
                         objects.addLast(treeNode.right);
                     }
                     size--;
@@ -568,6 +568,51 @@ public class all {
                 count++;
             }
             return res;
+        }
+    }
+
+    public class Solution15 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @return int整型ArrayList<ArrayList <>>
+         */
+        public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+            // write code here
+            ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
+            ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+            if (root==null){
+                return arrayLists;
+            }
+            treeNodes.addLast(root);
+            while (!treeNodes.isEmpty()){
+                int size = treeNodes.size();
+                ArrayList<Integer> integers = new ArrayList<>();
+                while (size>0){
+                    TreeNode treeNode = treeNodes.removeFirst();
+                    integers.add(treeNode.val);
+                    if(treeNode.left!=null){
+                        treeNodes.addLast(treeNode.left);
+                    }
+                    if(treeNode.right!=null){
+                        treeNodes.addLast(treeNode.right);
+                    }
+                    size--;
+                }
+                arrayLists.add(integers);
+            }
+            return arrayLists;
         }
     }
 }

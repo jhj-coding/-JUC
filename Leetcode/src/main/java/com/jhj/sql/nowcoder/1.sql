@@ -30,3 +30,9 @@ select user_profile.device_id, user_profile.gender, user_profile.age, user_profi
 
 #SQL8 查找某个年龄段的用户信息
 select device_id,gender,age from user_profile where user_profile.age>=20 and user_profile.age<=23;
+
+#SQL9 查找除复旦大学的用户信息
+select device_id,gender,age,university from user_profile where university !="复旦大学"
+
+#SQL10 用where过滤空值练习
+select device_id,gender,age,university from user_profile where age is not null;

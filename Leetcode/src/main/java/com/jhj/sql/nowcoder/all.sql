@@ -20,3 +20,7 @@ select dept_emp.emp_no,dept_manager.emp_no as manager from dept_emp,dept_manager
 select t2.dept_no, t2.emp_no,t2.salary from (select dept_emp.dept_no, max(salaries.salary) as maxSalary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no group by dept_emp.dept_no) t1,(select dept_emp.dept_no, dept_emp.emp_no,salaries.salary from dept_emp,salaries where dept_emp.emp_no=salaries.emp_no) t2 where t1.dept_no=t2.dept_no and t1.maxSalary=t2.salary order by t2.dept_no;
 #SQL209 查找employees表emp_no与last_name的员工信息
 select * from employees where employees.emp_no%2=1 && last_name !="Mary" order by hire_date desc;
+#SQL210 统计出当前各个title类型对应的员工当前薪水对应的平均工资
+select title, avg(salary) from titles,salaries where titles.emp_no =salaries.emp_no group by title;
+#SQL211 获取当前薪水第二多的员工的emp_no以及其对应的薪水salary
+select emp_no,salary from salaries where salary = (select distinct salary from salaries order by salary desc limit 1,1) order by salaries.emp_no asc;

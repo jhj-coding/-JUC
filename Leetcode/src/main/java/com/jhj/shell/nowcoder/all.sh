@@ -66,3 +66,6 @@ awk '{
   }
 }
 ' ./nowcoder.txt
+
+#SHELL12 打印每一行出现的数字个数
+awk -F "[1,2,3,4,5]" 'BEGIN{sum=0}{print "line"NR" number:"(NF-1);sum+=(NF-1)}END{print "sum is "sum}' nowcoder.txt

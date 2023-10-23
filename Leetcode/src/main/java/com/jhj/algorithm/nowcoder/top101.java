@@ -747,4 +747,67 @@ public class top101 {
             return listNode.next;
         }
     }
+
+    //BM17 二分查找-I
+    public class Solution17 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @param target int整型
+         * @return int整型
+         */
+        public int search (int[] nums, int target) {
+            // write code here
+            int left=0;
+            int right=nums.length-1;
+            while (left<=right){
+                int mid=(left+right)/2;
+                if(nums[mid]==target){
+                    return mid;
+                }else if (nums[mid]>target){
+                    right=mid-1;
+                }else {
+                    left=mid+1;
+                }
+            }
+            return -1;
+        }
+    }
+
+    //BM18 二维数组中的查找
+    public class Solution18 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param target int整型
+         * @param array int整型二维数组
+         * @return bool布尔型
+         */
+        public boolean Find (int target, int[][] array) {
+            // write code here
+            int hang=array.length-1;
+            if(hang==-1){
+                return false;
+            }
+            int lie=array[0].length;
+
+            int hi=0;
+            int li=lie-1;
+            while (hi<=hang&&li>=0){
+                int i = array[hi][li];
+                if(i==target){
+                    return true;
+                }else if(i>target){
+                    li--;
+                }else {
+                    hi++;
+                }
+            }
+            return false;
+
+        }
+    }
 }
