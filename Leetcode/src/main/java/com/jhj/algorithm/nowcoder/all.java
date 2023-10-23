@@ -571,6 +571,7 @@ public class all {
         }
     }
 
+    //NC15 求二叉树的层序遍历
     public class Solution15 {
         public class TreeNode {
             int val = 0;
@@ -592,20 +593,20 @@ public class all {
             // write code here
             ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
             ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
-            if (root==null){
+            if (root == null) {
                 return arrayLists;
             }
             treeNodes.addLast(root);
-            while (!treeNodes.isEmpty()){
+            while (!treeNodes.isEmpty()) {
                 int size = treeNodes.size();
                 ArrayList<Integer> integers = new ArrayList<>();
-                while (size>0){
+                while (size > 0) {
                     TreeNode treeNode = treeNodes.removeFirst();
                     integers.add(treeNode.val);
-                    if(treeNode.left!=null){
+                    if (treeNode.left != null) {
                         treeNodes.addLast(treeNode.left);
                     }
-                    if(treeNode.right!=null){
+                    if (treeNode.right != null) {
                         treeNodes.addLast(treeNode.right);
                     }
                     size--;
@@ -613,6 +614,42 @@ public class all {
                 arrayLists.add(integers);
             }
             return arrayLists;
+        }
+    }
+
+    //NC16 对称的二叉树
+    public class Solution16 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pRoot TreeNode类
+         * @return bool布尔型
+         */
+        public boolean isSymmetrical(TreeNode pRoot) {
+            // write code here
+            if(pRoot==null)
+                return true;
+            return is(pRoot.left,pRoot.right);
+        }
+
+        public boolean is(TreeNode left,TreeNode right){
+            if(left==null && right==null){
+                return true;
+            }
+            if(left==null || right==null || left.val!=right.val){
+                return false;
+            }
+            return is(left.left,right.right) && is(left.right,right.left);
         }
     }
 }
