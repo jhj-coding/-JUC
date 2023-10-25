@@ -1151,7 +1151,7 @@ public class All {
     }
 
     //36. 有效的数独
-    class Solution {
+    class Solution36 {
         public boolean isValidSudoku(char[][] board) {
             int[][] hang = new int[9][9];
             int[][] lie = new int[9][9];
@@ -1173,6 +1173,48 @@ public class All {
                 }
             }
             return true;
+        }
+    }
+
+    //37. 解数独 9*9 暴力回溯 放这个地方
+    class Solution37 {
+        boolean[][] hang = new boolean[9][9];
+        boolean[][] lie = new boolean[9][9];
+        boolean[][][] fangkuai = new boolean[3][3][9];
+        ArrayList<int[]> ints = new ArrayList<>();
+        boolean vaild=false;
+        public void solveSudoku(char[][] board) {
+            for(int i=0;i<9;i++){
+                for (int j=0;j<9;j++){
+                    if(board[i][j]=='.'){
+                        ints.add(new int[]{i,j});
+                    }else{
+                        int i1 = board[i][j] - '0' - 1;
+                        hang[i][i1]=lie[j][i1]=fangkuai[i/3][j/3][i1]=true;
+                    }
+                }
+            }
+            dfs(board,0);
+        }
+
+        private void dfs(char[][] board, int i) {
+            if(i==ints.size()){
+                vaild=true;
+                return;
+            }
+            int[] ints = this.ints.get(i);
+            int anInt = ints[0];
+            int anInt1 = ints[1];
+            for(int di=0;di<9 && !vaild;di++){
+                if(!hang[anInt][di]&&!lie[anInt1][di]&&!fangkuai[anInt/3][anInt1/3][di])
+                {
+                    hang[anInt][di]=lie[anInt1][di]=fangkuai[anInt/3][anInt1/3][di]=true;
+                    board[anInt][anInt1]=(char) (di+1+'0');
+                    dfs(board,i+1);
+                    hang[anInt][di]=lie[anInt1][di]=fangkuai[anInt/3][anInt1/3][di]=false;
+                }
+
+            }
         }
     }
 }
