@@ -24,3 +24,5 @@ select * from employees where employees.emp_no%2=1 && last_name !="Mary" order b
 select title, avg(salary) from titles,salaries where titles.emp_no =salaries.emp_no group by title;
 #SQL211 获取当前薪水第二多的员工的emp_no以及其对应的薪水salary
 select emp_no,salary from salaries where salary = (select distinct salary from salaries order by salary desc limit 1,1) order by salaries.emp_no asc;
+#SQL212 获取当前薪水第二多的员工的emp_no以及其对应的薪水salary
+select employees.emp_no,salaries.salary,employees.last_name,employees.first_name from employees,salaries where employees.emp_no =salaries.emp_no and salaries.salary=(select max(salaries.salary) from salaries where salaries.salary!=(select max(salaries.salary) from salaries));
