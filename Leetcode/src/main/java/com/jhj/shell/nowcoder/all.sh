@@ -72,3 +72,17 @@ awk -F "[1,2,3,4,5]" 'BEGIN{sum=0}{print "line"NR" number:"(NF-1);sum+=(NF-1)}EN
 
 #SHELL13 去掉所有包含this的句子
 grep -v this
+
+ #SHELL14 求平均值
+awk '{
+    for(i=1;i<=NF;i++){
+      if(NR==1){
+        row[0] = $i;
+      }else{
+        row[1] = row[1]+$i;
+      }
+    }
+}END{
+    printf("%.3f",row[1]/row[0]);
+}
+'
