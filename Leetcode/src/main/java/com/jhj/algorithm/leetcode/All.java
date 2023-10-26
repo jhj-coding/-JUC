@@ -1217,4 +1217,46 @@ public class All {
             }
         }
     }
+
+    //38. 外观数列
+    class Solution38 {
+        String[] strings=new String[31];
+        public String countAndSay(int n) {
+            strings[1]="1";
+            return digui(n);
+        }
+
+        public String digui(int n) {
+            if (strings[n]!=null){
+                return strings[n];
+            }
+            String s="";
+            while (n>1){
+                s=digui(n-1);
+                if(s!=null){
+                    break;
+                }
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            int res=0;
+            char c = s.charAt(0);
+            for(int i=1;i<s.length();i++){
+                if(c==s.charAt(i)){
+                    res++;
+                }else {
+                    stringBuilder.append(res+1);
+                    stringBuilder.append(c);
+                    res=0;
+                    c=s.charAt(i);
+                }
+            }
+            stringBuilder.append(res+1);
+            stringBuilder.append(c);
+            strings[n]=stringBuilder.toString();
+            return strings[n];
+        }
+
+    }
+
+
 }
