@@ -39,3 +39,6 @@ select device_id,gender,age,university from user_profile where age is not null;
 
 #SQL11 高级操作符练习(1)
 select device_id,gender,age,university,gpa from user_profile where gpa>3.5 and gender="male"
+
+#SQL12 高级操作符练习(2)
+select device_id,gender,age,university,gpa from user_profile where gpa>3.7 or university="北京大学";
