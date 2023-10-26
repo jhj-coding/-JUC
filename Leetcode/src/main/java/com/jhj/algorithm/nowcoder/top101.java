@@ -1,6 +1,7 @@
 package com.jhj.algorithm.nowcoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -835,5 +836,130 @@ public class top101 {
         }
     }
 
+    //BM20 数组中的逆序对
+    public class Solution20 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        int res=0;
+        public int InversePairs (int[] nums) {
+            // write code here
+            mergeSort(nums);
+            return res;
+        }
+        public int[] mergeSort(int[] arr) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+            int middle = arr.length / 2;
+            int[] arr_1 = Arrays.copyOfRange(arr, 0, middle);
+            int[] arr_2 = Arrays.copyOfRange(arr, middle, arr.length);
+            return merge(mergeSort(arr_1), mergeSort(arr_2));
+        }
 
+        public int[] merge(int[] arr_1, int[] arr_2) {
+            int[] sorted_arr = new int[arr_1.length + arr_2.length];
+            int idx = 0, idx_1 = 0, idx_2 = 0;
+            while (idx_1 < arr_1.length && idx_2 < arr_2.length) {
+                if (arr_1[idx_1] > arr_2[idx_2]) {
+                    sorted_arr[idx] = arr_2[idx_2];
+                    res+=arr_1.length-idx_1;
+                    res%=(1e9+7);
+                    idx_2 += 1;
+                } else {
+                    sorted_arr[idx] = arr_1[idx_1];
+                    idx_1 += 1;
+                }
+                idx += 1;
+            }
+            if (idx_1 < arr_1.length) {
+                while (idx_1 < arr_1.length) {
+                    sorted_arr[idx] = arr_1[idx_1];
+                    idx_1 += 1;
+                    idx += 1;
+                }
+            } else {
+                while (idx_2 < arr_2.length) {
+                    sorted_arr[idx] = arr_2[idx_2];
+                    idx_2 += 1;
+                    idx += 1;
+                }
+            }
+            return sorted_arr;
+        }
+    }
+
+    //BM21 旋转数组的最小数字
+    public class Solution21 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        public int minNumberInRotateArray (int[] nums) {
+            // write code here
+            int left=0;
+            int right=nums.length-1;
+            while (left<right){
+                int mid=(left+right)/2;
+                if(nums[mid]<nums[right]){
+                    right=mid;
+                }else if(nums[mid]>nums[right]){
+                    left=mid+1;
+                }else{
+                    right--;
+                }
+            };
+            return nums[left];
+        }
+    }
+
+    //BM22 比较版本号
+    public class Solution22 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 比较版本号
+         * @param version1 string字符串
+         * @param version2 string字符串
+         * @return int整型
+         */
+        public int compare (String version1, String version2) {
+            int n1 = version1.length();
+            int n2 = version2.length();
+            int i = 0, j = 0;
+            //直到某个字符串结束
+            while(i < n1 || j < n2){
+                long num1 = 0;
+                //从下一个点前截取数字
+                while(i < n1 && version1.charAt(i) != '.'){
+                    num1 = num1 * 10 + (version1.charAt(i) - '0');
+                    i++;
+                }
+                //跳过点
+                i++;
+                long num2 = 0;
+                //从下一个点前截取数字
+                while(j < n2 && version2.charAt(j) != '.'){
+                    num2 = num2 * 10 + (version2.charAt(j) - '0');
+                    j++;
+                }
+                //跳过点
+                j++;
+                //比较数字大小
+                if(num1 > num2)
+                    return 1;
+                if(num1 < num2)
+                    return -1;
+            }
+            //版本号相同
+            return 0;
+        }
+    }
 }
