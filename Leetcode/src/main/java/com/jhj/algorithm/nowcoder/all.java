@@ -652,6 +652,44 @@ public class all {
             return is(left.left,right.right) && is(left.right,right.left);
         }
     }
+
+    //NC17 最长回文子串
+    public class Solution17 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param A string字符串
+         * @return int整型
+         */
+        public int getLongestPalindrome (String A) {
+            // write code here
+            int length = A.length();
+            int max=1;
+            int[][] ints = new int[length][length];
+            for(int i=0;i<length;i++){
+                ints[i][i]=1;
+            }
+            for(int j=0;j<length;j++){
+                for (int i=0;i<j;i++){
+                    if(A.charAt(i)!=A.charAt(j)){
+                        ints[i][j]=0;
+                    }else {
+                        if (j - i < 3) {
+                            ints[i][j]=1;
+                        }else{
+                            ints[i][j]=ints[i+1][j-1];
+                        }
+                        if(ints[i][j]==1){
+                            max=Math.max(max,j-i+1);
+                        }
+                    }
+                }
+            }
+
+            return max;
+        }
+    }
 }
 
 
