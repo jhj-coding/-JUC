@@ -28,3 +28,6 @@ select emp_no,salary from salaries where salary = (select distinct salary from s
 select employees.emp_no,salaries.salary,employees.last_name,employees.first_name from employees,salaries where employees.emp_no =salaries.emp_no and salaries.salary=(select max(salaries.salary) from salaries where salaries.salary!=(select max(salaries.salary) from salaries));
 #SQL213 查找所有员工的last_name和first_name以及对应的dept_name
 select employees.last_name, employees.first_name, s.dept_name from employees left join (select departments.dept_name, dept_emp.emp_no, dept_emp.dept_no from departments, dept_emp where departments.dept_no = dept_emp.dept_no) as s on employees.emp_no = s.emp_no;
+#SQL215 查找在职员工自入职以来的薪水涨幅情况
+select a.emp_no, (b.salary-a.salary) as growth from (select employees.emp_no ,salaries.salary from employees,salaries where employees.emp_no =salaries.emp_no and employees.hire_date =salaries.from_date )as a,(select employees.emp_no ,salaries.salary from employees,salaries where employees.emp_no =salaries.emp_no and salaries.to_date="9999-01-01
+" )as b where a.emp_no= b.emp_no order by growth

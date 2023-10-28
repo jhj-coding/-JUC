@@ -42,3 +42,6 @@ select device_id,gender,age,university,gpa from user_profile where gpa>3.5 and g
 
 #SQL12 高级操作符练习(2)
 select device_id,gender,age,university,gpa from user_profile where gpa>3.7 or university="北京大学";
+
+#SQL13 Where in 和Not in
+select device_id,gender,age,university,gpa from user_profile where university in ("北京大学","山东大学","复旦大学");
