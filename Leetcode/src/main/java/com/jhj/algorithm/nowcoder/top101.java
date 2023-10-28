@@ -1,9 +1,6 @@
 package com.jhj.algorithm.nowcoder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class top101 {
 
@@ -960,6 +957,111 @@ public class top101 {
             }
             //版本号相同
             return 0;
+        }
+    }
+
+    //BM23 二叉树的前序遍历
+    public class Solution23 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型一维数组
+         */
+        ArrayList integers=new ArrayList<Integer>();
+        public int[] preorderTraversal (TreeNode root) {
+            // write code here
+            dfs(root);
+
+            int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
+            return ints;
+        }
+        public void dfs(TreeNode root){
+            if(root==null){
+                return;
+            }
+            integers.add(root.val);
+            dfs(root.left);
+            dfs(root.right);
+        }
+    }
+
+    //BM24 二叉树的中序遍历
+    public class Solution24 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型一维数组
+         */
+        ArrayList integers=new ArrayList<Integer>();
+        public int[] inorderTraversal (TreeNode root) {
+            // write code here
+            dfs(root);
+
+            int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
+            return ints;
+        }
+        public void dfs(TreeNode root){
+            if(root==null){
+                return;
+            }
+            dfs(root.left);
+            integers.add(root.val);
+            dfs(root.right);
+        }
+    }
+
+    //BM25 二叉树的后序遍历
+    public class Solution25 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型一维数组
+         */
+        ArrayList integers=new ArrayList<Integer>();
+        public int[] postorderTraversal (TreeNode root) {
+            // write code here
+            dfs(root);
+
+            int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
+            return ints;
+        }
+        public void dfs(TreeNode root){
+            if(root==null){
+                return;
+            }
+            dfs(root.left);
+            dfs(root.right);
+            integers.add(root.val);
         }
     }
 }
