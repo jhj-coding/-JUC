@@ -690,6 +690,40 @@ public class all {
             return max;
         }
     }
+
+    //NC18 顺时针旋转矩阵
+    public class Solution18 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param mat int整型二维数组
+         * @param n int整型
+         * @return int整型二维数组
+         */
+        public int[][] rotateMatrix (int[][] mat, int n) {
+            // write code here
+            for(int i=0;i<n;i++){
+                for(int j=0;j<i;j++){
+                    int temp=mat[i][j];
+                    mat[i][j]=mat[j][i];
+                    mat[j][i]=temp;
+                }
+            }
+            for(int i=0;i<n;i++){
+                int left=0;
+                int right=n-1;
+                while (left<right){
+                    int temp=mat[i][left];
+                    mat[i][left]=mat[i][right];
+                    mat[i][right]=temp;
+                    left++;
+                    right--;
+                }
+            }
+            return mat;
+        }
+    }
 }
 
 
