@@ -31,3 +31,5 @@ select employees.last_name, employees.first_name, s.dept_name from employees lef
 #SQL215 查找在职员工自入职以来的薪水涨幅情况
 select a.emp_no, (b.salary-a.salary) as growth from (select employees.emp_no ,salaries.salary from employees,salaries where employees.emp_no =salaries.emp_no and employees.hire_date =salaries.from_date )as a,(select employees.emp_no ,salaries.salary from employees,salaries where employees.emp_no =salaries.emp_no and salaries.to_date="9999-01-01
 " )as b where a.emp_no= b.emp_no order by growth
+#SQL216 统计各个部门的工资记录数
+select dept_emp.dept_no,departments.dept_name, count(*) as sum from dept_emp,departments,salaries where dept_emp.dept_no=departments.dept_no and dept_emp.emp_no=salaries.emp_no group by dept_emp.dept_no order by dept_emp.dept_no;
