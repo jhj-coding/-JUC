@@ -1285,4 +1285,30 @@ public class All {
             }
         }
     }
+
+
+    class Solution40 {
+        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+            List<List<Integer>> res = new ArrayList<List<Integer>>();
+            Arrays.sort(candidates);
+            dfs(candidates,0,candidates.length,new ArrayList<Integer>(),res,target);
+            return res;
+        }
+        public void dfs(int[] candidates,int begin,int end,ArrayList<Integer> path,List<List<Integer>> res ,int target){
+            if(target<0){
+                return;
+            }
+            if(target==0){
+                res.add(new ArrayList<>(path));
+            }
+            for (int i=begin;i<end;i++) {
+                if ( i > begin && candidates[i] == candidates[i - 1] ) {
+                    continue;
+                }
+                path.add(candidates[i]);
+                dfs(candidates, i+1, end, path, res, target-candidates[i]);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
 }
