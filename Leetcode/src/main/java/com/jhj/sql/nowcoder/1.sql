@@ -45,3 +45,22 @@ select device_id,gender,age,university,gpa from user_profile where gpa>3.7 or un
 
 #SQL13 Where in 和Not in
 select device_id,gender,age,university,gpa from user_profile where university in ("北京大学","山东大学","复旦大学");
+
+#SQL14 操作符混合运用
+select
+    device_id,
+    gender,
+    age,
+    university,
+    gpa
+from
+    user_profile
+where
+    (
+                gpa > 3.5
+            and university = "山东大学"
+        )
+   or (
+            gpa > 3.8
+        and university = "复旦大学"
+    );
