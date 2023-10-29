@@ -88,3 +88,6 @@ awk '{
 '
 #SHELL15 去掉不需要的单词
 grep -v b | grep -v B
+
+ #SHELL16 判断输入的是否为IP地址
+awk -F "." '{if(NF!=4){printf("error\n");next;}for(i=1;i<=4;i++){if($i<0 || $i>255){printf("no\n");next;}if(i==NF){printf("yes\n")}}}' nowcoder.txt
