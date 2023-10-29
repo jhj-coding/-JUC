@@ -1064,4 +1064,48 @@ public class top101 {
             integers.add(root.val);
         }
     }
+
+    //BM26 求二叉树的层序遍历
+    public class Solution26 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        public ArrayList<ArrayList<Integer>> levelOrder (TreeNode root) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            if(root==null){
+                return res;
+            }
+            ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
+            treeNodes.addLast(root);
+            while (!treeNodes.isEmpty()){
+                int size = treeNodes.size();
+                ArrayList<Integer> integers = new ArrayList<>();
+                for(int i=0;i<size;i++) {
+                    TreeNode treeNode = treeNodes.removeFirst();
+                    integers.add(treeNode.val);
+                    if (treeNode.left!=null){
+                        treeNodes.addLast(treeNode.left);
+                    }
+                    if (treeNode.right!=null){
+                        treeNodes.addLast(treeNode.right);
+                    }
+                }
+                res.add(integers);
+            }
+            return res;
+        }
+    }
 }
