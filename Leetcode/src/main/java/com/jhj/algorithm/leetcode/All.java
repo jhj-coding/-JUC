@@ -1311,4 +1311,27 @@ public class All {
             }
         }
     }
+
+    //41. 缺失的第一个正数 没有出现的正整数为1~N+1中 这个数出现了 这个位置有个标记
+    class Solution41 {
+        public int firstMissingPositive(int[] nums) {
+            for(int i=0;i<nums.length;i++){
+                if(nums[i]<=0){
+                    nums[i]=nums.length+1;
+                }
+            }
+            for(int i=0;i<nums.length;i++){
+                int num=Math.abs(nums[i]);
+                if(num<=nums.length){
+                    nums[num-1]=-Math.abs(nums[num-1]);
+                }
+            }
+            for(int i=0;i<nums.length;i++){
+                if(nums[i]>0){
+                    return i+1;
+                }
+            }
+            return nums.length+1;
+        }
+    }
 }
