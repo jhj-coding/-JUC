@@ -1108,4 +1108,54 @@ public class top101 {
             return res;
         }
     }
+
+    //BM27 按之字形顺序打印二叉树
+    public class Solution27 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param pRoot TreeNode类
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        public ArrayList<ArrayList<Integer>> Print (TreeNode pRoot) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            if(pRoot==null){
+                return res;
+            }
+            ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
+            treeNodes.addLast(pRoot);
+            int count=0;
+            while (!treeNodes.isEmpty()){
+                ArrayDeque<Integer> integers = new ArrayDeque<Integer>();
+                int size = treeNodes.size();
+                for (int i=0;i<size;i++){
+                    TreeNode treeNode = treeNodes.removeFirst();
+                    if(count%2==0){
+                        integers.addLast(treeNode.val);
+                    }else{
+                        integers.addFirst(treeNode.val);
+                    }
+                    if(treeNode.left!=null){
+                        treeNodes.addLast(treeNode.left);
+                    }
+                    if(treeNode.right!=null){
+                        treeNodes.addLast(treeNode.right);
+                    }
+                }
+                count++;
+                res.add(new ArrayList<>(integers));
+            }
+            return res;
+        }
+    }
 }
