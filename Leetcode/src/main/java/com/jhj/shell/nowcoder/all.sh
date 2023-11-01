@@ -89,5 +89,9 @@ awk '{
 #SHELL15 去掉不需要的单词
 grep -v b | grep -v B
 
- #SHELL16 判断输入的是否为IP地址
+#SHELL16 判断输入的是否为IP地址
 awk -F "." '{if(NF!=4){printf("error\n");next;}for(i=1;i<=4;i++){if($i<0 || $i>255){printf("no\n");next;}if(i==NF){printf("yes\n")}}}' nowcoder.txt
+
+#SHELL17 将字段逆序输出文件的每行 -F 分割 NF 是列
+awk -F":" '{for(i=NF;i>=1;i--) {if(i==1){printf("%s\n",$i)} else {printf("%s:",$i)}} }' nowcoder.txt
+
