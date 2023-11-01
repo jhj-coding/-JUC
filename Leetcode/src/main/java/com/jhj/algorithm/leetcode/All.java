@@ -1334,4 +1334,58 @@ public class All {
             return nums.length+1;
         }
     }
+
+    //42. 接雨水
+    class Solution42 {
+        //解法1 最大数组
+        public int trap1(int[] height) {
+            int[] left = new int[height.length];
+            int[] right = new int[height.length];
+            left[0]=height[0];
+            for(int i=1;i<height.length;i++){
+                left[i]=Math.max(height[i],left[i-1]);
+            }
+            right[height.length-1]=height[height.length-1];
+            for(int i=height.length-2;i>=0;i--){
+                right[i]=Math.max(height[i],right[i+1]);
+            }
+
+            int res=0;
+            for(int i=0;i<height.length;i++){
+                res+=Math.max(0,Math.min(left[i],right[i])-height[i]);
+            }
+            return res;
+        }
+        //单调栈 从大到小
+        public int trap(int[] height) {
+            if(height.length<=2){
+                return 0;
+            }
+            ArrayDeque<Integer> integers = new ArrayDeque<>();
+            integers.addLast(0);
+            int res=0;
+            for (int i=1;i<height.length;i++){
+                Integer integer = integers.peekLast();
+                if(height[i]<height[integer]){
+                    integers.addLast(i);
+                }else if(height[i]==height[integer]){
+                    integers.removeLast();
+                    integers.addLast(i);
+                }else{
+                    while (!integers.isEmpty()&&height[integer]<height[i]){
+                        Integer integer1 = integers.removeLast();
+                        if(!integers.isEmpty()){
+                            Integer peek = integers.peekLast();
+                            int h = Math.min(height[peek], height[i]) - height[integer1];
+                            int i1 = i - peek - 1;
+                            res+=Math.max(0,h*i1);
+                            integer=integers.peekLast();
+                        }
+                    }
+                    integers.addLast(i);
+                }
+            }
+            return res;
+        }
+    }
 }
