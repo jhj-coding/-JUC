@@ -33,3 +33,15 @@ select a.emp_no, (b.salary-a.salary) as growth from (select employees.emp_no ,sa
 " )as b where a.emp_no= b.emp_no order by growth
 #SQL216 统计各个部门的工资记录数
 select dept_emp.dept_no,departments.dept_name, count(*) as sum from dept_emp,departments,salaries where dept_emp.dept_no=departments.dept_no and dept_emp.emp_no=salaries.emp_no group by dept_emp.dept_no order by dept_emp.dept_no;
+#SQL217 对所有员工的薪水按照salary降序进行1-N的排名
+SELECT
+    s1.emp_no,
+    s1.salary,
+    (SELECT
+         COUNT(DISTINCT s2.salary)
+     FROM
+         salaries s2
+     WHERE s2.salary >= s1.salary) AS `t_rank`  -- 去重：计算并列排名
+FROM
+    salaries s1
+ORDER BY s1.salary DESC;

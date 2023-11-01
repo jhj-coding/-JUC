@@ -64,3 +64,6 @@ where
             gpa > 3.8
         and university = "复旦大学"
     );
+
+#SQL15 查看学校名称中含北京的用户
+select device_id,age,university from user_profile where university like '%北京%'

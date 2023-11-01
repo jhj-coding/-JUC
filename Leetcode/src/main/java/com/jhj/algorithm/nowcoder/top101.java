@@ -1158,4 +1158,54 @@ public class top101 {
             return res;
         }
     }
+
+    //BM28 二叉树的最大深度
+    public class Solution28 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @return int整型
+         */
+        public int maxDepth1 (TreeNode root) {
+            // write code here
+            int res=0;
+            if(root==null){
+                return res;
+            }
+            ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+            deque.add(root);
+            while (!deque.isEmpty()){
+                int size = deque.size();
+                res++;
+                for(int i=0;i<size;i++){
+                    TreeNode treeNode = deque.removeFirst();
+                    if(treeNode.left!=null){
+                        deque.addLast(treeNode.left);
+                    }
+                    if(treeNode.right!=null){
+                        deque.addLast(treeNode.right);
+                    }
+                }
+            }
+            return res;
+        }
+        public int maxDepth (TreeNode root) {
+            if(root==null){
+                return 0;
+            }
+            return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
+        }
+    }
+
+
 }

@@ -745,6 +745,74 @@ public class all {
             return max;
         }
     }
+
+    //NC20 数字字符串转化成IP地址
+    public class Solution20 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @return string字符串ArrayList
+         */
+        public ArrayList<String> restoreIpAddresses1 (String s) {
+            // write code here
+            int n=s.length();
+            ArrayList<String> res = new ArrayList<>();
+            for(int i=1;i<4&&i<n-2;i++){
+                for(int j=i+1;j<i+4&&j<n-1;j++){
+                    for(int k=j+1;k<j+4&&k<n;k++){
+                        if(n - k >= 4)
+                            continue;
+                        String a = s.substring(0, i);
+                        String b = s.substring(i, j);
+                        String c = s.substring(j, k);
+                        String d = s.substring(k);
+                        //IP每个数字不大于255
+                        if(Integer.parseInt(a) > 255 || Integer.parseInt(b) > 255 || Integer.parseInt(c) > 255 || Integer.parseInt(d) > 255)
+                            continue;
+                        if((a.length() != 1 && a.charAt(0) == '0') || (b.length() != 1 && b.charAt(0) == '0') ||  (c.length() != 1 && c.charAt(0) == '0') || (d.length() != 1 && d.charAt(0) == '0'))
+                            continue;
+                        String temp = a + "." + b + "." + c + "." + d;
+                        res.add(temp);
+                    }
+                }
+            }
+            return res;
+        }
+
+        public ArrayList<String> restoreIpAddresses (String s) {
+            // write code here
+            ArrayList<String> strings = new ArrayList<>();
+            dfs(s,strings,0,0,new StringBuilder(""));
+            return strings;
+        }
+        public void dfs(String s,ArrayList<String> res,int step,int index,StringBuilder path){
+            if(step==4){
+                if(index==s.length()){
+                    res.add(new String(path));
+                }else{
+                    return;
+                }
+            }else{
+                for(int i=index;i<index+3&&i<s.length();i++){
+                    String substring = s.substring(index, i + 1);
+                    int i1 = Integer.parseInt(substring);
+                    if(i1<=255&&(substring.length()==1||substring.charAt(0)!='0')){
+                        if(step-3!=0){
+                            path.append(substring+".");
+                            dfs(s,res,step+1,i+1,path);
+                            path.delete(path.length()-substring.length()-1,path.length());
+                        }else {
+                            path.append(substring);
+                            dfs(s,res,step+1,i+1,path);
+                            path.delete(path.length()-substring.length(),path.length());
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
