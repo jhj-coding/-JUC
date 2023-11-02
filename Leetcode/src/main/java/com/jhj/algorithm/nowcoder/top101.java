@@ -1207,5 +1207,36 @@ public class top101 {
         }
     }
 
-
+    //BM29 二叉树中和为某一值的路径(一)
+    public class Solution29 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param root TreeNode类
+         * @param sum int整型
+         * @return bool布尔型
+         */
+        public boolean hasPathSum (TreeNode root, int sum) {
+            // write code here
+            if (root==null){
+                return false;
+            }
+            sum-=root.val;
+            if(sum==0&&root.left==null&&root.right==null){
+                return true;
+            }
+            boolean b = hasPathSum(root.left, sum);
+            boolean b1 = hasPathSum(root.right, sum);
+            return b||b1;
+        }
+    }
 }
