@@ -67,3 +67,6 @@ where
 
 #SQL15 查看学校名称中含北京的用户
 select device_id,age,university from user_profile where university like '%北京%'
+
+#SQL16 查找GPA最高值
+select max(gpa) from user_profile where university="复旦大学"

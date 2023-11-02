@@ -45,3 +45,6 @@ SELECT
 FROM
     salaries s1
 ORDER BY s1.salary DESC;
+
+#SQL218 获取所有非manager员工当前的薪水情况
+select dept_emp.dept_no,dept_emp.emp_no,salaries.salary  from dept_emp,employees,salaries where dept_emp.emp_no=employees.emp_no and salaries.emp_no=employees.emp_no and salaries.emp_no not in (select emp_no from dept_manager);
