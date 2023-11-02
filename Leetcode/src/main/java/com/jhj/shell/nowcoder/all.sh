@@ -95,3 +95,5 @@ awk -F "." '{if(NF!=4){printf("error\n");next;}for(i=1;i<=4;i++){if($i<0 || $i>2
 #SHELL17 将字段逆序输出文件的每行 -F 分割 NF 是列
 awk -F":" '{for(i=NF;i>=1;i--) {if(i==1){printf("%s\n",$i)} else {printf("%s:",$i)}} }' nowcoder.txt
 
+#SHELL18 域名进行计数排序处理 -r 倒序
+awk -F"/" '{printf("%s\n",$3)}' | sort | uniq -c | sort -r | awk '{print $1, $2}'
