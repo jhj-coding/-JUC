@@ -294,7 +294,7 @@ public class All {
 
     //10 正则表达式匹配
     class Solution10 {
-        public boolean isMatch(String s, String p) {
+        public boolean isMatch1(String s, String p) {
             int m = s.length() + 1, n = p.length() + 1;
             boolean[][] dp = new boolean[m][n];
             dp[0][0] = true;
@@ -315,6 +315,29 @@ public class All {
                 }
             }
             return dp[m - 1][n - 1];
+        }
+        public boolean isMatch2(String s, String p) {
+            int slen = s.length() + 1;
+            int plen=p.length()+1;
+            boolean[][] f = new boolean[slen][plen];
+            f[0][0]=true;
+            s=" "+s;
+            p=" "+p;
+            char[] schars = s.toCharArray();
+            char[] pchars = p.toCharArray();
+            for(int i=0;i<slen;i++){
+                for(int j=1;j<plen;j++){
+                    if(j+1<plen&&p.charAt(j+1)=='*'&&p.charAt(j)!='*'){
+                        continue;
+                    }
+                    if(pchars[j]!='*'){
+                        f[i][j]= (p.charAt(j)==s.charAt(i)||p.charAt(j)=='.')&&(i-1>=0&&f[i-1][j-1]);
+                    }else{
+                        f[i][j]=(j-2>=0&&f[i][j-2])||(i-1>=0&&f[i-1][j]&&(s.charAt(i)==p.charAt(j-1)||p.charAt(j-1)=='.'));
+                    }
+                }
+            }
+            return f[slen-1][plen-1];
         }
     }
 
@@ -1424,6 +1447,30 @@ public class All {
                 res.append(ints[i]);
             }
             return res.length()==0?"0":res.toString();
+        }
+    }
+
+    //44. 通配符匹配
+    class Solution44 {
+        public boolean isMatch(String s, String p) {
+            int slen = s.length() + 1;
+            int plen=p.length()+1;
+            boolean[][] f = new boolean[slen][plen];
+            f[0][0]=true;
+            s=" "+s;
+            p=" "+p;
+            char[] schars = s.toCharArray();
+            char[] pchars = p.toCharArray();
+            for(int i=0;i<slen;i++){
+                for(int j=1;j<plen;j++){
+                    if(pchars[j]=='*'){
+                        f[i][j]= f[i][j-1] || (i-1>=0&&f[i-1][j]);
+                    }else{
+                        f[i][j]=i-1>=0&&f[i-1][j-1]&&(schars[i]==pchars[j]||pchars[j]=='?');
+                    }
+                }
+            }
+            return f[slen-1][plen-1];
         }
     }
 }
