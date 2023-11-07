@@ -637,19 +637,19 @@ public class all {
          */
         public boolean isSymmetrical(TreeNode pRoot) {
             // write code here
-            if(pRoot==null)
+            if (pRoot == null)
                 return true;
-            return is(pRoot.left,pRoot.right);
+            return is(pRoot.left, pRoot.right);
         }
 
-        public boolean is(TreeNode left,TreeNode right){
-            if(left==null && right==null){
+        public boolean is(TreeNode left, TreeNode right) {
+            if (left == null && right == null) {
                 return true;
             }
-            if(left==null || right==null || left.val!=right.val){
+            if (left == null || right == null || left.val != right.val) {
                 return false;
             }
-            return is(left.left,right.right) && is(left.right,right.left);
+            return is(left.left, right.right) && is(left.right, right.left);
         }
     }
 
@@ -658,30 +658,29 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param A string字符串
          * @return int整型
          */
-        public int getLongestPalindrome (String A) {
+        public int getLongestPalindrome(String A) {
             // write code here
             int length = A.length();
-            int max=1;
+            int max = 1;
             int[][] ints = new int[length][length];
-            for(int i=0;i<length;i++){
-                ints[i][i]=1;
+            for (int i = 0; i < length; i++) {
+                ints[i][i] = 1;
             }
-            for(int j=0;j<length;j++){
-                for (int i=0;i<j;i++){
-                    if(A.charAt(i)!=A.charAt(j)){
-                        ints[i][j]=0;
-                    }else {
+            for (int j = 0; j < length; j++) {
+                for (int i = 0; i < j; i++) {
+                    if (A.charAt(i) != A.charAt(j)) {
+                        ints[i][j] = 0;
+                    } else {
                         if (j - i < 3) {
-                            ints[i][j]=1;
-                        }else{
-                            ints[i][j]=ints[i+1][j-1];
+                            ints[i][j] = 1;
+                        } else {
+                            ints[i][j] = ints[i + 1][j - 1];
                         }
-                        if(ints[i][j]==1){
-                            max=Math.max(max,j-i+1);
+                        if (ints[i][j] == 1) {
+                            max = Math.max(max, j - i + 1);
                         }
                     }
                 }
@@ -696,27 +695,26 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param mat int整型二维数组
-         * @param n int整型
+         * @param n   int整型
          * @return int整型二维数组
          */
-        public int[][] rotateMatrix (int[][] mat, int n) {
+        public int[][] rotateMatrix(int[][] mat, int n) {
             // write code here
-            for(int i=0;i<n;i++){
-                for(int j=0;j<i;j++){
-                    int temp=mat[i][j];
-                    mat[i][j]=mat[j][i];
-                    mat[j][i]=temp;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < i; j++) {
+                    int temp = mat[i][j];
+                    mat[i][j] = mat[j][i];
+                    mat[j][i] = temp;
                 }
             }
-            for(int i=0;i<n;i++){
-                int left=0;
-                int right=n-1;
-                while (left<right){
-                    int temp=mat[i][left];
-                    mat[i][left]=mat[i][right];
-                    mat[i][right]=temp;
+            for (int i = 0; i < n; i++) {
+                int left = 0;
+                int right = n - 1;
+                while (left < right) {
+                    int temp = mat[i][left];
+                    mat[i][left] = mat[i][right];
+                    mat[i][right] = temp;
                     left++;
                     right--;
                 }
@@ -730,17 +728,16 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param array int整型一维数组
          * @return int整型
          */
-        public int FindGreatestSumOfSubArray (int[] array) {
+        public int FindGreatestSumOfSubArray(int[] array) {
             // write code here
-            int res=array[0];
-            int max=array[0];
-            for(int i=1;i<array.length;i++){
-                res=Math.max(res+array[i],array[i]);
-                max=Math.max(res,max);
+            int res = array[0];
+            int max = array[0];
+            for (int i = 1; i < array.length; i++) {
+                res = Math.max(res + array[i], array[i]);
+                max = Math.max(res, max);
             }
             return max;
         }
@@ -751,27 +748,26 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param s string字符串
          * @return string字符串ArrayList
          */
-        public ArrayList<String> restoreIpAddresses1 (String s) {
+        public ArrayList<String> restoreIpAddresses1(String s) {
             // write code here
-            int n=s.length();
+            int n = s.length();
             ArrayList<String> res = new ArrayList<>();
-            for(int i=1;i<4&&i<n-2;i++){
-                for(int j=i+1;j<i+4&&j<n-1;j++){
-                    for(int k=j+1;k<j+4&&k<n;k++){
-                        if(n - k >= 4)
+            for (int i = 1; i < 4 && i < n - 2; i++) {
+                for (int j = i + 1; j < i + 4 && j < n - 1; j++) {
+                    for (int k = j + 1; k < j + 4 && k < n; k++) {
+                        if (n - k >= 4)
                             continue;
                         String a = s.substring(0, i);
                         String b = s.substring(i, j);
                         String c = s.substring(j, k);
                         String d = s.substring(k);
                         //IP每个数字不大于255
-                        if(Integer.parseInt(a) > 255 || Integer.parseInt(b) > 255 || Integer.parseInt(c) > 255 || Integer.parseInt(d) > 255)
+                        if (Integer.parseInt(a) > 255 || Integer.parseInt(b) > 255 || Integer.parseInt(c) > 255 || Integer.parseInt(d) > 255)
                             continue;
-                        if((a.length() != 1 && a.charAt(0) == '0') || (b.length() != 1 && b.charAt(0) == '0') ||  (c.length() != 1 && c.charAt(0) == '0') || (d.length() != 1 && d.charAt(0) == '0'))
+                        if ((a.length() != 1 && a.charAt(0) == '0') || (b.length() != 1 && b.charAt(0) == '0') || (c.length() != 1 && c.charAt(0) == '0') || (d.length() != 1 && d.charAt(0) == '0'))
                             continue;
                         String temp = a + "." + b + "." + c + "." + d;
                         res.add(temp);
@@ -781,33 +777,106 @@ public class all {
             return res;
         }
 
-        public ArrayList<String> restoreIpAddresses (String s) {
+        public ArrayList<String> restoreIpAddresses(String s) {
             // write code here
             ArrayList<String> strings = new ArrayList<>();
-            dfs(s,strings,0,0,new StringBuilder(""));
+            dfs(s, strings, 0, 0, new StringBuilder(""));
             return strings;
         }
-        public void dfs(String s,ArrayList<String> res,int step,int index,StringBuilder path){
-            if(step==4){
-                if(index==s.length()){
+
+        public void dfs(String s, ArrayList<String> res, int step, int index, StringBuilder path) {
+            if (step == 4) {
+                if (index == s.length()) {
                     res.add(new String(path));
-                }else{
+                } else {
                     return;
                 }
-            }else{
-                for(int i=index;i<index+3&&i<s.length();i++){
+            } else {
+                for (int i = index; i < index + 3 && i < s.length(); i++) {
                     String substring = s.substring(index, i + 1);
                     int i1 = Integer.parseInt(substring);
-                    if(i1<=255&&(substring.length()==1||substring.charAt(0)!='0')){
-                        if(step-3!=0){
-                            path.append(substring+".");
-                            dfs(s,res,step+1,i+1,path);
-                            path.delete(path.length()-substring.length()-1,path.length());
-                        }else {
+                    if (i1 <= 255 && (substring.length() == 1 || substring.charAt(0) != '0')) {
+                        if (step - 3 != 0) {
+                            path.append(substring + ".");
+                            dfs(s, res, step + 1, i + 1, path);
+                            path.delete(path.length() - substring.length() - 1, path.length());
+                        } else {
                             path.append(substring);
-                            dfs(s,res,step+1,i+1,path);
-                            path.delete(path.length()-substring.length(),path.length());
+                            dfs(s, res, step + 1, i + 1, path);
+                            path.delete(path.length() - substring.length(), path.length());
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    //NC21 链表内指定区间反转
+    public class Solution21 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @param m    int整型
+         * @param n    int整型
+         * @return ListNode类
+         */
+        public ListNode reverseBetween(ListNode head, int m, int n) {
+            // write code here
+            ListNode pre=new ListNode(0);
+            pre.next=head;
+            ListNode ppre=pre;
+            ListNode ppcur=head;
+            for(int i=1;i<m;i++){
+                ppre=ppre.next;
+                ppcur=ppcur.next;
+            }
+            ListNode next=ppcur.next;
+            for(int i=m;i<n;i++){
+                next=next.next;
+            }
+            for (int i=m;i<n;i++){
+                ListNode next1 = ppcur.next;
+                ppcur.next=next;
+                next=ppcur;
+                ppcur=next1;
+            }
+            ppcur.next=next;
+            ppre.next=ppcur;
+            return pre.next;
+        }
+    }
+
+    //NC22 合并两个有序的数组
+    public class Solution22 {
+        public void merge(int A[], int m, int B[], int n) {
+            int i=m-1;
+            int j=n-1;
+            for(int k=m+n-1;k>=0;k--){
+                if(i>=0&&j>=0) {
+                    if (A[i] > B[j]) {
+                        A[k] = A[i];
+                        i--;
+                    } else {
+                        A[k] = B[j];
+                        j--;
+                    }
+                }else{
+                    if(i>=0){
+                        A[k]=A[i];
+                        i--;
+                    }else {
+                        A[k]=B[j];
+                        j--;
                     }
                 }
             }
