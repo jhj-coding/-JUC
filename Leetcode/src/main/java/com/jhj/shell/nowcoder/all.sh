@@ -97,3 +97,22 @@ awk -F":" '{for(i=NF;i>=1;i--) {if(i==1){printf("%s\n",$i)} else {printf("%s:",$
 
 #SHELL18 域名进行计数排序处理 -r 倒序
 awk -F"/" '{printf("%s\n",$3)}' | sort | uniq -c | sort -r | awk '{print $1, $2}'
+
+#SHELL19 打印等腰三角形
+read n
+for ((i=1;i<=n;i++))
+do
+    #打印空格
+    for ((j=n-i;j>=1;j--))
+    do
+        printf " "
+    done
+    #打印*
+    for ((k=1;k<=i;k++))
+    do
+        printf "* "
+    done
+    #换行
+    printf "\n"
+done
+
