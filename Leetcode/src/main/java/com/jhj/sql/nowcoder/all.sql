@@ -48,3 +48,9 @@ ORDER BY s1.salary DESC;
 
 #SQL218 获取所有非manager员工当前的薪水情况
 select dept_emp.dept_no,dept_emp.emp_no,salaries.salary  from dept_emp,employees,salaries where dept_emp.emp_no=employees.emp_no and salaries.emp_no=employees.emp_no and salaries.emp_no not in (select emp_no from dept_manager);
+
+#SQL219 获取员工其当前的薪水比其manager当前薪水还高的相关信息
+select dept_emp.emp_no, dept_manager.emp_no,a.salary,b.salary from dept_emp,dept_manager,salaries a,salaries b where dept_manager.dept_no=dept_emp.dept_no and dept_manager.emp_no=b.emp_no and dept_emp.emp_no=a.emp_no and a.salary>b.salary;
+
+#SQL220 汇总各个部门当前员工的title类型的分配数目
+select dept_emp.dept_no,departments.dept_name,titles.title,count(titles.title) from departments,dept_emp,titles where dept_emp.emp_no=titles.emp_no and departments.dept_no=dept_emp.dept_no group by departments.dept_no,titles.title order by departments.dept_no;

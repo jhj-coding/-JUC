@@ -70,3 +70,9 @@ select device_id,age,university from user_profile where university like '%北京
 
 #SQL16 查找GPA最高值
 select max(gpa) from user_profile where university="复旦大学"
+
+#SQL17 计算男生人数以及平均GPA
+select count(*),avg(gpa) from user_profile where gender="male"
+
+#SQL18 分组计算练习题
+select gender,university, count(*),avg(active_days_within_30),avg(question_cnt) from user_profile group by university,gender
