@@ -726,20 +726,20 @@ public class top101 {
          */
         public ListNode deleteDuplicates(ListNode head) {
             // write code here
-            if(head==null){
+            if (head == null) {
                 return head;
             }
-            ListNode listNode=new ListNode(-1);
-            listNode.next=head;
-            ListNode cur=listNode;
-            while (cur.next!=null&&cur.next.next!=null){
-                if(cur.next.val==cur.next.next.val){
-                    int temp=cur.next.val;
-                    while (cur.next!=null && cur.next.val==temp){
-                        cur.next=cur.next.next;
+            ListNode listNode = new ListNode(-1);
+            listNode.next = head;
+            ListNode cur = listNode;
+            while (cur.next != null && cur.next.next != null) {
+                if (cur.next.val == cur.next.next.val) {
+                    int temp = cur.next.val;
+                    while (cur.next != null && cur.next.val == temp) {
+                        cur.next = cur.next.next;
                     }
-                }else{
-                    cur=cur.next;
+                } else {
+                    cur = cur.next;
                 }
             }
             return listNode.next;
@@ -751,23 +751,22 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
-         * @param nums int整型一维数组
+         * @param nums   int整型一维数组
          * @param target int整型
          * @return int整型
          */
-        public int search (int[] nums, int target) {
+        public int search(int[] nums, int target) {
             // write code here
-            int left=0;
-            int right=nums.length-1;
-            while (left<=right){
-                int mid=(left+right)/2;
-                if(nums[mid]==target){
+            int left = 0;
+            int right = nums.length - 1;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if (nums[mid] == target) {
                     return mid;
-                }else if (nums[mid]>target){
-                    right=mid-1;
-                }else {
-                    left=mid+1;
+                } else if (nums[mid] > target) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
                 }
             }
             return -1;
@@ -779,28 +778,27 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param target int整型
-         * @param array int整型二维数组
+         * @param array  int整型二维数组
          * @return bool布尔型
          */
-        public boolean Find (int target, int[][] array) {
+        public boolean Find(int target, int[][] array) {
             // write code here
-            int hang=array.length-1;
-            if(hang==-1){
+            int hang = array.length - 1;
+            if (hang == -1) {
                 return false;
             }
-            int lie=array[0].length;
+            int lie = array[0].length;
 
-            int hi=0;
-            int li=lie-1;
-            while (hi<=hang&&li>=0){
+            int hi = 0;
+            int li = lie - 1;
+            while (hi <= hang && li >= 0) {
                 int i = array[hi][li];
-                if(i==target){
+                if (i == target) {
                     return true;
-                }else if(i>target){
+                } else if (i > target) {
                     li--;
-                }else {
+                } else {
                     hi++;
                 }
             }
@@ -814,19 +812,19 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param nums int整型一维数组
          * @return int整型
          */
-        public int findPeakElement (int[] nums) {
+        public int findPeakElement(int[] nums) {
             // write code here
-            int left=0;int right=nums.length-1;
-            while (left<right){
-                int mid=(left+right)/2;
-                if(nums[mid]>nums[mid+1]){
-                    right=mid;
-                }else{
-                    left=mid+1;
+            int left = 0;
+            int right = nums.length - 1;
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (nums[mid] > nums[mid + 1]) {
+                    right = mid;
+                } else {
+                    left = mid + 1;
                 }
             }
             return right;
@@ -838,16 +836,17 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param nums int整型一维数组
          * @return int整型
          */
-        int res=0;
-        public int InversePairs (int[] nums) {
+        int res = 0;
+
+        public int InversePairs(int[] nums) {
             // write code here
             mergeSort(nums);
             return res;
         }
+
         public int[] mergeSort(int[] arr) {
             if (arr.length <= 1) {
                 return arr;
@@ -864,8 +863,8 @@ public class top101 {
             while (idx_1 < arr_1.length && idx_2 < arr_2.length) {
                 if (arr_1[idx_1] > arr_2[idx_2]) {
                     sorted_arr[idx] = arr_2[idx_2];
-                    res+=arr_1.length-idx_1;
-                    res%=(1e9+7);
+                    res += arr_1.length - idx_1;
+                    res %= (1e9 + 7);
                     idx_2 += 1;
                 } else {
                     sorted_arr[idx] = arr_1[idx_1];
@@ -895,24 +894,24 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param nums int整型一维数组
          * @return int整型
          */
-        public int minNumberInRotateArray (int[] nums) {
+        public int minNumberInRotateArray(int[] nums) {
             // write code here
-            int left=0;
-            int right=nums.length-1;
-            while (left<right){
-                int mid=(left+right)/2;
-                if(nums[mid]<nums[right]){
-                    right=mid;
-                }else if(nums[mid]>nums[right]){
-                    left=mid+1;
-                }else{
+            int left = 0;
+            int right = nums.length - 1;
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (nums[mid] < nums[right]) {
+                    right = mid;
+                } else if (nums[mid] > nums[right]) {
+                    left = mid + 1;
+                } else {
                     right--;
                 }
-            };
+            }
+            ;
             return nums[left];
         }
     }
@@ -921,21 +920,22 @@ public class top101 {
     public class Solution22 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
+         * <p>
          * 比较版本号
+         *
          * @param version1 string字符串
          * @param version2 string字符串
          * @return int整型
          */
-        public int compare (String version1, String version2) {
+        public int compare(String version1, String version2) {
             int n1 = version1.length();
             int n2 = version2.length();
             int i = 0, j = 0;
             //直到某个字符串结束
-            while(i < n1 || j < n2){
+            while (i < n1 || j < n2) {
                 long num1 = 0;
                 //从下一个点前截取数字
-                while(i < n1 && version1.charAt(i) != '.'){
+                while (i < n1 && version1.charAt(i) != '.') {
                     num1 = num1 * 10 + (version1.charAt(i) - '0');
                     i++;
                 }
@@ -943,16 +943,16 @@ public class top101 {
                 i++;
                 long num2 = 0;
                 //从下一个点前截取数字
-                while(j < n2 && version2.charAt(j) != '.'){
+                while (j < n2 && version2.charAt(j) != '.') {
                     num2 = num2 * 10 + (version2.charAt(j) - '0');
                     j++;
                 }
                 //跳过点
                 j++;
                 //比较数字大小
-                if(num1 > num2)
+                if (num1 > num2)
                     return 1;
-                if(num1 < num2)
+                if (num1 < num2)
                     return -1;
             }
             //版本号相同
@@ -966,27 +966,30 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
                 this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param root TreeNode类
          * @return int整型一维数组
          */
-        ArrayList integers=new ArrayList<Integer>();
-        public int[] preorderTraversal (TreeNode root) {
+        ArrayList integers = new ArrayList<Integer>();
+
+        public int[] preorderTraversal(TreeNode root) {
             // write code here
             dfs(root);
 
             int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
             return ints;
         }
-        public void dfs(TreeNode root){
-            if(root==null){
+
+        public void dfs(TreeNode root) {
+            if (root == null) {
                 return;
             }
             integers.add(root.val);
@@ -1001,27 +1004,30 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
                 this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param root TreeNode类
          * @return int整型一维数组
          */
-        ArrayList integers=new ArrayList<Integer>();
-        public int[] inorderTraversal (TreeNode root) {
+        ArrayList integers = new ArrayList<Integer>();
+
+        public int[] inorderTraversal(TreeNode root) {
             // write code here
             dfs(root);
 
             int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
             return ints;
         }
-        public void dfs(TreeNode root){
-            if(root==null){
+
+        public void dfs(TreeNode root) {
+            if (root == null) {
                 return;
             }
             dfs(root.left);
@@ -1036,27 +1042,30 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
                 this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param root TreeNode类
          * @return int整型一维数组
          */
-        ArrayList integers=new ArrayList<Integer>();
-        public int[] postorderTraversal (TreeNode root) {
+        ArrayList integers = new ArrayList<Integer>();
+
+        public int[] postorderTraversal(TreeNode root) {
             // write code here
             dfs(root);
 
             int[] ints = integers.stream().mapToInt(e -> (int) e).toArray();
             return ints;
         }
-        public void dfs(TreeNode root){
-            if(root==null){
+
+        public void dfs(TreeNode root) {
+            if (root == null) {
                 return;
             }
             dfs(root.left);
@@ -1071,35 +1080,36 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param root TreeNode类
-         * @return int整型ArrayList<ArrayList<>>
+         * @return int整型ArrayList<ArrayList <>>
          */
-        public ArrayList<ArrayList<Integer>> levelOrder (TreeNode root) {
+        public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
             // write code here
             ArrayList<ArrayList<Integer>> res = new ArrayList<>();
-            if(root==null){
+            if (root == null) {
                 return res;
             }
             ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
             treeNodes.addLast(root);
-            while (!treeNodes.isEmpty()){
+            while (!treeNodes.isEmpty()) {
                 int size = treeNodes.size();
                 ArrayList<Integer> integers = new ArrayList<>();
-                for(int i=0;i<size;i++) {
+                for (int i = 0; i < size; i++) {
                     TreeNode treeNode = treeNodes.removeFirst();
                     integers.add(treeNode.val);
-                    if (treeNode.left!=null){
+                    if (treeNode.left != null) {
                         treeNodes.addLast(treeNode.left);
                     }
-                    if (treeNode.right!=null){
+                    if (treeNode.right != null) {
                         treeNodes.addLast(treeNode.right);
                     }
                 }
@@ -1115,40 +1125,41 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param pRoot TreeNode类
-         * @return int整型ArrayList<ArrayList<>>
+         * @return int整型ArrayList<ArrayList <>>
          */
-        public ArrayList<ArrayList<Integer>> Print (TreeNode pRoot) {
+        public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
             // write code here
             ArrayList<ArrayList<Integer>> res = new ArrayList<>();
-            if(pRoot==null){
+            if (pRoot == null) {
                 return res;
             }
             ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
             treeNodes.addLast(pRoot);
-            int count=0;
-            while (!treeNodes.isEmpty()){
+            int count = 0;
+            while (!treeNodes.isEmpty()) {
                 ArrayDeque<Integer> integers = new ArrayDeque<Integer>();
                 int size = treeNodes.size();
-                for (int i=0;i<size;i++){
+                for (int i = 0; i < size; i++) {
                     TreeNode treeNode = treeNodes.removeFirst();
-                    if(count%2==0){
+                    if (count % 2 == 0) {
                         integers.addLast(treeNode.val);
-                    }else{
+                    } else {
                         integers.addFirst(treeNode.val);
                     }
-                    if(treeNode.left!=null){
+                    if (treeNode.left != null) {
                         treeNodes.addLast(treeNode.left);
                     }
-                    if(treeNode.right!=null){
+                    if (treeNode.right != null) {
                         treeNodes.addLast(treeNode.right);
                     }
                 }
@@ -1165,45 +1176,47 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param root TreeNode类
          * @return int整型
          */
-        public int maxDepth1 (TreeNode root) {
+        public int maxDepth1(TreeNode root) {
             // write code here
-            int res=0;
-            if(root==null){
+            int res = 0;
+            if (root == null) {
                 return res;
             }
             ArrayDeque<TreeNode> deque = new ArrayDeque<>();
             deque.add(root);
-            while (!deque.isEmpty()){
+            while (!deque.isEmpty()) {
                 int size = deque.size();
                 res++;
-                for(int i=0;i<size;i++){
+                for (int i = 0; i < size; i++) {
                     TreeNode treeNode = deque.removeFirst();
-                    if(treeNode.left!=null){
+                    if (treeNode.left != null) {
                         deque.addLast(treeNode.left);
                     }
-                    if(treeNode.right!=null){
+                    if (treeNode.right != null) {
                         deque.addLast(treeNode.right);
                     }
                 }
             }
             return res;
         }
-        public int maxDepth (TreeNode root) {
-            if(root==null){
+
+        public int maxDepth(TreeNode root) {
+            if (root == null) {
                 return 0;
             }
-            return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
+            return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
         }
     }
 
@@ -1213,30 +1226,102 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param root TreeNode类
-         * @param sum int整型
+         * @param sum  int整型
          * @return bool布尔型
          */
-        public boolean hasPathSum (TreeNode root, int sum) {
+        public boolean hasPathSum(TreeNode root, int sum) {
             // write code here
-            if (root==null){
+            if (root == null) {
                 return false;
             }
-            sum-=root.val;
-            if(sum==0&&root.left==null&&root.right==null){
+            sum -= root.val;
+            if (sum == 0 && root.left == null && root.right == null) {
                 return true;
             }
             boolean b = hasPathSum(root.left, sum);
             boolean b1 = hasPathSum(root.right, sum);
-            return b||b1;
+            return b || b1;
+        }
+    }
+
+    //BM30 二叉搜索树与双向链表
+    public class Solution30 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+
+            }
+
+        }
+
+        TreeNode head = null;
+        TreeNode pre = null;
+
+        public TreeNode Convert(TreeNode pRootOfTree) {
+            if (pRootOfTree == null) {
+                return null;
+            }
+            Convert(pRootOfTree.left);
+            if (pre == null) {
+                head = pRootOfTree;
+                pre = pRootOfTree;
+            } else {
+                pre.right = pRootOfTree;
+                pRootOfTree.left = pre;
+                pre = pRootOfTree;
+            }
+            Convert(pRootOfTree.right);
+            return head;
+        }
+    }
+
+    //BM31 对称的二叉树
+    public class Solution31 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pRoot TreeNode类
+         * @return bool布尔型
+         */
+        public boolean isSymmetrical(TreeNode pRoot) {
+            // write code here
+            if (pRoot==null){
+                return true;
+            }
+            return isSymmetricall(pRoot.left,pRoot.right);
+        }
+        public boolean isSymmetricall(TreeNode left,TreeNode right){
+            if(left==null && right==null){
+                return true;
+            }
+            if(left==null || right==null|| right.val!=left.val){
+                return false;
+            }
+            return isSymmetricall(left.left,right.right) && isSymmetricall(left.right,right.left);
         }
     }
 }
