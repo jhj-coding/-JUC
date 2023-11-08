@@ -116,3 +116,5 @@ do
     printf "\n"
 done
 
+#SHELL20 打印只有一个数字的行
+awk -F"[0-9]" '{if(NF==2)print $0}'
