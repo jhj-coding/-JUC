@@ -1473,4 +1473,21 @@ public class All {
             return f[slen-1][plen-1];
         }
     }
+
+    //45. 跳跃游戏 II
+    class Solution45 {
+        public int jump(int[] nums) {
+            int res=0;
+            int sum=0;
+            int end=0;
+            for(int i=0;i<nums.length-1;i++){
+                sum=Math.max(sum,i+nums[i]);
+                if(i==end){
+                    end=sum;
+                    res++;
+                }
+            }
+            return res;
+        }
+    }
 }

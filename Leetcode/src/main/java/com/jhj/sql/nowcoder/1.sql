@@ -76,3 +76,9 @@ select count(*),avg(gpa) from user_profile where gender="male"
 
 #SQL18 分组计算练习题
 select gender,university, count(*),avg(active_days_within_30),avg(question_cnt) from user_profile group by university,gender
+
+#SQL19 分组过滤练习题
+select university,avg(question_cnt) as avg_question_cnt,avg(answer_cnt) as avg_answer_cnt from user_profile group by university having avg(question_cnt)<5 or avg(answer_cnt)<20
+
+#SQL20 分组排序练习题
+select university,avg(question_cnt) as avg_question_cnt from user_profile group by university order by avg_question_cnt

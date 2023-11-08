@@ -54,3 +54,9 @@ select dept_emp.emp_no, dept_manager.emp_no,a.salary,b.salary from dept_emp,dept
 
 #SQL220 汇总各个部门当前员工的title类型的分配数目
 select dept_emp.dept_no,departments.dept_name,titles.title,count(titles.title) from departments,dept_emp,titles where dept_emp.emp_no=titles.emp_no and departments.dept_no=dept_emp.dept_no group by departments.dept_no,titles.title order by departments.dept_no;
+
+#SQL223 使用join查询方式找出没有分类的电影id以及名称
+select film.film_id,film.title from film left join film_category on film.film_id=film_category.film_id where film_category.category_id is Null
+
+#SQL224 使用子查询的方式找出属于Action分类的所有电影对应的title,description
+select film.title,film.description from film where film.film_id in (select film_category.film_id from category,film_category where category.category_id=film_category.category_id and category.name="Action")
