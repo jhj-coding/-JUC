@@ -1324,4 +1324,68 @@ public class top101 {
             return isSymmetricall(left.left,right.right) && isSymmetricall(left.right,right.left);
         }
     }
+
+    //BM32 合并二叉树
+    public class Solution32 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+          }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param t1 TreeNode类
+         * @param t2 TreeNode类
+         * @return TreeNode类
+         */
+        public TreeNode mergeTrees (TreeNode t1, TreeNode t2) {
+            // write code here
+            if(t1==null){
+                return t2;
+            }
+            if (t2==null){
+                return t1;
+            }
+            t1.left=mergeTrees(t1.left,t2.left);
+            t1.val+=t2.val;
+            t1.right=mergeTrees(t1.right,t2.right);
+            return t1;
+        }
+    }
+
+    //BM33 二叉树的镜像
+    public class Solution33 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+            public TreeNode(int val) {
+              this.val = val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param pRoot TreeNode类
+         * @return TreeNode类
+         */
+        public TreeNode Mirror (TreeNode pRoot) {
+            // write code here
+            if (pRoot==null){
+                return null;
+            }
+            TreeNode left = pRoot.left;
+            pRoot.left=pRoot.right;
+            pRoot.right=left;
+            Mirror(pRoot.left);
+            Mirror(pRoot.right);
+            return pRoot;
+        }
+    }
 }

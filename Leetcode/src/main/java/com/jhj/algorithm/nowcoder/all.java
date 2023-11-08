@@ -832,26 +832,26 @@ public class all {
          */
         public ListNode reverseBetween(ListNode head, int m, int n) {
             // write code here
-            ListNode pre=new ListNode(0);
-            pre.next=head;
-            ListNode ppre=pre;
-            ListNode ppcur=head;
-            for(int i=1;i<m;i++){
-                ppre=ppre.next;
-                ppcur=ppcur.next;
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            ListNode ppre = pre;
+            ListNode ppcur = head;
+            for (int i = 1; i < m; i++) {
+                ppre = ppre.next;
+                ppcur = ppcur.next;
             }
-            ListNode next=ppcur.next;
-            for(int i=m;i<n;i++){
-                next=next.next;
+            ListNode next = ppcur.next;
+            for (int i = m; i < n; i++) {
+                next = next.next;
             }
-            for (int i=m;i<n;i++){
+            for (int i = m; i < n; i++) {
                 ListNode next1 = ppcur.next;
-                ppcur.next=next;
-                next=ppcur;
-                ppcur=next1;
+                ppcur.next = next;
+                next = ppcur;
+                ppcur = next1;
             }
-            ppcur.next=next;
-            ppre.next=ppcur;
+            ppcur.next = next;
+            ppre.next = ppcur;
             return pre.next;
         }
     }
@@ -859,10 +859,10 @@ public class all {
     //NC22 合并两个有序的数组
     public class Solution22 {
         public void merge(int A[], int m, int B[], int n) {
-            int i=m-1;
-            int j=n-1;
-            for(int k=m+n-1;k>=0;k--){
-                if(i>=0&&j>=0) {
+            int i = m - 1;
+            int j = n - 1;
+            for (int k = m + n - 1; k >= 0; k--) {
+                if (i >= 0 && j >= 0) {
                     if (A[i] > B[j]) {
                         A[k] = A[i];
                         i--;
@@ -870,16 +870,98 @@ public class all {
                         A[k] = B[j];
                         j--;
                     }
-                }else{
-                    if(i>=0){
-                        A[k]=A[i];
+                } else {
+                    if (i >= 0) {
+                        A[k] = A[i];
                         i--;
-                    }else {
-                        A[k]=B[j];
+                    } else {
+                        A[k] = B[j];
                         j--;
                     }
                 }
             }
+        }
+    }
+
+    //NC23 划分链表
+    public class Solution23 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @param x    int整型
+         * @return ListNode类
+         */
+        public ListNode partition(ListNode head, int x) {
+            // write code here
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+
+            ListNode cur = pre;
+            while (cur.next != null && cur.next.val < x) {
+                cur = cur.next;
+            }
+            ListNode next = cur.next;
+            ListNode big = cur.next;
+            while (next != null && next.next != null) {
+                if (next.next.val < x) {
+                    cur.next = next.next;
+                    next.next = next.next.next;
+                    cur.next.next = big;
+                    cur = cur.next;
+                } else {
+                    next = next.next;
+                }
+            }
+            return pre.next;
+        }
+    }
+
+    //NC24 删除有序链表中重复的元素-II
+    public class Solution24 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @return ListNode类
+         */
+        public ListNode deleteDuplicates(ListNode head) {
+            if(head==null){
+                return null;
+            }
+            // write code here
+            ListNode pre=new ListNode(-1);
+            pre.next=head;
+            ListNode cur=pre;
+            while (cur.next!=null&&cur.next.next!=null){
+                if(cur.next.val==cur.next.next.val){
+                    int temp=cur.next.val;
+                    while (cur.next!=null && cur.next.val==temp){
+                        cur.next=cur.next.next;
+                    }
+                }else{
+                    cur=cur.next;
+                }
+            }
+            return pre.next;
         }
     }
 }
