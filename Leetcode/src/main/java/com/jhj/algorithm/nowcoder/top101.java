@@ -1309,19 +1309,20 @@ public class top101 {
          */
         public boolean isSymmetrical(TreeNode pRoot) {
             // write code here
-            if (pRoot==null){
+            if (pRoot == null) {
                 return true;
             }
-            return isSymmetricall(pRoot.left,pRoot.right);
+            return isSymmetricall(pRoot.left, pRoot.right);
         }
-        public boolean isSymmetricall(TreeNode left,TreeNode right){
-            if(left==null && right==null){
+
+        public boolean isSymmetricall(TreeNode left, TreeNode right) {
+            if (left == null && right == null) {
                 return true;
             }
-            if(left==null || right==null|| right.val!=left.val){
+            if (left == null || right == null || right.val != left.val) {
                 return false;
             }
-            return isSymmetricall(left.left,right.right) && isSymmetricall(left.right,right.left);
+            return isSymmetricall(left.left, right.right) && isSymmetricall(left.right, right.left);
         }
     }
 
@@ -1331,29 +1332,30 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
-          }
+        }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param t1 TreeNode类
          * @param t2 TreeNode类
          * @return TreeNode类
          */
-        public TreeNode mergeTrees (TreeNode t1, TreeNode t2) {
+        public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
             // write code here
-            if(t1==null){
+            if (t1 == null) {
                 return t2;
             }
-            if (t2==null){
+            if (t2 == null) {
                 return t1;
             }
-            t1.left=mergeTrees(t1.left,t2.left);
-            t1.val+=t2.val;
-            t1.right=mergeTrees(t1.right,t2.right);
+            t1.left = mergeTrees(t1.left, t2.left);
+            t1.val += t2.val;
+            t1.right = mergeTrees(t1.right, t2.right);
             return t1;
         }
     }
@@ -1364,28 +1366,84 @@ public class top101 {
             int val = 0;
             TreeNode left = null;
             TreeNode right = null;
+
             public TreeNode(int val) {
-              this.val = val;
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
          *
          * @param pRoot TreeNode类
          * @return TreeNode类
          */
-        public TreeNode Mirror (TreeNode pRoot) {
+        public TreeNode Mirror(TreeNode pRoot) {
             // write code here
-            if (pRoot==null){
+            if (pRoot == null) {
                 return null;
             }
             TreeNode left = pRoot.left;
-            pRoot.left=pRoot.right;
-            pRoot.right=left;
+            pRoot.left = pRoot.right;
+            pRoot.right = left;
             Mirror(pRoot.left);
             Mirror(pRoot.right);
             return pRoot;
+        }
+    }
+
+    //BM34 判断是不是二叉搜索树
+    public class Solution34 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @return bool布尔型
+         */
+        public boolean isValidBST1(TreeNode root) {
+            // write code here
+            ArrayList<Integer> integers = new ArrayList<>();
+            dfs(integers,root);
+            for(int i=0;i<integers.size()-1;i++){
+                if(integers.get(i)>=integers.get(i+1)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void dfs(ArrayList<Integer> res,TreeNode root){
+            if(root==null){
+                return;
+            }
+            dfs(res,root.left);
+            res.add(root.val);
+            dfs(res,root.right);
+        }
+        int pre=Integer.MIN_VALUE;
+        public boolean isValidBST2(TreeNode root) {
+            if(root == null)
+                return true;
+            //先进入左子树
+            if(!isValidBST2(root.left))
+                return false;
+            if(root.val <= pre)
+                return false;
+            //更新最值
+            pre = root.val;
+            //再进入右子树
+            if(!isValidBST2(root.right))
+                return false;
+            return true;
         }
     }
 }
