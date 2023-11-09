@@ -1490,4 +1490,28 @@ public class All {
             return res;
         }
     }
+
+    //46. 全排列
+    class Solution46 {
+        public List<List<Integer>> permute(int[] nums) {
+            ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+            huisu(new ArrayList<>(),res,nums);
+            return res;
+        }
+
+        public void huisu(ArrayList<Integer> path,List<List<Integer>> res,int[] nums) {
+            HashSet<Integer> integers = new HashSet<>(path);
+            if (integers.size()==nums.length){
+                res.add(new ArrayList<Integer>(path));
+                return;
+            }
+            for(int i=0;i<nums.length;i++){
+                if(!integers.contains(nums[i])){
+                    path.add(nums[i]);
+                    huisu(path,res,nums);
+                    path.remove(path.size()-1);
+                }
+            }
+        }
+    }
 }
