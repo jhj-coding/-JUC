@@ -1514,4 +1514,29 @@ public class All {
             }
         }
     }
+
+    //全排列 II
+    class Solution47 {
+        public List<List<Integer>> permuteUnique(int[] nums) {
+            HashSet<List<Integer>> res = new HashSet<>();
+            huisu(new HashSet<Integer>(),new ArrayList<Integer>(),res,nums);
+            return new ArrayList<>(res);
+        }
+
+        public void huisu(HashSet<Integer> indexs,List<Integer> path,HashSet<List<Integer>> res,int[] nums){
+            if(indexs.size()==nums.length){
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for (int i=0;i<nums.length;i++){
+                if(!indexs.contains(i)){
+                    indexs.add(i);
+                    path.add(nums[i]);
+                    huisu(indexs,path,res,nums);
+                    path.remove(path.size()-1);
+                    indexs.remove(i);
+                }
+            }
+        }
+    }
 }
