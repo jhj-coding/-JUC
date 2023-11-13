@@ -118,3 +118,15 @@ done
 
 #SHELL20 打印只有一个数字的行
 awk -F"[0-9]" '{if(NF==2)print $0}'
+
+#SHELL21 格式化输出 length 长度 substr 截取
+awk '{
+l=length($0)
+f=l%3
+for (i=1;i<=l;i++){
+    printf substr($0,i,1)
+    if((i-f)%3==0 && i!=l)
+        printf ","
+}
+print ""
+}' nowcoder.txt

@@ -60,3 +60,14 @@ select film.film_id,film.title from film left join film_category on film.film_id
 
 #SQL224 使用子查询的方式找出属于Action分类的所有电影对应的title,description
 select film.title,film.description from film where film.film_id in (select film_category.film_id from category,film_category where category.category_id=film_category.category_id and category.name="Action")
+
+#SQL226将employees表的所有员工的last_name和first_name拼接起来作为Name
+select concat(last_name," ",first_name) as Name from employees
+
+#SQL227 创建一个actor表,包含如下列信息
+create table `actor`(
+                        `actor_id` smallint(5) not null primary key comment "主键id",
+                        `first_name` varchar(45) not null comment "名字",
+                        `last_name` varchar(45)	not null comment "姓氏",
+                        `last_update` date not null comment "日期"
+);

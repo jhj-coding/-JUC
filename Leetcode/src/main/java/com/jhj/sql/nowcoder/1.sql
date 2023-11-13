@@ -82,3 +82,10 @@ select university,avg(question_cnt) as avg_question_cnt,avg(answer_cnt) as avg_a
 
 #SQL20 分组排序练习题
 select university,avg(question_cnt) as avg_question_cnt from user_profile group by university order by avg_question_cnt
+
+#SQL21 浙江大学用户题目回答情况
+select question_practice_detail.device_id,question_practice_detail.question_id,question_practice_detail.result from question_practice_detail,user_profile where user_profile.university="浙江大学" and question_practice_detail.device_id=user_profile.device_id;
+
+#SQL22 统计每个学校的答过题的用户的平均答题数
+select user_profile.university,count(question_practice_detail.question_id)/count(distinct user_profile.device_id) from user_profile right join question_practice_detail on user_profile.device_id=question_practice_detail.device_id group by user_profile.university
+
