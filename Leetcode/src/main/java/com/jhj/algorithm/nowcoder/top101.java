@@ -1413,37 +1413,126 @@ public class top101 {
         public boolean isValidBST1(TreeNode root) {
             // write code here
             ArrayList<Integer> integers = new ArrayList<>();
-            dfs(integers,root);
-            for(int i=0;i<integers.size()-1;i++){
-                if(integers.get(i)>=integers.get(i+1)){
+            dfs(integers, root);
+            for (int i = 0; i < integers.size() - 1; i++) {
+                if (integers.get(i) >= integers.get(i + 1)) {
                     return false;
                 }
             }
             return true;
         }
-        public void dfs(ArrayList<Integer> res,TreeNode root){
-            if(root==null){
+
+        public void dfs(ArrayList<Integer> res, TreeNode root) {
+            if (root == null) {
                 return;
             }
-            dfs(res,root.left);
+            dfs(res, root.left);
             res.add(root.val);
-            dfs(res,root.right);
+            dfs(res, root.right);
         }
-        int pre=Integer.MIN_VALUE;
+
+        int pre = Integer.MIN_VALUE;
+
         public boolean isValidBST2(TreeNode root) {
-            if(root == null)
+            if (root == null)
                 return true;
             //先进入左子树
-            if(!isValidBST2(root.left))
+            if (!isValidBST2(root.left))
                 return false;
-            if(root.val <= pre)
+            if (root.val <= pre)
                 return false;
             //更新最值
             pre = root.val;
             //再进入右子树
-            if(!isValidBST2(root.right))
+            if (!isValidBST2(root.right))
                 return false;
             return true;
+        }
+    }
+
+    //BM35 判断是不是完全二叉树
+    public class Solution35 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @return bool布尔型
+         */
+        public boolean isCompleteTree(TreeNode root) {
+            //空树一定是完全二叉树
+            if (root == null)
+                return true;
+            //辅助队列
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            TreeNode cur;
+            //定义一个首次出现的标记位
+            boolean notComplete = false;
+            while (!queue.isEmpty()) {
+                cur = queue.poll();
+                //标记第一次遇到空节点
+                if (cur == null) {
+                    notComplete = true;
+                    continue;
+                }
+                //后续访问已经遇到空节点了，说明经过了叶子
+                if (notComplete)
+                    return false;
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+            }
+            return true;
+        }
+    }
+
+    //BM36 判断是不是平衡二叉树
+    public class Solution36 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pRoot TreeNode类
+         * @return bool布尔型
+         */
+        public boolean IsBalanced_Solution(TreeNode pRoot) {
+            // write code here
+            return getHeight(pRoot) != -1;
+        }
+        public int getHeight(TreeNode root){
+            if(root==null){
+                return 0;
+            }
+            int leftheight = getHeight(root.left);
+            if(leftheight==-1){
+                return -1;
+            }
+            int rightheight = getHeight(root.right);
+            if(rightheight==-1){
+                return -1;
+            }
+            if(Math.abs(leftheight-rightheight)>1){
+                return -1;
+            }
+            return Math.max(leftheight,rightheight)+1;
         }
     }
 }
