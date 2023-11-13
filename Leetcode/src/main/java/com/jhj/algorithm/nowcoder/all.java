@@ -944,24 +944,90 @@ public class all {
          * @return ListNode类
          */
         public ListNode deleteDuplicates(ListNode head) {
-            if(head==null){
+            if (head == null) {
                 return null;
             }
             // write code here
-            ListNode pre=new ListNode(-1);
-            pre.next=head;
-            ListNode cur=pre;
-            while (cur.next!=null&&cur.next.next!=null){
-                if(cur.next.val==cur.next.next.val){
-                    int temp=cur.next.val;
-                    while (cur.next!=null && cur.next.val==temp){
-                        cur.next=cur.next.next;
+            ListNode pre = new ListNode(-1);
+            pre.next = head;
+            ListNode cur = pre;
+            while (cur.next != null && cur.next.next != null) {
+                if (cur.next.val == cur.next.next.val) {
+                    int temp = cur.next.val;
+                    while (cur.next != null && cur.next.val == temp) {
+                        cur.next = cur.next.next;
                     }
-                }else{
-                    cur=cur.next;
+                } else {
+                    cur = cur.next;
                 }
             }
             return pre.next;
+        }
+    }
+
+    //NC25 删除有序链表中重复的元素-I
+    public class Solution25 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @return ListNode类
+         */
+        public ListNode deleteDuplicates(ListNode head) {
+            // write code here
+            ListNode pre = new ListNode(-1000);
+            pre.next = head;
+            ListNode ppre = pre;
+            ListNode cur = head;
+            while (cur != null) {
+                if (cur.val != ppre.val) {
+                    ppre = ppre.next;
+                    cur = cur.next;
+                } else {
+                    ppre.next = cur.next;
+                    cur = cur.next;
+                }
+            }
+            return pre.next;
+        }
+    }
+
+    //NC26 括号生成
+    public class Solution26 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param n int整型
+         * @return string字符串ArrayList
+         */
+        public ArrayList<String> generateParenthesis (int n) {
+            // write code here
+            ArrayList<String> res = new ArrayList<>();
+            recursion(n,n,new String(),res);
+            return res;
+        }
+
+        public void recursion(int left,int right,String path,ArrayList<String> res){
+            if(left==0&&right==0){
+                res.add(new String(path));
+            }
+            if(left>0){
+                recursion(left-1,right,path+"(",res);
+            }
+
+            if(right>0 && right>left){
+                recursion(left,right-1,path+")",res);
+            }
         }
     }
 }
