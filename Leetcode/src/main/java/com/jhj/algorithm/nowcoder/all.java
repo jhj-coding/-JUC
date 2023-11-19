@@ -1,9 +1,6 @@
 package com.jhj.algorithm.nowcoder;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class all {
 
@@ -1027,6 +1024,38 @@ public class all {
 
             if(right>0 && right>left){
                 recursion(left,right-1,path+")",res);
+            }
+        }
+    }
+
+    //NC27 集合的所有子集(一)
+    public class Solution27 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param S int整型一维数组
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
+        public ArrayList<ArrayList<Integer>> subsets (int[] S) {
+            // write code here
+            Arrays.sort(S);
+            res.add(new ArrayList<>());
+            for(int i=1;i<=S.length;i++){
+                huisu(0,i,S,new ArrayList<Integer>());
+            }
+            return res;
+        }
+        public void huisu(int startIndex,int k,int[] S,ArrayList<Integer> path){
+            if(path.size()==k){
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for(int j=startIndex;j<S.length;j++){
+                path.add(S[j]);
+                huisu(j+1,k,S,path);
+                path.remove(path.size()-1);
             }
         }
     }
