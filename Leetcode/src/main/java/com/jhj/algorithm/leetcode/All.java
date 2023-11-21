@@ -1,6 +1,7 @@
 package com.jhj.algorithm.leetcode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class All {
     //1 两数之和
@@ -1515,7 +1516,7 @@ public class All {
         }
     }
 
-    //全排列 II
+    //47. 全排列 II
     class Solution47 {
         public List<List<Integer>> permuteUnique(int[] nums) {
             HashSet<List<Integer>> res = new HashSet<>();
@@ -1540,7 +1541,7 @@ public class All {
         }
     }
 
-    //旋转图像
+    //48. 旋转图像
     class Solution48 {
         public void rotate(int[][] matrix) {
             int n=matrix.length;
@@ -1564,4 +1565,113 @@ public class All {
             }
         }
     }
+
+    //49. 字母异位词分组
+    class Solution49 {
+        public List<List<String>> groupAnagrams(String[] strs) {
+            HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+
+            for (int i = 0; i < strs.length; i++) {
+                StringBuilder res = new StringBuilder("00000000000000000000000000");
+                for (int j = 0; j < strs[i].length(); j++) {
+                    res.setCharAt(strs[i].charAt(j) - 'a', (char) (res.charAt(strs[i].charAt(j) - 'a') + 1));
+                }
+                List<String> orDefault = map.getOrDefault(res.toString(), new ArrayList<String>());
+                orDefault.add(strs[i]);
+                map.put(res.toString(), orDefault);
+            }
+            return map.values().stream().collect(Collectors.toList());
+        }
+
+        public List<List<String>> groupAnagrams2(String[] strs) {
+            HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+            for (int i = 0; i < strs.length; i++) {
+                char[] res=strs[i].toCharArray();
+                Arrays.sort(res);
+                List<String> orDefault = map.getOrDefault(new String(res), new ArrayList<String>());
+                orDefault.add(strs[i]);
+                map.put(new String(res), orDefault);
+            }
+            return map.values().stream().collect(Collectors.toList());
+        }
+
+    }
+
+    //50. Pow(x, n) 快速幂 指数除2 底数平方
+    class Solution50 {
+        public double quickPow1(double x, long n) {
+            if (n == 0) {
+                return 1;
+            }
+            double y = quickPow1(x, n / 2);
+            return n % 2 == 0 ? y * y : y * y * x;
+        }
+
+        public double myPow1(double x, int n) {
+            long m = n;
+            return m > 0 ? quickPow1(x, m) : 1.0 / quickPow1(x, m);
+        }
+
+        public double myPow2(double x, int n) {
+            long m=n;
+            if (m== 0) {
+                return 1;
+            } else if (x == 0) {
+                return 0;
+            } else if (m> 0) {
+                double res = 1;
+                while (m> 0) {
+                    if (m% 2 == 1) {
+                        m-= 1;
+                        m/= 2;
+                        res *= x;
+                        x *= x;
+                    } else {
+                        m/= 2;
+                        x *= x;
+                    }
+                }
+                return res;
+            } else {
+                x = 1.0 / x;
+                m= -m;
+                double res = 1;
+                while (m> 0) {
+                    if (m% 2 == 1) {
+                        m-= 1;
+                        m/= 2;
+                        res *= x;
+                        x *= x;
+                    } else {
+                        m/= 2;
+                        x *= x;
+                    }
+                }
+                return res;
+            }
+        }
+
+        public double quickPow(double x, long n) {
+            if (n < 0) {
+                n = -n;
+            }
+            double res = 1;
+            String s = Long.toBinaryString(n);
+            int len = s.length();
+            for (int i = len - 1; i >= 0; i--) {
+                if (s.charAt(i) == '1') {
+                    res *= x;
+                }
+                x *= x;
+            }
+            return res;
+        }
+
+        public double myPow(double x, int n) {
+            long m = n;
+            return m > 0 ? quickPow(x, m) : 1.0 / quickPow(x, m);
+        }
+    }
+
+
 }
