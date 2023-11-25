@@ -130,3 +130,12 @@ for (i=1;i<=l;i++){
 }
 print ""
 }' nowcoder.txt
+
+#SHELL22 处理文本
+awk -F ":" '{
+        a[$1] = a[$1] $2 "\n"
+    }
+    END {for (i in a){
+        printf("[%s]\n%s",i,a[i])
+        }
+    }' nowcoder.txt
