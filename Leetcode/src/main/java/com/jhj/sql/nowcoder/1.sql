@@ -89,3 +89,56 @@ select question_practice_detail.device_id,question_practice_detail.question_id,q
 #SQL22 统计每个学校的答过题的用户的平均答题数
 select user_profile.university,count(question_practice_detail.question_id)/count(distinct user_profile.device_id) from user_profile right join question_practice_detail on user_profile.device_id=question_practice_detail.device_id group by user_profile.university
 
+#SQL23 统计每个学校各难度的用户平均刷题数
+select
+    user_profile.university,
+    question_detail.difficult_level,
+    count(question_practice_detail.question_id) / count(distinct user_profile.device_id)
+from
+    user_profile,
+    question_practice_detail,
+    question_detail
+where
+        question_practice_detail.question_id = question_detail.question_id
+  and user_profile.device_id = question_practice_detail.device_id
+group by
+    user_profile.university,
+    question_detail.difficult_level;
+
+#SQL24 统计每个用户的平均刷题数
+select
+    user_profile.university,
+    question_detail.difficult_level,
+    count(question_practice_detail.question_id) / count(distinct user_profile.device_id)
+from
+    user_profile,
+    question_practice_detail,
+    question_detail
+where
+        question_practice_detail.question_id = question_detail.question_id
+  and user_profile.device_id = question_practice_detail.device_id
+  and user_profile.university="山东大学"
+group by
+    user_profile.university,
+    question_detail.difficult_level;
+
+#SQL25 查找山东大学或者性别为男生的信息
+select
+    device_id,
+    gender,
+    age,
+    gpa
+from
+    user_profile
+where
+        user_profile.university = "山东大学"
+union all
+select
+    device_id,
+    gender,
+    age,
+    gpa
+from
+    user_profile
+where
+        user_profile.gender = "male"
