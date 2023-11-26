@@ -139,3 +139,6 @@ awk -F ":" '{
         printf("[%s]\n%s",i,a[i])
         }
     }' nowcoder.txt
+
+#SHELL23 Nginx日志分析1-IP访问次数统计
+grep "23/Apr/2020" |awk -F"-" '{printf("%s\n",$1)}' |sort | uniq -c | sort -r | awk '{print $1,$2}'

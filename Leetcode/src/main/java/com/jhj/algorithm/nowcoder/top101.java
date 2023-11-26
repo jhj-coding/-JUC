@@ -1517,22 +1517,63 @@ public class top101 {
             // write code here
             return getHeight(pRoot) != -1;
         }
-        public int getHeight(TreeNode root){
-            if(root==null){
+
+        public int getHeight(TreeNode root) {
+            if (root == null) {
                 return 0;
             }
             int leftheight = getHeight(root.left);
-            if(leftheight==-1){
+            if (leftheight == -1) {
                 return -1;
             }
             int rightheight = getHeight(root.right);
-            if(rightheight==-1){
+            if (rightheight == -1) {
                 return -1;
             }
-            if(Math.abs(leftheight-rightheight)>1){
+            if (Math.abs(leftheight - rightheight) > 1) {
                 return -1;
             }
-            return Math.max(leftheight,rightheight)+1;
+            return Math.max(leftheight, rightheight) + 1;
+        }
+    }
+
+    //BM37 二叉搜索树的最近公共祖先
+    public class Solution {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @param p    int整型
+         * @param q    int整型
+         * @return int整型
+         */
+        public int lowestCommonAncestor(TreeNode root, int p, int q) {
+            if(root==null){
+                return -1;
+            }
+            if(p>q){
+                int temp=p;
+                p=q;
+                q=temp;
+            }
+            // write code here
+            if(p<=root.val&&root.val<=q){
+                return root.val;
+            }else if(p<=root.val&&root.val>=q){
+                return lowestCommonAncestor(root.left,p,q);
+            }else{
+                return lowestCommonAncestor(root.right,p,q);
+            }
         }
     }
 }

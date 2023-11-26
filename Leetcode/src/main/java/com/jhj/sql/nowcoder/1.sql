@@ -142,3 +142,33 @@ from
     user_profile
 where
         user_profile.gender = "male"
+
+#CASE函数
+#是一种多分支的函数,可以根据条件列表的值返回多个可能的结果表达式中的一个.
+#可用在任何允许使用表达式的地方,但不能单独作为一个语句执行.
+#SQL26 计算25岁以上和以下的用户数量
+SELECT
+    CASE
+        WHEN age < 25
+            OR age IS NULL THEN '25岁以下'
+        WHEN age >= 25 THEN '25岁及以上'
+        END age_cut,
+    COUNT(*) number
+FROM
+    user_profile
+GROUP BY
+    age_cut
+
+#SQL27 查看不同年龄段的用户明细
+select
+    device_id,
+    gender,
+    case
+        when age < 20 then '20岁以下'
+        when 20 <= age
+            and age <= 24 then '20-24岁'
+        when 25 <= age then '25岁及以上'
+        when age is null then '其他'
+        end age_cut
+from
+    user_profile

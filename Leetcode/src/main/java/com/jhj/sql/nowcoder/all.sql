@@ -88,3 +88,10 @@ CREATE TABLE  actor_name  (
                               first_name  varchar(45) NOT NULL,
                               last_name  varchar(45) NOT NULL);
 insert into actor_name select first_name ,last_name from actor;
+
+#SQL231 对first_name创建唯一索引uniq_idx_firstname
+ALTER TABLE actor ADD UNIQUE uniq_idx_firstname (first_name);
+ALTER TABLE actor ADD index idx_lastname (last_name);
+
+#SQL232 针对actor表创建视图actor_name_view
+create view actor_name_view (first_name_v,last_name_v) as select first_name,last_name from actor
