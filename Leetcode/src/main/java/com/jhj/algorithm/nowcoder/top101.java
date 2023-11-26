@@ -1538,7 +1538,7 @@ public class top101 {
     }
 
     //BM37 二叉搜索树的最近公共祖先
-    public class Solution {
+    public class Solution38 {
         public class TreeNode {
             int val = 0;
             TreeNode left = null;
@@ -1558,21 +1558,63 @@ public class top101 {
          * @return int整型
          */
         public int lowestCommonAncestor(TreeNode root, int p, int q) {
-            if(root==null){
+            if (root == null) {
                 return -1;
             }
-            if(p>q){
-                int temp=p;
-                p=q;
-                q=temp;
+            if (p > q) {
+                int temp = p;
+                p = q;
+                q = temp;
             }
             // write code here
-            if(p<=root.val&&root.val<=q){
+            if (p <= root.val && root.val <= q) {
                 return root.val;
-            }else if(p<=root.val&&root.val>=q){
-                return lowestCommonAncestor(root.left,p,q);
-            }else{
-                return lowestCommonAncestor(root.right,p,q);
+            } else if (p <= root.val && root.val >= q) {
+                return lowestCommonAncestor(root.left, p, q);
+            } else {
+                return lowestCommonAncestor(root.right, p, q);
+            }
+        }
+    }
+
+    //BM38 在二叉树中找到两个节点的最近公共祖先 后序天然回溯
+    public class Solution39 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类
+         * @param o1   int整型
+         * @param o2   int整型
+         * @return int整型
+         */
+        public int lowestCommonAncestor(TreeNode root, int o1, int o2) {
+            // write code here
+            if (root == null) {
+                return -1;
+            }
+            if (root.val == o1 || root.val == o2) {
+                return root.val;
+            }
+            int left = lowestCommonAncestor(root.left, o1, o2);
+            int right = lowestCommonAncestor(root.right, o1, o2);
+            if (left == -1 && right == -1) {
+                return -1;
+            } else if (left == -1 && right != -1) {
+                return right;
+            } else if (left != -1 && right == -1) {
+                return left;
+            } else {
+                return root.val;
             }
         }
     }
