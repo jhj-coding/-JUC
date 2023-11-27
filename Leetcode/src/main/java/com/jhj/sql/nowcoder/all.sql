@@ -95,3 +95,23 @@ ALTER TABLE actor ADD index idx_lastname (last_name);
 
 #SQL232 针对actor表创建视图actor_name_view
 create view actor_name_view (first_name_v,last_name_v) as select first_name,last_name from actor
+
+#SQL233 针对上面的salaries表emp_no字段创建索引idx_emp_no
+#强制使用索引 force index (idx_emp_no)
+select
+    *
+from
+    salaries force index (idx_emp_no)
+where
+    emp_no = 10005
+
+#SQL234 在last_update后面新增加一列名字为create_date
+alter table actor add column create_date datetime not null default '2020-10-01 00:00:00'
+
+#SQL235 构造一个触发器audit_log
+create trigger audit_log after insert on employees_test for each row begin
+    insert into
+        audit
+    values
+        (new.id, new.name);
+end

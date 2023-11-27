@@ -172,3 +172,35 @@ select
         end age_cut
 from
     user_profile
+
+#SQL28 计算用户8月每天的练题数量
+select
+    day (date) as day,
+    count(question_id) as question_cnt
+from
+    question_practice_detail
+where
+    month (date) = 8
+  and year (date) = 2021
+group by
+    date
+
+#SQL29 计算用户的平均次日留存率
+select
+        COUNT(t2.device_id) / COUNT(t1.device_id)
+from
+    (
+        select DISTINCT
+            device_id,
+            date
+        from
+            question_practice_detail
+    ) as t1
+        left join (
+        select DISTINCT
+            device_id,
+            date
+        from
+            question_practice_detail
+    ) as t2 on t1.device_id = t2.device_id
+        and t2.date = DATE_ADD (t1.date, interval 1 day);

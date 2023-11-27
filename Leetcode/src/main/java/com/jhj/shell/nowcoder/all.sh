@@ -142,3 +142,6 @@ awk -F ":" '{
 
 #SHELL23 Nginx日志分析1-IP访问次数统计
 grep "23/Apr/2020" |awk -F"-" '{printf("%s\n",$1)}' |sort | uniq -c | sort -r | awk '{print $1,$2}'
+
+ #SHELL24 Nginx日志分析2-统计某个时间段的IP访问量
+grep "23/Apr/2020:2[0-3]" | awk '{print $1}' | sort | uniq | wc -l
