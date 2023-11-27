@@ -1059,6 +1059,115 @@ public class all {
             }
         }
     }
+
+    //NC28 最小覆盖子串
+    public class Solution28 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param S string字符串
+         * @param T string字符串
+         * @return string字符串
+         */
+        public String minWindow (String S, String T) {
+            // write code here
+            int[] map=new int[128];
+            for(int i=0;i<T.length();i++){
+                map[T.charAt(i)-'0']--;
+            }
+            int left=0;
+            int right=0;
+            int len=S.length()+1;
+            int resLeft=-1;
+            while (right<S.length()){
+                char c = S.charAt(right);
+                map[c-'0']++;
+                boolean flag=true;
+                for(int i=0;i<map.length;i++){
+                    if(map[i]<0){
+                        flag=false;
+                        break;
+                    }
+                }
+                while (flag){
+                    if(len>right-left+1){
+                        len=right-left+1;
+                        resLeft=left;
+                    }
+                    char c1 = S.charAt(left);
+
+                    map[c1-'0']--;
+                    left++;
+                    flag=true;
+                    for(int i=0;i<map.length;i++){
+                        if(map[i]<0){
+                            flag=false;
+                            break;
+                        }
+                    }
+                }
+                right++;
+            }
+            if(resLeft==-1){
+                return "";
+            }else{
+                return S.substring(resLeft,resLeft+len);
+            }
+        }
+    }
+
+    //NC29 二维数组中的查找
+    public class Solution29 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param target int整型
+         * @param array int整型二维数组
+         * @return bool布尔型
+         */
+        public boolean Find (int target, int[][] array) {
+            // write code here
+            int i=0;
+            int hang=array.length-1;
+            int lie=array[0].length-1;
+            while (i<=hang&&lie>=0){
+                if(array[i][lie]==target){
+                    return true;
+                } else if (array[i][lie] > target) {
+                    lie--;
+                } else {
+                    i++;
+                }
+            }
+            return false;
+        }
+    }
+
+    //NC30 缺失的第一个正整数
+    public class Solution30 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        public int minNumberDisappeared (int[] nums) {
+            // write code here
+            HashSet<Integer> integers = new HashSet<>();
+            for (int i=0;i<nums.length;i++){
+                integers.add(nums[i]);
+            }
+            for(int i=1;i<nums.length+1;i++){
+                if(!integers.contains(i)){
+                    return i;
+                }
+            }
+            return nums.length+1;
+        }
+    }
 }
 
 
