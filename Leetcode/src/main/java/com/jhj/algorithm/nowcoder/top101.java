@@ -1538,7 +1538,7 @@ public class top101 {
     }
 
     //BM37 二叉搜索树的最近公共祖先
-    public class Solution38 {
+    public class Solution37 {
         public class TreeNode {
             int val = 0;
             TreeNode left = null;
@@ -1578,7 +1578,7 @@ public class top101 {
     }
 
     //BM38 在二叉树中找到两个节点的最近公共祖先 后序天然回溯
-    public class Solution39 {
+    public class Solution38 {
         public class TreeNode {
             int val = 0;
             TreeNode left = null;
@@ -1616,6 +1616,162 @@ public class top101 {
             } else {
                 return root.val;
             }
+        }
+    }
+
+    //BM39 序列化二叉树
+    public class Solution39 {
+        class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+
+            }
+
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String Serialize(TreeNode root) {
+            if (root == null) {
+                stringBuilder.append("#");
+                return stringBuilder.toString();
+            }
+            stringBuilder.append(root.val).append("!");
+            Serialize(root.left);
+            Serialize(root.right);
+            return stringBuilder.toString();
+        }
+
+        int index = 0;
+
+        TreeNode Deserialize(String str) {
+            if (str.charAt(index) == '#') {
+                index++;
+                return null;
+            }
+            int val = 0;
+            while (str.charAt(index) != '!' && index != str.length()) {
+                val *= 10;
+                val += str.charAt(index) - '0';
+                index++;
+            }
+            TreeNode treeNode = new TreeNode(val);
+            if (index == str.length()) {
+                return treeNode;
+            } else {
+                index++;
+            }
+            treeNode.left = Deserialize(str);
+            treeNode.right = Deserialize(str);
+            return treeNode;
+        }
+    }
+
+    //BM40 重建二叉树
+    public class Solution40 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param preOrder int整型一维数组
+         * @param vinOrder int整型一维数组
+         * @return TreeNode类
+         */
+        public TreeNode reConstructBinaryTree(int[] preOrder, int[] vinOrder) {
+            // write code here
+            //后序数组出现的位置
+            HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
+            for(int i=0;i<vinOrder.length;i++){
+                integerIntegerHashMap.put(vinOrder[i],i);
+            }
+            return hebing(preOrder,0,preOrder.length-1,vinOrder,0,vinOrder.length-1,integerIntegerHashMap);
+        }
+        public TreeNode hebing(int[] preOrder,int preStart,int preEnd,int[] vinOrder,int vinstart,int vinEnd,HashMap<Integer, Integer> integerIntegerHashMap){
+            if(preStart>preEnd||vinstart>vinEnd){
+                return null;
+            }
+            int val = preOrder[preStart];
+            TreeNode root=new TreeNode(val);
+            Integer midIndex = integerIntegerHashMap.get(val);
+            root.left=hebing(preOrder,preStart+1,midIndex-vinstart+preStart,vinOrder,vinstart,midIndex,integerIntegerHashMap);
+            root.right=hebing(preOrder,midIndex-vinstart+preStart+1,preEnd,vinOrder,midIndex+1,vinEnd,integerIntegerHashMap);
+            return root;
+        }
+    }
+
+    //BM41 输出二叉树的右视图
+    public class Solution41 {
+        public class TreeNode{
+            int val;
+            TreeNode left;
+            TreeNode right;
+            public TreeNode(int val){
+                this.val=val;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 求二叉树的右视图
+         * @param preOrder int整型一维数组 先序遍历
+         * @param inOrder int整型一维数组 中序遍历
+         * @return int整型一维数组
+         */
+        public int[] solve (int[] preOrder, int[] inOrder) {
+            // write code here
+            //后序位置
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for(int i=0;i<inOrder.length;i++){
+                map.put(inOrder[i],i);
+            }
+            TreeNode treeNode = buildTree(preOrder, 0, preOrder.length-1, inOrder, 0, inOrder.length-1, map);
+            ArrayList<Integer> integers = new ArrayList<>();
+            ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
+            treeNodes.add(treeNode);
+            while (!treeNodes.isEmpty()){
+                int len = treeNodes.size();
+                for(int i=0;i<len;i++){
+                    TreeNode treeNode1 = treeNodes.removeFirst();
+                    if(treeNode1.left!=null){
+                        treeNodes.add(treeNode1.left);
+                    }
+                    if(treeNode1.right!=null){
+                        treeNodes.add(treeNode1.right);
+                    }
+                    if(i==len-1){
+                        integers.add(treeNode1.val);
+                    }
+                }
+            }
+            int[] res = new int[integers.size()];
+            for (int i=0;i<integers.size();i++){
+                res[i]=integers.get(i);
+            }
+            return res;
+        }
+        public TreeNode buildTree(int[] preOrder, int preStart,int preEnd,int[] inOrder,int inStart,int inEnd,HashMap<Integer,Integer> map){
+            if(preStart>preEnd||inStart>inEnd){
+                return null;
+            }
+            int val = preOrder[preStart];
+            TreeNode treeNode = new TreeNode(val);
+            Integer midIndex = map.get(val);
+            treeNode.left=buildTree(preOrder,preStart+1,midIndex-inStart+preStart,inOrder,inStart,midIndex-1,map);
+            treeNode.right=buildTree(preOrder,midIndex-inStart+preStart+1,preEnd,inOrder,midIndex+1,inEnd,map);
+            return treeNode;
         }
     }
 }
