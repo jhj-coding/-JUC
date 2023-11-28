@@ -115,3 +115,22 @@ create trigger audit_log after insert on employees_test for each row begin
     values
         (new.id, new.name);
 end
+
+#SQL236 删除emp_no重复的记录,只保留最小的id对应的记录.
+DELETE from
+    titles_test
+where
+        id not in (select * from (
+                                     select
+                                         MIN(id)
+                                     from
+                                         titles_test
+                                     group by
+                                         emp_no
+                                 )a);
+
+#SQL237 将所有to_date为9999-01-01的全部更新为NULL
+update titles_test set to_date =null,from_date='2001-01-01' where to_date='9999-01-01'
+
+#SQL238 将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005
+update titles_test set emp_no =replace(emp_no,10001,10005) where id=5

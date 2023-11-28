@@ -204,3 +204,20 @@ from
             question_practice_detail
     ) as t2 on t1.device_id = t2.device_id
         and t2.date = DATE_ADD (t1.date, interval 1 day);
+
+#SQL30 统计每种性别的人数
+select substring_index(profile,',',-1), count(*) from user_submit group by substring_index(profile,',',-1)
+
+#SQL31 提取博客URL中的用户名
+select
+    device_id,substring_index (blog_url, '/', -1)
+from
+    user_submit
+
+#SQL32 截取出年龄
+select
+    substring_index(substring_index (profile, ',', -2),',', 1) as age,
+    count(*) as number
+from
+    user_submit
+group by age
