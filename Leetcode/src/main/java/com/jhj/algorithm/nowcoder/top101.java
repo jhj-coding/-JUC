@@ -1694,84 +1694,175 @@ public class top101 {
             // write code here
             //后序数组出现的位置
             HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
-            for(int i=0;i<vinOrder.length;i++){
-                integerIntegerHashMap.put(vinOrder[i],i);
+            for (int i = 0; i < vinOrder.length; i++) {
+                integerIntegerHashMap.put(vinOrder[i], i);
             }
-            return hebing(preOrder,0,preOrder.length-1,vinOrder,0,vinOrder.length-1,integerIntegerHashMap);
+            return hebing(preOrder, 0, preOrder.length - 1, vinOrder, 0, vinOrder.length - 1, integerIntegerHashMap);
         }
-        public TreeNode hebing(int[] preOrder,int preStart,int preEnd,int[] vinOrder,int vinstart,int vinEnd,HashMap<Integer, Integer> integerIntegerHashMap){
-            if(preStart>preEnd||vinstart>vinEnd){
+
+        public TreeNode hebing(int[] preOrder, int preStart, int preEnd, int[] vinOrder, int vinstart, int vinEnd, HashMap<Integer, Integer> integerIntegerHashMap) {
+            if (preStart > preEnd || vinstart > vinEnd) {
                 return null;
             }
             int val = preOrder[preStart];
-            TreeNode root=new TreeNode(val);
+            TreeNode root = new TreeNode(val);
             Integer midIndex = integerIntegerHashMap.get(val);
-            root.left=hebing(preOrder,preStart+1,midIndex-vinstart+preStart,vinOrder,vinstart,midIndex,integerIntegerHashMap);
-            root.right=hebing(preOrder,midIndex-vinstart+preStart+1,preEnd,vinOrder,midIndex+1,vinEnd,integerIntegerHashMap);
+            root.left = hebing(preOrder, preStart + 1, midIndex - vinstart + preStart, vinOrder, vinstart, midIndex, integerIntegerHashMap);
+            root.right = hebing(preOrder, midIndex - vinstart + preStart + 1, preEnd, vinOrder, midIndex + 1, vinEnd, integerIntegerHashMap);
             return root;
         }
     }
 
     //BM41 输出二叉树的右视图
     public class Solution41 {
-        public class TreeNode{
+        public class TreeNode {
             int val;
             TreeNode left;
             TreeNode right;
-            public TreeNode(int val){
-                this.val=val;
+
+            public TreeNode(int val) {
+                this.val = val;
             }
         }
+
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
+         * <p>
          * 求二叉树的右视图
+         *
          * @param preOrder int整型一维数组 先序遍历
-         * @param inOrder int整型一维数组 中序遍历
+         * @param inOrder  int整型一维数组 中序遍历
          * @return int整型一维数组
          */
-        public int[] solve (int[] preOrder, int[] inOrder) {
+        public int[] solve(int[] preOrder, int[] inOrder) {
             // write code here
             //后序位置
             HashMap<Integer, Integer> map = new HashMap<>();
-            for(int i=0;i<inOrder.length;i++){
-                map.put(inOrder[i],i);
+            for (int i = 0; i < inOrder.length; i++) {
+                map.put(inOrder[i], i);
             }
-            TreeNode treeNode = buildTree(preOrder, 0, preOrder.length-1, inOrder, 0, inOrder.length-1, map);
+            TreeNode treeNode = buildTree(preOrder, 0, preOrder.length - 1, inOrder, 0, inOrder.length - 1, map);
             ArrayList<Integer> integers = new ArrayList<>();
             ArrayDeque<TreeNode> treeNodes = new ArrayDeque<>();
             treeNodes.add(treeNode);
-            while (!treeNodes.isEmpty()){
+            while (!treeNodes.isEmpty()) {
                 int len = treeNodes.size();
-                for(int i=0;i<len;i++){
+                for (int i = 0; i < len; i++) {
                     TreeNode treeNode1 = treeNodes.removeFirst();
-                    if(treeNode1.left!=null){
+                    if (treeNode1.left != null) {
                         treeNodes.add(treeNode1.left);
                     }
-                    if(treeNode1.right!=null){
+                    if (treeNode1.right != null) {
                         treeNodes.add(treeNode1.right);
                     }
-                    if(i==len-1){
+                    if (i == len - 1) {
                         integers.add(treeNode1.val);
                     }
                 }
             }
             int[] res = new int[integers.size()];
-            for (int i=0;i<integers.size();i++){
-                res[i]=integers.get(i);
+            for (int i = 0; i < integers.size(); i++) {
+                res[i] = integers.get(i);
             }
             return res;
         }
-        public TreeNode buildTree(int[] preOrder, int preStart,int preEnd,int[] inOrder,int inStart,int inEnd,HashMap<Integer,Integer> map){
-            if(preStart>preEnd||inStart>inEnd){
+
+        public TreeNode buildTree(int[] preOrder, int preStart, int preEnd, int[] inOrder, int inStart, int inEnd, HashMap<Integer, Integer> map) {
+            if (preStart > preEnd || inStart > inEnd) {
                 return null;
             }
             int val = preOrder[preStart];
             TreeNode treeNode = new TreeNode(val);
             Integer midIndex = map.get(val);
-            treeNode.left=buildTree(preOrder,preStart+1,midIndex-inStart+preStart,inOrder,inStart,midIndex-1,map);
-            treeNode.right=buildTree(preOrder,midIndex-inStart+preStart+1,preEnd,inOrder,midIndex+1,inEnd,map);
+            treeNode.left = buildTree(preOrder, preStart + 1, midIndex - inStart + preStart, inOrder, inStart, midIndex - 1, map);
+            treeNode.right = buildTree(preOrder, midIndex - inStart + preStart + 1, preEnd, inOrder, midIndex + 1, inEnd, map);
             return treeNode;
+        }
+    }
+
+    //BM42 用两个栈实现队列
+    public class Solution42 {
+        Stack<Integer> stack1 = new Stack<Integer>();
+        Stack<Integer> stack2 = new Stack<Integer>();
+
+        public void push(int node) {
+            stack1.add(node);
+        }
+
+        public int pop() {
+            if(stack2.isEmpty()){
+                while (!stack1.isEmpty()){
+                    stack2.add(stack1.pop());
+                }
+            }
+            return stack2.pop();
+        }
+    }
+
+    //BM43 包含min函数的栈
+    public class Solution43 {
+
+        Stack<Integer> stack=new Stack<Integer>();
+        Stack<Integer> stack1=new Stack<Integer>();
+        public void push(int node) {
+            stack.push(node);
+            if(stack1.isEmpty()||stack1.peek()>node){
+                stack1.push(node);
+            }else{
+                stack1.push(stack1.peek());
+            }
+        }
+
+        public void pop() {
+            stack.pop();
+            stack1.pop();
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int min() {
+            return stack1.peek();
+        }
+    }
+
+    //BM44 有效括号序列
+    public class Solution44 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @return bool布尔型
+         */
+        public boolean isValid (String s) {
+            // write code here
+            HashMap<Character, Character> map = new HashMap<>();
+            map.put(')','(');
+            map.put(']','[');
+            map.put('}','{');
+            HashSet<Character> set = new HashSet<>();
+            set.add('(');
+            set.add('[');
+            set.add('{');
+            ArrayDeque<Character> characters = new ArrayDeque<>();
+            for(int i=0;i<s.length();i++){
+                char c = s.charAt(i);
+                if(set.contains(c)){
+                    characters.addLast(c);
+                }else{
+                    Character character = map.get(c);
+                    if(characters.isEmpty()){
+                        return false;
+                    }
+                    Character character1 = characters.removeLast();
+                    if(character!=character1){
+                        return false;
+                    }
+                }
+            }
+            return characters.isEmpty();
         }
     }
 }

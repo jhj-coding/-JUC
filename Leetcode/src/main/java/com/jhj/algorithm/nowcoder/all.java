@@ -1168,6 +1168,70 @@ public class all {
             return nums.length+1;
         }
     }
+
+    //NC31 第一个只出现一次的字符
+    public class Solution31 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param str string字符串
+         * @return int整型
+         */
+        public int FirstNotRepeatingChar (String str) {
+            // write code here
+            HashMap<Character, Integer> mapChars = new HashMap<>();
+            HashMap<Character, Integer> mapIndexs = new HashMap<>();
+            for(int i=0;i<str.length();i++){
+                char c = str.charAt(i);
+                Integer integer = mapChars.get(c);
+                if(integer==null){
+                    mapChars.put(c,1);
+                    mapIndexs.put(c,i);
+                }else {
+                    mapChars.put(c,integer+1);
+                }
+            }
+            int j=Integer.MAX_VALUE;
+            for (Map.Entry<Character, Integer> e:mapChars.entrySet()){
+                if(e.getValue()==1){
+                    j=Math.min(j,mapIndexs.get(e.getKey()));
+                }
+            }
+            if(j!=Integer.MAX_VALUE){
+                return j;
+            }else {
+                return -1;
+            }
+        }
+    }
+
+    //NC32 求平方根
+    public class Solution32 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param x int整型
+         * @return int整型
+         */
+        public int sqrt (int x) {
+            // write code here
+            int left=1;
+            int right=x;
+            while (left<=right){
+                int mid=(left+right)/2;
+                if((long)mid*mid>x){
+                    right=mid-1;
+                }else if((long)mid*mid<x){
+                    left=mid+1;
+                }else{
+                    return mid;
+                }
+            }
+            return right;
+        }
+    }
 }
 
 
