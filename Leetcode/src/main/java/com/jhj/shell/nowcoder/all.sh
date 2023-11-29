@@ -148,3 +148,6 @@ grep "23/Apr/2020:2[0-3]" | awk '{print $1}' | sort | uniq | wc -l
 
 #SHELL25 nginx日志分析3-统计访问3次以上的IP
 awk '{print($1)}' | sort | uniq -c|sort -r| awk '{if($1>3) print $1,$2}'
+
+#SHELL26 Nginx日志分析4-查询某个IP的详细访问情况
+grep 192.168.1.22 | awk '{print($7)}' | sort | uniq -c | sort -r | awk '{print($1,$2)}'
