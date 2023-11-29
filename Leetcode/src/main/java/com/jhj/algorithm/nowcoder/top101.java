@@ -1865,4 +1865,106 @@ public class top101 {
             return characters.isEmpty();
         }
     }
+
+    //BM45 滑动窗口的最大值
+    public class Solution45 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param num int整型一维数组
+         * @param size int整型
+         * @return int整型ArrayList
+         */
+        public ArrayList<Integer> maxInWindows (int[] num, int size) {
+            // write code here
+            ArrayList<Integer> res=new ArrayList<Integer>();
+            if(size>num.length){
+                return res;
+            }
+            if(size==0){
+                return res;
+            }
+            ArrayDeque<Integer> deque = new ArrayDeque<>();
+            int i=0;
+            int j=0;
+            while (j<size){
+                while (!deque.isEmpty()&&num[j]>num[deque.peekFirst()]){
+                    deque.removeFirst();
+                }
+                if(deque.isEmpty()||num[j]<num[deque.peekFirst()]){
+                    deque.addLast(j);
+                }
+                j++;
+            }
+            while (j<num.length){
+                Integer integer = deque.peekFirst();
+                res.add(num[integer]);
+                if(i==integer){
+                    deque.removeFirst();
+                }
+                while (!deque.isEmpty()&&num[j]>num[deque.peekFirst()]){
+                    deque.removeFirst();
+                }
+                if(deque.isEmpty()||num[j]<num[deque.peekFirst()]){
+                    deque.addLast(j);
+                }
+                i++;
+                j++;
+            }
+            int max=Integer.MIN_VALUE;
+            while(i<j){
+                max=Math.max(num[i],max);
+            }
+            res.add(max);
+            return res;
+        }
+    }
+
+    //BM46 最小的K个数
+    public class Solution46 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param input int整型一维数组
+         * @param k int整型
+         * @return int整型ArrayList
+         */
+        public ArrayList<Integer> GetLeastNumbers_Solution (int[] input, int k) {
+            // write code here
+            ArrayList<Integer> res=new ArrayList<Integer>();
+            PriorityQueue<Integer> queue = new PriorityQueue<>();
+            for(int i=0;i<input.length;i++){
+                queue.add(input[i]);
+            }
+            int count=0;
+            while (!queue.isEmpty()){
+                if(count==k){
+                    break;
+                }
+                res.add(queue.remove());
+                count++;
+            }
+            return res;
+        }
+    }
+
+    //BM47 寻找第K大
+    public class Solution47 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param a int整型一维数组
+         * @param n int整型
+         * @param K int整型
+         * @return int整型
+         */
+        public int findKth (int[] a, int n, int K) {
+            // write code here
+            Arrays.sort(a);
+            return a[n-K];
+        }
+    }
 }

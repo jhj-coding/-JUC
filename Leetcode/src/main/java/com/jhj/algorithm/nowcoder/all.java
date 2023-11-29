@@ -1003,27 +1003,26 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param n int整型
          * @return string字符串ArrayList
          */
-        public ArrayList<String> generateParenthesis (int n) {
+        public ArrayList<String> generateParenthesis(int n) {
             // write code here
             ArrayList<String> res = new ArrayList<>();
-            recursion(n,n,new String(),res);
+            recursion(n, n, new String(), res);
             return res;
         }
 
-        public void recursion(int left,int right,String path,ArrayList<String> res){
-            if(left==0&&right==0){
+        public void recursion(int left, int right, String path, ArrayList<String> res) {
+            if (left == 0 && right == 0) {
                 res.add(new String(path));
             }
-            if(left>0){
-                recursion(left-1,right,path+"(",res);
+            if (left > 0) {
+                recursion(left - 1, right, path + "(", res);
             }
 
-            if(right>0 && right>left){
-                recursion(left,right-1,path+")",res);
+            if (right > 0 && right > left) {
+                recursion(left, right - 1, path + ")", res);
             }
         }
     }
@@ -1033,29 +1032,30 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param S int整型一维数组
-         * @return int整型ArrayList<ArrayList<>>
+         * @return int整型ArrayList<ArrayList <>>
          */
-        ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
-        public ArrayList<ArrayList<Integer>> subsets (int[] S) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+
+        public ArrayList<ArrayList<Integer>> subsets(int[] S) {
             // write code here
             Arrays.sort(S);
             res.add(new ArrayList<>());
-            for(int i=1;i<=S.length;i++){
-                huisu(0,i,S,new ArrayList<Integer>());
+            for (int i = 1; i <= S.length; i++) {
+                huisu(0, i, S, new ArrayList<Integer>());
             }
             return res;
         }
-        public void huisu(int startIndex,int k,int[] S,ArrayList<Integer> path){
-            if(path.size()==k){
+
+        public void huisu(int startIndex, int k, int[] S, ArrayList<Integer> path) {
+            if (path.size() == k) {
                 res.add(new ArrayList<>(path));
                 return;
             }
-            for(int j=startIndex;j<S.length;j++){
+            for (int j = startIndex; j < S.length; j++) {
                 path.add(S[j]);
-                huisu(j+1,k,S,path);
-                path.remove(path.size()-1);
+                huisu(j + 1, k, S, path);
+                path.remove(path.size() - 1);
             }
         }
     }
@@ -1065,54 +1065,53 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param S string字符串
          * @param T string字符串
          * @return string字符串
          */
-        public String minWindow (String S, String T) {
+        public String minWindow(String S, String T) {
             // write code here
-            int[] map=new int[128];
-            for(int i=0;i<T.length();i++){
-                map[T.charAt(i)-'0']--;
+            int[] map = new int[128];
+            for (int i = 0; i < T.length(); i++) {
+                map[T.charAt(i) - '0']--;
             }
-            int left=0;
-            int right=0;
-            int len=S.length()+1;
-            int resLeft=-1;
-            while (right<S.length()){
+            int left = 0;
+            int right = 0;
+            int len = S.length() + 1;
+            int resLeft = -1;
+            while (right < S.length()) {
                 char c = S.charAt(right);
-                map[c-'0']++;
-                boolean flag=true;
-                for(int i=0;i<map.length;i++){
-                    if(map[i]<0){
-                        flag=false;
+                map[c - '0']++;
+                boolean flag = true;
+                for (int i = 0; i < map.length; i++) {
+                    if (map[i] < 0) {
+                        flag = false;
                         break;
                     }
                 }
-                while (flag){
-                    if(len>right-left+1){
-                        len=right-left+1;
-                        resLeft=left;
+                while (flag) {
+                    if (len > right - left + 1) {
+                        len = right - left + 1;
+                        resLeft = left;
                     }
                     char c1 = S.charAt(left);
 
-                    map[c1-'0']--;
+                    map[c1 - '0']--;
                     left++;
-                    flag=true;
-                    for(int i=0;i<map.length;i++){
-                        if(map[i]<0){
-                            flag=false;
+                    flag = true;
+                    for (int i = 0; i < map.length; i++) {
+                        if (map[i] < 0) {
+                            flag = false;
                             break;
                         }
                     }
                 }
                 right++;
             }
-            if(resLeft==-1){
+            if (resLeft == -1) {
                 return "";
-            }else{
-                return S.substring(resLeft,resLeft+len);
+            } else {
+                return S.substring(resLeft, resLeft + len);
             }
         }
     }
@@ -1122,18 +1121,17 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param target int整型
-         * @param array int整型二维数组
+         * @param array  int整型二维数组
          * @return bool布尔型
          */
-        public boolean Find (int target, int[][] array) {
+        public boolean Find(int target, int[][] array) {
             // write code here
-            int i=0;
-            int hang=array.length-1;
-            int lie=array[0].length-1;
-            while (i<=hang&&lie>=0){
-                if(array[i][lie]==target){
+            int i = 0;
+            int hang = array.length - 1;
+            int lie = array[0].length - 1;
+            while (i <= hang && lie >= 0) {
+                if (array[i][lie] == target) {
                     return true;
                 } else if (array[i][lie] > target) {
                     lie--;
@@ -1150,22 +1148,21 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param nums int整型一维数组
          * @return int整型
          */
-        public int minNumberDisappeared (int[] nums) {
+        public int minNumberDisappeared(int[] nums) {
             // write code here
             HashSet<Integer> integers = new HashSet<>();
-            for (int i=0;i<nums.length;i++){
+            for (int i = 0; i < nums.length; i++) {
                 integers.add(nums[i]);
             }
-            for(int i=1;i<nums.length+1;i++){
-                if(!integers.contains(i)){
+            for (int i = 1; i < nums.length + 1; i++) {
+                if (!integers.contains(i)) {
                     return i;
                 }
             }
-            return nums.length+1;
+            return nums.length + 1;
         }
     }
 
@@ -1174,33 +1171,32 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param str string字符串
          * @return int整型
          */
-        public int FirstNotRepeatingChar (String str) {
+        public int FirstNotRepeatingChar(String str) {
             // write code here
             HashMap<Character, Integer> mapChars = new HashMap<>();
             HashMap<Character, Integer> mapIndexs = new HashMap<>();
-            for(int i=0;i<str.length();i++){
+            for (int i = 0; i < str.length(); i++) {
                 char c = str.charAt(i);
                 Integer integer = mapChars.get(c);
-                if(integer==null){
-                    mapChars.put(c,1);
-                    mapIndexs.put(c,i);
-                }else {
-                    mapChars.put(c,integer+1);
+                if (integer == null) {
+                    mapChars.put(c, 1);
+                    mapIndexs.put(c, i);
+                } else {
+                    mapChars.put(c, integer + 1);
                 }
             }
-            int j=Integer.MAX_VALUE;
-            for (Map.Entry<Character, Integer> e:mapChars.entrySet()){
-                if(e.getValue()==1){
-                    j=Math.min(j,mapIndexs.get(e.getKey()));
+            int j = Integer.MAX_VALUE;
+            for (Map.Entry<Character, Integer> e : mapChars.entrySet()) {
+                if (e.getValue() == 1) {
+                    j = Math.min(j, mapIndexs.get(e.getKey()));
                 }
             }
-            if(j!=Integer.MAX_VALUE){
+            if (j != Integer.MAX_VALUE) {
                 return j;
-            }else {
+            } else {
                 return -1;
             }
         }
@@ -1211,25 +1207,98 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param x int整型
          * @return int整型
          */
-        public int sqrt (int x) {
+        public int sqrt(int x) {
             // write code here
-            int left=1;
-            int right=x;
-            while (left<=right){
-                int mid=(left+right)/2;
-                if((long)mid*mid>x){
-                    right=mid-1;
-                }else if((long)mid*mid<x){
-                    left=mid+1;
-                }else{
+            int left = 1;
+            int right = x;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if ((long) mid * mid > x) {
+                    right = mid - 1;
+                } else if ((long) mid * mid < x) {
+                    left = mid + 1;
+                } else {
                     return mid;
                 }
             }
             return right;
+        }
+    }
+
+    //NC33 合并两个排序的链表
+    public class Solution33 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param pHead1 ListNode类
+         * @param pHead2 ListNode类
+         * @return ListNode类
+         */
+        public ListNode Merge(ListNode pHead1, ListNode pHead2) {
+            // write code here
+            ListNode cur1=pHead1;
+            ListNode cur2=pHead2;
+            ListNode pre =new ListNode(-1);
+            ListNode curPre=pre;
+            while (cur1!=null || cur2!=null){
+                if(cur1==null){
+                    curPre.next=new ListNode(cur2.val);
+                    cur2=cur2.next;
+                }else if(cur2==null){
+                    curPre.next=new ListNode(cur1.val);
+                    cur1=cur1.next;
+                }else{
+                    if(cur1.val<cur2.val){
+                        curPre.next=new ListNode(cur1.val);
+                        cur1=cur1.next;
+                    }else{
+                        curPre.next=new ListNode(cur2.val);
+                        cur2=cur2.next;
+                    }
+                }
+                curPre=curPre.next;
+            }
+            return pre.next;
+        }
+    }
+
+    //NC34 不同路径的数目(一)
+    public class Solution34 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param m int整型
+         * @param n int整型
+         * @return int整型
+         */
+        public int uniquePaths (int m, int n) {
+            // write code here
+            int [][] f=new int[m][n];
+            for(int i=0;i<m;i++){
+                f[i][0]=1;
+            }
+            for(int i=0;i<n;i++){
+                f[0][i]=1;
+            }
+            for(int i=1;i<m;i++){
+                for (int j=1;j<n;j++){
+                    f[i][j]=f[i-1][j]+f[i][j-1];
+                }
+            }
+            return f[m-1][n-1];
         }
     }
 }
