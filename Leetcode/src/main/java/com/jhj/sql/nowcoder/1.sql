@@ -221,3 +221,84 @@ select
 from
     user_submit
 group by age
+
+#SQL33 找出每个学校GPA最低的同学
+# 窗口函数 https://zhuanlan.zhihu.com/p/92654574
+SELECT device_id,university,gpa FROM
+    (SELECT device_id,university,gpa,
+            RANK() over (PARTITION BY university ORDER BY gpa) rk FROM user_profile) a
+WHERE a.rk=1;
+
+select
+    device_id,
+    university,
+    gpa
+from
+    user_profile,
+    (
+        select
+            university as university1,
+            min(gpa) as gpa1
+        from
+            user_profile
+        group by
+            university
+    ) as a
+where
+        user_profile.university = a.university1
+  and user_profile.gpa = a.gpa1
+order by
+    user_profile.university
+
+#SQL34 统计复旦用户8月练题情况
+select
+    d.device_id,
+    d.university,
+    case
+        when c.question_cnt is null then 0
+        when c.question_cnt is not null then c.question_cnt
+    end question_cnt,
+    case
+        when c.right_question_cnt is null then 0
+        when c.right_question_cnt is not null then c.right_question_cnt
+    end right_question_cnt
+from
+    (
+        select
+            device_id,
+            university
+        from
+            user_profile
+        where
+            user_profile.university = '复旦大学'
+    ) as d
+    left join (
+        select
+            a.device_id,
+            a.question_cnt,
+            b.right_question_cnt
+        from
+            (
+                select
+                    device_id,
+                    count(*) as question_cnt
+                from
+                    question_practice_detail
+                where
+                    month (date) = 8
+                group by
+                    device_id
+            ) as a
+            left join (
+                select
+                    device_id,
+                    count(*) as right_question_cnt
+                from
+                    question_practice_detail
+                where
+                    month (date) = 8
+                    and result = 'right'
+                group by
+                    device_id
+            ) as b on a.device_id = b.device_id
+    ) as c on d.device_id = c.device_id

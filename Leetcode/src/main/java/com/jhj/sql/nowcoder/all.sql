@@ -134,3 +134,17 @@ update titles_test set to_date =null,from_date='2001-01-01' where to_date='9999-
 
 #SQL238 将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005
 update titles_test set emp_no =replace(emp_no,10001,10005) where id=5
+
+#SQL239 将titles_test表名修改为titles_2017
+alter table titles_test RENAME to titles_2017
+
+#SQL240 在audit表上创建外键约束,其emp_no对应employees_test表的主键id
+ALTER TABLE audit
+    ADD CONSTRAINT FOREIGN KEY (emp_no)
+        REFERENCES employees_test(id);
+
+#SQL242 将所有获取奖金的员工当前的薪水增加10%
+update salaries set salary=salary*1.1 where salaries.to_date='9999-01-01' and emp_no in (select emp_no from emp_bonus)
+
+#SQL244 将employees表中的所有员工的last_name和first_name通过引号连接起来
+select concat(last_name,"\'",first_name) from employees
