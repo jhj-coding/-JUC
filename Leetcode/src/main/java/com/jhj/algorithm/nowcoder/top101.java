@@ -1987,4 +1987,82 @@ public class top101 {
             }
         }
     }
+
+    //BM49 表达式求值
+    public class Solution49 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 返回表达式的值
+         * @param s string字符串 待计算的表达式
+         * @return int整型
+         */
+        public int solve (String s) {
+            // write code here
+            s = s.replaceAll(" ", "");
+            HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+            map.put('+', 1);
+            map.put('-', 1);
+            map.put('*', 2);
+            ArrayDeque<Integer> nums = new ArrayDeque<>();
+            nums.addLast(0);
+            ArrayDeque<Character> ops = new ArrayDeque<>();
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (c == '(') {
+                    ops.add(c);
+                } else if (c == ')') {
+                    //计算到下一个左括号位置
+                    while (!ops.isEmpty()) {
+                        if (ops.peekLast() != '(') {
+                            calc(nums, ops);
+                        } else {
+                            ops.removeLast();
+                            break;
+                        }
+                    }
+                } else {
+                    if (c >= '0' && c <= '9') {
+                        int u = 0;
+                        int j = i;
+                        while (j < s.length() && s.charAt(j) >= '0' && s.charAt(j) <= '9') {
+                            u = u * 10 + (s.charAt(j) - '0');
+                            j++;
+                        }
+                        nums.addLast(u);
+                        i = j - 1;
+                    } else {
+                        //计算
+                        if (i > 0 && (s.charAt(i - 1) == '(' || s.charAt(i - 1) == '+' ||
+                                s.charAt(i - 1) == '-')) {
+                            nums.addLast(0);
+                        }
+                        while (!ops.isEmpty() && ops.peekLast() != '(') {
+                            Character prePos = ops.peekLast();
+                            if (map.get(prePos) >= map.get(c)) {
+                                calc(nums, ops);
+                            } else {
+                                break;
+                            }
+                        }
+                        ops.addLast(c);
+                    }
+                }
+            }
+            while (!ops.isEmpty() && ops.peekLast() != '(') calc(nums, ops);
+            return nums.peekLast();
+        }
+
+        void calc(Deque<Integer> nums, Deque<Character> ops) {
+            if (nums.isEmpty() || nums.size() < 2) return;
+            if (ops.isEmpty()) return;
+            int b = nums.removeLast(), a = nums.removeLast();
+            char op = ops.removeLast();
+            int ans = 0;
+            if (op == '+') ans = a + b;
+            else if (op == '-') ans = a - b;
+            else if (op == '*') ans = a * b;
+            nums.addLast(ans);
+        }
+    }
 }
