@@ -302,3 +302,30 @@ from
                     device_id
             ) as b on a.device_id = b.device_id
     ) as c on d.device_id = c.device_id
+
+#SQL35 浙大不同难度题目的正确率
+select
+    c.difficult_level as difficult_level,
+    sum(if(c.result='right', 1, 0))/count(*) as correct_rate
+from
+    (
+        select
+            b.result,
+            b.difficult_level
+        from
+            user_profile
+                inner join (
+                select
+                    question_practice_detail.device_id,
+                    question_practice_detail.question_id,
+                    question_practice_detail.result,
+                    question_detail.difficult_level
+                from
+                    question_practice_detail
+                        left join question_detail on question_practice_detail.question_id = question_detail.question_id
+            ) as b on user_profile.device_id = b.device_id
+                and user_profile.university = "浙江大学"
+    ) as c group by c.difficult_level order by correct_rate
+
+#SQL39 21年8月份练题总数
+select count(distinct device_id),count(question_id) from question_practice_detail where month(date)=8
