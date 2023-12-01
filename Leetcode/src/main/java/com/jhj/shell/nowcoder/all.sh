@@ -151,3 +151,6 @@ awk '{print($1)}' | sort | uniq -c|sort -r| awk '{if($1>3) print $1,$2}'
 
 #SHELL26 Nginx日志分析4-查询某个IP的详细访问情况
 grep 192.168.1.22 | awk '{print($7)}' | sort | uniq -c | sort -r | awk '{print($1,$2)}'
+
+#SHELL27 nginx日志分析5-统计爬虫抓取404的次数
+grep 404 | grep http://www.baidu.com/search/spider.html | wc -l
