@@ -1790,8 +1790,8 @@ public class top101 {
         }
 
         public int pop() {
-            if(stack2.isEmpty()){
-                while (!stack1.isEmpty()){
+            if (stack2.isEmpty()) {
+                while (!stack1.isEmpty()) {
                     stack2.add(stack1.pop());
                 }
             }
@@ -1802,13 +1802,14 @@ public class top101 {
     //BM43 包含min函数的栈
     public class Solution43 {
 
-        Stack<Integer> stack=new Stack<Integer>();
-        Stack<Integer> stack1=new Stack<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack1 = new Stack<Integer>();
+
         public void push(int node) {
             stack.push(node);
-            if(stack1.isEmpty()||stack1.peek()>node){
+            if (stack1.isEmpty() || stack1.peek() > node) {
                 stack1.push(node);
-            }else{
+            } else {
                 stack1.push(stack1.peek());
             }
         }
@@ -1832,32 +1833,31 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param s string字符串
          * @return bool布尔型
          */
-        public boolean isValid (String s) {
+        public boolean isValid(String s) {
             // write code here
             HashMap<Character, Character> map = new HashMap<>();
-            map.put(')','(');
-            map.put(']','[');
-            map.put('}','{');
+            map.put(')', '(');
+            map.put(']', '[');
+            map.put('}', '{');
             HashSet<Character> set = new HashSet<>();
             set.add('(');
             set.add('[');
             set.add('{');
             ArrayDeque<Character> characters = new ArrayDeque<>();
-            for(int i=0;i<s.length();i++){
+            for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
-                if(set.contains(c)){
+                if (set.contains(c)) {
                     characters.addLast(c);
-                }else{
+                } else {
                     Character character = map.get(c);
-                    if(characters.isEmpty()){
+                    if (characters.isEmpty()) {
                         return false;
                     }
                     Character character1 = characters.removeLast();
-                    if(character!=character1){
+                    if (character != character1) {
                         return false;
                     }
                 }
@@ -1871,50 +1871,49 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
-         * @param num int整型一维数组
+         * @param num  int整型一维数组
          * @param size int整型
          * @return int整型ArrayList
          */
-        public ArrayList<Integer> maxInWindows (int[] num, int size) {
+        public ArrayList<Integer> maxInWindows(int[] num, int size) {
             // write code here
-            ArrayList<Integer> res=new ArrayList<Integer>();
-            if(size>num.length){
+            ArrayList<Integer> res = new ArrayList<Integer>();
+            if (size > num.length) {
                 return res;
             }
-            if(size==0){
+            if (size == 0) {
                 return res;
             }
             ArrayDeque<Integer> deque = new ArrayDeque<>();
-            int i=0;
-            int j=0;
-            while (j<size){
-                while (!deque.isEmpty()&&num[j]>num[deque.peekFirst()]){
+            int i = 0;
+            int j = 0;
+            while (j < size) {
+                while (!deque.isEmpty() && num[j] > num[deque.peekFirst()]) {
                     deque.removeFirst();
                 }
-                if(deque.isEmpty()||num[j]<num[deque.peekFirst()]){
+                if (deque.isEmpty() || num[j] < num[deque.peekFirst()]) {
                     deque.addLast(j);
                 }
                 j++;
             }
-            while (j<num.length){
+            while (j < num.length) {
                 Integer integer = deque.peekFirst();
                 res.add(num[integer]);
-                if(i==integer){
+                if (i == integer) {
                     deque.removeFirst();
                 }
-                while (!deque.isEmpty()&&num[j]>num[deque.peekFirst()]){
+                while (!deque.isEmpty() && num[j] > num[deque.peekFirst()]) {
                     deque.removeFirst();
                 }
-                if(deque.isEmpty()||num[j]<num[deque.peekFirst()]){
+                if (deque.isEmpty() || num[j] < num[deque.peekFirst()]) {
                     deque.addLast(j);
                 }
                 i++;
                 j++;
             }
-            int max=Integer.MIN_VALUE;
-            while(i<j){
-                max=Math.max(num[i],max);
+            int max = Integer.MIN_VALUE;
+            while (i < j) {
+                max = Math.max(num[i], max);
             }
             res.add(max);
             return res;
@@ -1926,21 +1925,20 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param input int整型一维数组
-         * @param k int整型
+         * @param k     int整型
          * @return int整型ArrayList
          */
-        public ArrayList<Integer> GetLeastNumbers_Solution (int[] input, int k) {
+        public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
             // write code here
-            ArrayList<Integer> res=new ArrayList<Integer>();
+            ArrayList<Integer> res = new ArrayList<Integer>();
             PriorityQueue<Integer> queue = new PriorityQueue<>();
-            for(int i=0;i<input.length;i++){
+            for (int i = 0; i < input.length; i++) {
                 queue.add(input[i]);
             }
-            int count=0;
-            while (!queue.isEmpty()){
-                if(count==k){
+            int count = 0;
+            while (!queue.isEmpty()) {
+                if (count == k) {
                     break;
                 }
                 res.add(queue.remove());
@@ -1955,16 +1953,38 @@ public class top101 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param a int整型一维数组
          * @param n int整型
          * @param K int整型
          * @return int整型
          */
-        public int findKth (int[] a, int n, int K) {
+        public int findKth(int[] a, int n, int K) {
             // write code here
             Arrays.sort(a);
-            return a[n-K];
+            return a[n - K];
+        }
+    }
+
+    //BM48 数据流中的中位数
+    public class Solution48 {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        public void Insert(Integer num) {
+            list.add(num);
+        }
+
+        public Double GetMedian() {
+            list.sort(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o1 - o2;
+                }
+            });
+            int size = list.size();
+            if (size % 2 == 0) {
+                return (list.get(size / 2) + list.get(size / 2 - 1)) / 2.0;
+            } else {
+                return Double.valueOf(list.get(size / 2));
+            }
         }
     }
 }

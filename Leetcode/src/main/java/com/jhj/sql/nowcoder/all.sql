@@ -148,3 +148,12 @@ update salaries set salary=salary*1.1 where salaries.to_date='9999-01-01' and em
 
 #SQL244 将employees表中的所有员工的last_name和first_name通过引号连接起来
 select concat(last_name,"\'",first_name) from employees
+
+#SQL245 查找字符串中逗号出现的次数
+select id, length(string)-length(replace(string,',','')) from strings
+
+#SQL246 获取employees中的first_name
+select first_name from employees order by substring(first_name,length(first_name)-1,2);
+
+#SQL247 按照dept_no进行汇总
+select dept_no,group_concat(emp_no) from dept_emp group by dept_no
