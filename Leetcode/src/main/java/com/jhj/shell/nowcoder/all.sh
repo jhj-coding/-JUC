@@ -154,3 +154,6 @@ grep 192.168.1.22 | awk '{print($7)}' | sort | uniq -c | sort -r | awk '{print($
 
 #SHELL27 nginx日志分析5-统计爬虫抓取404的次数
 grep 404 | grep http://www.baidu.com/search/spider.html | wc -l
+
+#SHELL28 Nginx日志分析6-统计每分钟的请求数
+awk -F':' '{ans[$2":"$3]++}END{for (i in ans){print ans[i],i }}' | sort -r
