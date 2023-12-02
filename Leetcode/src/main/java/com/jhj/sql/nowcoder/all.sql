@@ -157,3 +157,9 @@ select first_name from employees order by substring(first_name,length(first_name
 
 #SQL247 按照dept_no进行汇总
 select dept_no,group_concat(emp_no) from dept_emp group by dept_no
+
+#SQL248 平均工资
+select (sum(salary)-max(salary)-min(salary))/(count(*)-2) from salaries where to_date = '9999-01-01'
+
+#SQL249 分页查询employees表,每5行一页,返回第2页的数据
+select * from employees limit 5 offset 5;
