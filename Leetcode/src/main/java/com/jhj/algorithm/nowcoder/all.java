@@ -1301,6 +1301,45 @@ public class all {
             return f[m-1][n-1];
         }
     }
+
+    //NC35 编辑距离(二)
+    public class Solution35 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * min edit cost
+         * @param str1 string字符串 the string
+         * @param str2 string字符串 the string
+         * @param ic int整型 insert cost
+         * @param dc int整型 delete cost
+         * @param rc int整型 replace cost
+         * @return int整型
+         */
+        public int minEditCost (String str1, String str2, int ic, int dc, int rc) {
+            // write code here
+            int len1=str1.length();
+            int len2=str2.length();
+            int[][] f = new int[len1+1][len2+1];
+            //str2 为0
+            for(int i=1;i<=len1;i++){
+                f[i][0]=i*dc;
+            }
+            //str1 为0 str1 添加
+            for(int i=1;i<=len2;i++){
+                f[0][i]=i*ic;
+            }
+            for(int i=1;i<=len1;i++){
+                for(int j=1;j<=len2;j++){
+                    if(str1.charAt(i)==str2.charAt(j)){
+                        f[i][j]=f[i-1][j-1];
+                    }else{
+                        f[i][j]= Math.min(Math.min(f[i-1][j]+dc,f[i][j-1]+ic),f[i-1][j-1]+rc);
+                    }
+                }
+            }
+            return f[len1][len2];
+        }
+    }
 }
 
 

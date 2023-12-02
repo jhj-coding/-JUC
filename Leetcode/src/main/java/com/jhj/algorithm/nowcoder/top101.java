@@ -2065,4 +2065,162 @@ public class top101 {
             nums.addLast(ans);
         }
     }
+
+    //BM50 两数之和
+    public class Solution50 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param numbers int整型一维数组
+         * @param target int整型
+         * @return int整型一维数组
+         */
+        public int[] twoSum (int[] numbers, int target) {
+            // write code here
+            HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+            for(int i=0;i<numbers.length;i++){
+                map.put(target-numbers[i],i);
+            }
+            for(int i=0;i<numbers.length;i++){
+                Integer integer = map.get(numbers[i]);
+                if(integer!=null && i!=integer){
+                    if(i<integer){
+                        return new int[]{i+1,integer+1};
+                    }else {
+                        return new int[]{integer+1,i+1};
+                    }
+                }
+            }
+            return new int[]{-1,-1};
+        }
+    }
+
+    //BM51 数组中出现次数超过一半的数字
+    public class Solution51 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param numbers int整型一维数组
+         * @return int整型
+         */
+        public int MoreThanHalfNum_Solution (int[] numbers) {
+            // write code here
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for(int i=0;i<numbers.length;i++){
+                map.put(numbers[i],map.getOrDefault(numbers[i],0)+1);
+            }
+            for (Map.Entry<Integer,Integer> e:map.entrySet()){
+                if(e.getValue()>numbers.length/2){
+                    return e.getKey();
+                }
+            }
+            return -1;
+        }
+    }
+
+    //BM52 数组中只出现一次的两个数字
+    public class Solution52 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型一维数组
+         */
+        public int[] FindNumsAppearOnce (int[] nums) {
+            // write code here
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for(int i=0;i<nums.length;i++){
+                map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+            }
+            int a=0;
+            int b=0;
+            for (Map.Entry<Integer,Integer> e:map.entrySet()){
+                if(e.getValue()==1){
+                    if(a!=0){
+                        b=e.getKey();
+                    }else{
+                        a=e.getKey();
+                    }
+                }
+            }
+            if(a>b){
+                return new int[]{b,a};
+            }else{
+                return new int[]{a,b};
+            }
+        }
+    }
+
+    //BM53 缺失的第一个正整数
+    public class Solution53 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        public int minNumberDisappeared (int[] nums) {
+            // write code here
+            HashSet<Integer> set = new HashSet<>();
+            for(int i=0;i<nums.length;i++){
+                set.add(nums[i]);
+            }
+            for(int i=1;i<nums.length+1;i++){
+                if(!set.contains(i)){
+                    return i;
+                }
+            }
+            return nums.length+1;
+        }
+    }
+
+    //BM54 三数之和
+    public class Solution54 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param num int整型一维数组
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        public ArrayList<ArrayList<Integer>> threeSum (int[] num) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
+            Arrays.sort(num);
+            int n=num.length;
+            for(int i=0;i<n;i++){
+                if(i>0 && num[i]==num[i-1]){
+                    continue;
+                }
+                int left=i+1;
+                int right=n-1;
+                while (left<right){
+                    if(num[i]+num[left]+num[right]==0){
+                        ArrayList<Integer> integers = new ArrayList<>();
+                        integers.add(num[i]);
+                        integers.add(num[left]);
+                        integers.add(num[right]);
+                        res.add(integers);
+                        while (left<right && num[left]==num[left+1]){
+                            left++;
+                        }
+                        while (left<right&&num[right]==num[right-1]){
+                            right--;
+                        }
+                        left++;
+                        right--;
+                    }else if(num[i]+num[left]+num[right]>0){
+                        right--;
+                    }else{
+                        left++;
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
