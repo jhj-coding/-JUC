@@ -1673,5 +1673,196 @@ public class All {
         }
     }
 
+    //51. N 皇后
+    class Solution51 {
+        List<List<String>> res=new ArrayList<List<String>>();
+        public List<List<String>> solveNQueens(int n) {
+            char[][] chars = new char[n][n];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    chars[i][j]='.';
+                }
+            }
+            huisu(n,0,chars);
+            return res;
+        }
 
+        private void huisu(int n, int rowIndex, char[][] chars) {
+            if(n==rowIndex){
+                ArrayList<String> strings = new ArrayList<>();
+                for(int i=0;i<n;i++){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for(int j=0;j<n;j++){
+                        stringBuilder.append(chars[i][j]);
+                    }
+                    strings.add(stringBuilder.toString());
+                }
+                res.add(strings);
+                return;
+            }
+            for(int i=0;i<n;i++){
+                boolean flag=true;
+                //看看第i 列有没有 现在到rowIndex 这一行
+                for (int j=0;j<rowIndex;j++){
+                    if(chars[j][i]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                for(int h=rowIndex-1,l=i-1;h>=0&&l>=0;h--,l--){
+                    if(chars[h][l]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                for(int h=rowIndex-1,l=i+1;h>=0&&l<n;h--,l++){
+                    if(chars[h][l]=='Q'){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    chars[rowIndex][i]='Q';
+                    huisu(n,rowIndex+1,chars);
+                    chars[rowIndex][i]='.';
+                }
+            }
+
+        }
+
+    }
+
+    //52. N 皇后 II
+    class Solution52 {
+        int count=0;
+        public int totalNQueens(int n) {
+            char[][] chars = new char[n][n];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    chars[i][j]='.';
+                }
+            }
+            huisu(n,0,chars);
+            return count;
+        }
+
+        private void huisu(int n, int rowIndex, char[][] chars) {
+            if(n==rowIndex){
+                count++;
+                return;
+            }
+            for (int i=0;i<n;i++){
+                boolean flag=true;
+                for (int j=0;j<rowIndex;j++){
+                    if(chars[j][i]=='Q'){
+                        flag=false;
+                    }
+                }
+                for(int h=rowIndex-1,l=i-1;h>=0&&l>=0;h--,l--){
+                    if(chars[h][l]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                for(int h=rowIndex-1,l=i+1;h>=0&&l<n;h--,l++){
+                    if(chars[h][l]=='Q'){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    chars[rowIndex][i]='Q';
+                    huisu(n,rowIndex+1,chars);
+                    chars[rowIndex][i]='.';
+                }
+            }
+
+        }
+
+    }
+
+    //53. 最大子数组和
+    class Solution53 {
+        public int maxSubArray(int[] nums) {
+            int res=nums[0];
+            int res1=nums[0];
+            for (int i=1;i<nums.length;i++){
+                res=Math.max(res+nums[i],nums[i]);
+                res1=Math.max(res,res1);
+            }
+
+            return res1;
+        }
+    }
+
+    //54. 螺旋矩阵
+    class Solution54 {
+        public List<Integer> spiralOrder(int[][] matrix) {
+            int m=matrix.length;
+            int n=matrix[0].length;
+            List<Integer> integers = new ArrayList<Integer>();
+            int min=n>m?m:n;
+            int start=0;
+            int count=0;
+            while(start<min/2) {
+                int i = start;
+                for (; i < n - start; i++) {
+                    integers.add(matrix[start][i]);
+                    count++;
+                }
+                int j = start + 1;
+                i=i-1;
+                for (; j < m - start; j++) {
+                    integers.add(matrix[j][i]);
+                    count++;
+                }
+                int k = i - 1;
+                j=j-1;
+                for (; k >= start; k--) {
+                    integers.add(matrix[j][k]);
+                    count++;
+                }
+
+                int s = j - 1;
+                k=k+1;
+                for (; s > start; s--) {
+                    integers.add(matrix[s][k]);
+                    count++;
+                }
+                start++;
+            }
+            if(count<n*m){
+                if(n>m){
+                    for (int i=start; i < n - start; i++) {
+                        integers.add(matrix[start][i]);
+                    }
+                }else if(n<m){
+                    for (int i=start; i < m - start; i++) {
+                        integers.add(matrix[i][start]);
+                    }
+                }else if(n==m){
+                    integers.add(matrix[start][start]);
+                }
+            }
+            return integers;
+        }
+    }
+
+    //55. 跳跃游戏
+    class Solution55 {
+        public boolean canJump(int[] nums) {
+            int count=nums[0];
+            if (count==0 && nums.length>1){
+                return false;
+            }
+            for(int i=1;i<nums.length;i++){
+                count--;
+                if(count<nums[i]){
+                    count=nums[i];
+                }
+                if(count==0 && i!=nums.length-1){
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 }
