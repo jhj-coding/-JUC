@@ -163,3 +163,27 @@ select (sum(salary)-max(salary)-min(salary))/(count(*)-2) from salaries where to
 
 #SQL249 分页查询employees表,每5行一页,返回第2页的数据
 select * from employees limit 5 offset 5;
+
+#SQL251 使用含有关键字exists查找未分配具体部门的员工的所有信息.
+select * from employees where not exists (select emp_no from dept_emp where employees.emp_no=dept_emp.emp_no)
+
+#SQL253 获取有奖金的员工相关信息.
+select
+    employees.emp_no,
+    employees.first_name,
+    employees.last_name,
+    emp_bonus.btype,
+    salaries.salary,
+    salaries.salary * if (
+                emp_bonus.btype = 1,
+                0.1,
+                if (emp_bonus.btype = 2, 0.2, 0.3)
+        )
+from
+    employees,
+    emp_bonus,
+    salaries
+where
+        employees.emp_no = emp_bonus.emp_no
+  and emp_bonus.emp_no = salaries.emp_no
+  and salaries.to_date = '9999-01-01'
