@@ -1248,27 +1248,27 @@ public class all {
          */
         public ListNode Merge(ListNode pHead1, ListNode pHead2) {
             // write code here
-            ListNode cur1=pHead1;
-            ListNode cur2=pHead2;
-            ListNode pre =new ListNode(-1);
-            ListNode curPre=pre;
-            while (cur1!=null || cur2!=null){
-                if(cur1==null){
-                    curPre.next=new ListNode(cur2.val);
-                    cur2=cur2.next;
-                }else if(cur2==null){
-                    curPre.next=new ListNode(cur1.val);
-                    cur1=cur1.next;
-                }else{
-                    if(cur1.val<cur2.val){
-                        curPre.next=new ListNode(cur1.val);
-                        cur1=cur1.next;
-                    }else{
-                        curPre.next=new ListNode(cur2.val);
-                        cur2=cur2.next;
+            ListNode cur1 = pHead1;
+            ListNode cur2 = pHead2;
+            ListNode pre = new ListNode(-1);
+            ListNode curPre = pre;
+            while (cur1 != null || cur2 != null) {
+                if (cur1 == null) {
+                    curPre.next = new ListNode(cur2.val);
+                    cur2 = cur2.next;
+                } else if (cur2 == null) {
+                    curPre.next = new ListNode(cur1.val);
+                    cur1 = cur1.next;
+                } else {
+                    if (cur1.val < cur2.val) {
+                        curPre.next = new ListNode(cur1.val);
+                        cur1 = cur1.next;
+                    } else {
+                        curPre.next = new ListNode(cur2.val);
+                        cur2 = cur2.next;
                     }
                 }
-                curPre=curPre.next;
+                curPre = curPre.next;
             }
             return pre.next;
         }
@@ -1279,26 +1279,25 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param m int整型
          * @param n int整型
          * @return int整型
          */
-        public int uniquePaths (int m, int n) {
+        public int uniquePaths(int m, int n) {
             // write code here
-            int [][] f=new int[m][n];
-            for(int i=0;i<m;i++){
-                f[i][0]=1;
+            int[][] f = new int[m][n];
+            for (int i = 0; i < m; i++) {
+                f[i][0] = 1;
             }
-            for(int i=0;i<n;i++){
-                f[0][i]=1;
+            for (int i = 0; i < n; i++) {
+                f[0][i] = 1;
             }
-            for(int i=1;i<m;i++){
-                for (int j=1;j<n;j++){
-                    f[i][j]=f[i-1][j]+f[i][j-1];
+            for (int i = 1; i < m; i++) {
+                for (int j = 1; j < n; j++) {
+                    f[i][j] = f[i - 1][j] + f[i][j - 1];
                 }
             }
-            return f[m-1][n-1];
+            return f[m - 1][n - 1];
         }
     }
 
@@ -1306,39 +1305,132 @@ public class all {
     public class Solution35 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-         *
+         * <p>
          * min edit cost
+         *
          * @param str1 string字符串 the string
          * @param str2 string字符串 the string
-         * @param ic int整型 insert cost
-         * @param dc int整型 delete cost
-         * @param rc int整型 replace cost
+         * @param ic   int整型 insert cost
+         * @param dc   int整型 delete cost
+         * @param rc   int整型 replace cost
          * @return int整型
          */
-        public int minEditCost (String str1, String str2, int ic, int dc, int rc) {
+        public int minEditCost(String str1, String str2, int ic, int dc, int rc) {
             // write code here
-            int len1=str1.length();
-            int len2=str2.length();
-            int[][] f = new int[len1+1][len2+1];
+            int len1 = str1.length();
+            int len2 = str2.length();
+            int[][] f = new int[len1 + 1][len2 + 1];
             //str2 为0
-            for(int i=1;i<=len1;i++){
-                f[i][0]=i*dc;
+            for (int i = 1; i <= len1; i++) {
+                f[i][0] = i * dc;
             }
             //str1 为0 str1 添加
-            for(int i=1;i<=len2;i++){
-                f[0][i]=i*ic;
+            for (int i = 1; i <= len2; i++) {
+                f[0][i] = i * ic;
             }
-            for(int i=1;i<=len1;i++){
-                for(int j=1;j<=len2;j++){
-                    if(str1.charAt(i)==str2.charAt(j)){
-                        f[i][j]=f[i-1][j-1];
-                    }else{
-                        f[i][j]= Math.min(Math.min(f[i-1][j]+dc,f[i][j-1]+ic),f[i-1][j-1]+rc);
+            for (int i = 1; i <= len1; i++) {
+                for (int j = 1; j <= len2; j++) {
+                    if (str1.charAt(i) == str2.charAt(j)) {
+                        f[i][j] = f[i - 1][j - 1];
+                    } else {
+                        f[i][j] = Math.min(Math.min(f[i - 1][j] + dc, f[i][j - 1] + ic), f[i - 1][j - 1] + rc);
                     }
                 }
             }
             return f[len1][len2];
         }
+    }
+
+    //NC36 在两个长度相等的排序数组中找到上中位数
+    public class Solution36 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         * <p>
+         * find median in two sorted array
+         *
+         * @param arr1 int整型一维数组 the array1
+         * @param arr2 int整型一维数组 the array2
+         * @return int整型
+         */
+        public int findMedianinTwoSortedAray(int[] arr1, int[] arr2) {
+            // write code here
+            int len1 = arr1.length;
+            int len2 = arr2.length;
+            int ji = (len1 + len2 + 1) / 2;
+            int ou = (len1 + len2 + 1) / 2;
+            return (getKth(0, len1 - 1, arr1, 0, len2 - 1, arr2, ji) + getKth(0, len1 - 1, arr1, 0, len2 - 1, arr2, ou)) / 2;
+        }
+
+        public int getKth(int start1, int end1, int[] arr1, int start2, int end2, int[] arr2, int k) {
+            int len1 = end1 - start1 + 1;
+            int len2 = end2 - start2 + 1;
+            if (len1 > len2) {
+                return getKth(start2, end2, arr2, start1, end2, arr1, k);
+            }
+            if (len1 == 0) {
+                return arr2[start2 + k - 1];
+            }
+            if (k == 1) {
+                return Math.min(arr1[start1], arr2[start2]);
+            }
+            int i = start1 + Math.min(k / 2, len1) - 1;
+            int j = start2 + Math.min(k / 2, len2) - 1;
+            if (arr1[i] > arr2[j]) {
+                return getKth(start1, end1, arr1, j + 1, end2, arr2, k - (j - start2 + 1));
+            } else {
+                return getKth(i + 1, end1, arr1, start2, end2, arr2, k - (i - start1 + 1));
+            }
+        }
+    }
+
+    //NC37 合并区间
+    public class Solution37 {
+        public class Interval {
+            int start;
+            int end;
+
+            public Interval(int start, int end) {
+                this.start = start;
+                this.end = end;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param intervals Interval类ArrayList
+         * @return Interval类ArrayList
+         */
+        public ArrayList<Interval> merge1(ArrayList<Interval> intervals) {
+            // write code here
+            intervals.sort(new Comparator<Interval>() {
+                @Override
+                public int compare(Interval o1, Interval o2) {
+                    if(o1.start==o2.start){
+                        return o1.end-o2.end;
+                    }else {
+                        return o1.start-o2.start;
+                    }
+                }
+            });
+            ArrayList<Interval> res = new ArrayList<>();
+            if(intervals.size()==0){
+                return res;
+            }
+            res.add(intervals.get(0));
+            for(int i=1;i<intervals.size();i++){
+                if(intervals.get(i).start<=res.get(res.size()-1).end){
+                    if(intervals.get(i).end>res.get(res.size()-1).end){
+                        res.get(res.size() - 1).end = intervals.get(i).end;
+                    }
+                }else{
+                    res.add(intervals.get(i));
+                }
+            }
+            return res;
+        }
+
+
     }
 }
 

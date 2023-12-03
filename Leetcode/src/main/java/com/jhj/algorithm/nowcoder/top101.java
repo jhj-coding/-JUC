@@ -2223,4 +2223,122 @@ public class top101 {
             return res;
         }
     }
+
+    //BM55 没有重复项数字的全排列
+    public class Solution55 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param num int整型一维数组
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        public ArrayList<ArrayList<Integer>> permute (int[] num) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();
+            ArrayList<Integer> path = new ArrayList<>();
+            HashSet<Integer> set = new HashSet<>();
+            huisu(num,path,res,set);
+            return res;
+        }
+
+        private void huisu(int[] num, ArrayList<Integer> path,ArrayList<ArrayList<Integer>> res,HashSet<Integer> set) {
+            if(path.size()==num.length){
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for (int i=0;i<num.length;i++){
+                if(!set.contains(num[i])){
+                    set.add(num[i]);
+                    path.add(num[i]);
+                    huisu(num,path,res,set);
+                    path.remove(path.size()-1);
+                    set.remove(num[i]);
+                }
+            }
+        }
+    }
+
+    //BM56 有重复项数字的全排列
+    public class Solution56 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param num int整型一维数组
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        public ArrayList<ArrayList<Integer>> permuteUnique (int[] num) {
+            // write code here
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            Arrays.sort(num);
+            ArrayList<Integer> path = new ArrayList<>();
+            HashSet<Integer> set = new HashSet<>();
+            huisu(num,path,set,res);
+            return res;
+        }
+
+        private void huisu(int[] num, ArrayList<Integer> path, HashSet<Integer> set, ArrayList<ArrayList<Integer>> res) {
+            if(path.size()==num.length){
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for(int i=0;i<num.length;i++){
+                if(i>0&&num[i]==num[i-1]&&!set.contains(i-1)){
+                    continue;
+                }
+                if(!set.contains(i)){
+                   set.add(i);
+                   path.add(num[i]);
+                   huisu(num,path,set,res);
+                   set.remove(i);
+                   path.remove(path.size()-1);
+                }
+            }
+        }
+    }
+
+    //BM57 岛屿数量
+    public class Solution57 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 判断岛屿数量
+         * @param grid char字符型二维数组
+         * @return int整型
+         */
+        public int solve (char[][] grid) {
+            // write code here
+            int m=grid.length;
+            int n=grid[0].length;
+            int res=0;
+            for(int i=0;i<m;i++){
+                for (int j=0;j<n;j++){
+                    if(grid[i][j]=='1'){
+                        res++;
+                        // 将相邻的1 改为0
+                        huisu(grid,i,j);
+                    }
+                }
+            }
+            return res;
+        }
+
+        private void huisu(char[][] grid, int i, int j) {
+            if(i<0 || i>grid.length-1){
+                return;
+            }
+            if(j<0 || j>grid[0].length-1){
+                return;
+            }
+            if(grid[i][j]=='0'){
+                return;
+            }
+            grid[i][j]='0';
+            huisu(grid,i-1,j);
+            huisu(grid,i+1,j);
+            huisu(grid,i,j+1);
+            huisu(grid,i,j-1);
+        }
+    }
 }
