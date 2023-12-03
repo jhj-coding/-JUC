@@ -1865,4 +1865,43 @@ public class All {
             return true;
         }
     }
+
+    //56. 合并区间
+    class Solution {
+        public int[][] merge(int[][] intervals) {
+            Arrays.sort(intervals, new Comparator<int[]>() {
+                @Override
+                public int compare(int[] o1, int[] o2) {
+                    if(o1[0]==o2[0]){
+                        return o1[1]-o2[1];
+                    }
+                    return o1[0]-o2[0];
+                }
+            });
+            ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+            ArrayList<Integer> one = new ArrayList<>();
+            one.add(intervals[0][0]);
+            one.add(intervals[0][1]);
+            arrayLists.add(one);
+            for (int i=1;i< intervals.length;i++){
+                if(intervals[i][0]<=arrayLists.get(arrayLists.size()-1).get(1)){
+                    if(intervals[i][1]>arrayLists.get(arrayLists.size()-1).get(1)){
+                        arrayLists.get(arrayLists.size()-1).remove(1);
+                        arrayLists.get(arrayLists.size()-1).add(intervals[i][1]);
+                    }
+                }else{
+                    ArrayList<Integer> two = new ArrayList<>();
+                    two.add(intervals[i][0]);
+                    two.add(intervals[i][1]);
+                    arrayLists.add(two);
+                }
+            }
+            int[][] res = new int[arrayLists.size()][2];
+            for(int i=0;i<arrayLists.size();i++){
+                res[i][0]=arrayLists.get(i).get(0);
+                res[i][1]=arrayLists.get(i).get(1);
+            }
+            return res;
+        }
+    }
 }
