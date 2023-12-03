@@ -157,3 +157,6 @@ grep 404 | grep http://www.baidu.com/search/spider.html | wc -l
 
 #SHELL28 Nginx日志分析6-统计每分钟的请求数
 awk -F':' '{ans[$2":"$3]++}END{for (i in ans){print ans[i],i }}' | sort -r
+
+#SHELL29 netstat练习1-查看各个状态的连接数
+grep tcp|awk '{arr[$6]++} END {for (i in arr){print i,arr[i]}}' | sort -rn -k2
