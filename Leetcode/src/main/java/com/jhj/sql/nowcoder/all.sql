@@ -187,3 +187,6 @@ where
         employees.emp_no = emp_bonus.emp_no
   and emp_bonus.emp_no = salaries.emp_no
   and salaries.to_date = '9999-01-01'
+
+#SQL254 统计salary的累计和running_total
+select emp_no,salary,sum(salary)over(order by emp_no) as running_total from salaries where to_date = '9999-01-01'
