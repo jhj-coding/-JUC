@@ -18,3 +18,15 @@ select * from OrderItems order by quantity desc,item_price desc
 
 #SQL66 检查SQL语句
 SELECT vend_name FROM Vendors ORDER by vend_name DESC;
+
+#SQL67 返回固定价格的产品
+select prod_id,prod_name from Products where prod_price=9.49
+
+#SQL68 返回更高价格的产品
+select prod_id,prod_name from Products  where prod_price>=9
+
+#SQL69 返回产品并且按照价格排序
+select prod_name,prod_price from Products where prod_price between 3 and 6 order by prod_price
+
+#SQL70 返回更多的产品
+select distinct order_num from OrderItems where quantity>=100
