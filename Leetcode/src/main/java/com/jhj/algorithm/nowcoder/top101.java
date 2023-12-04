@@ -2341,4 +2341,141 @@ public class top101 {
             huisu(grid,i,j-1);
         }
     }
+
+    //BM58 字符串的排列
+    public class Solution58 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param str string字符串
+         * @return string字符串ArrayList
+         */
+        public ArrayList<String> Permutation (String str) {
+            // write code here
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            str = new String(chars);
+            HashSet<Integer> set = new HashSet<>();
+            ArrayList<String> res = new ArrayList<>();
+            StringBuilder path = new StringBuilder();
+            huisu(str,path,res,set);
+            return res;
+        }
+
+        private void huisu(String str, StringBuilder path, ArrayList<String> res, HashSet<Integer> set) {
+            if(path.length()==str.length()){
+                StringBuilder stringBuilder = new StringBuilder(path);
+                res.add(stringBuilder.toString());
+                return;
+            }
+            for(int i=0;i<str.length();i++){
+                if(i>0 &&str.charAt(i)== str.charAt(i-1)&&!set.contains(i-1)){
+                    continue;
+                }
+                if(!set.contains(i)){
+                    set.add(i);
+                    path.append(str.charAt(i));
+                    huisu(str,path,res,set);
+                    path.deleteCharAt(path.length()-1);
+                    set.remove(i);
+                }
+            }
+        }
+    }
+
+    //BM59 N皇后问题
+    public class Solution59 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param n int整型 the n
+         * @return int整型
+         */
+        int res=0;
+        public int Nqueen (int n) {
+            // write code here
+            char[][] chars = new char[n][n];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++) {
+                    chars[i][j] ='.';
+                }
+            }
+            huisu(0,n,chars);
+            return res;
+        }
+
+        private void huisu(int rowIndex, int n, char[][] chars) {
+            if(rowIndex==n){
+                res++;
+                return;
+            }
+            //列
+            for(int i=0;i<n;i++){
+
+                boolean flag=true;
+                //lie
+                for(int j=0;j<rowIndex;j++){
+                    if(chars[j][i]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                //斜45
+                for(int hang=rowIndex-1, lie=i-1;hang>=0&&lie>=0;hang--,lie--){
+                    if (chars[hang][lie]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                //斜135
+                for(int hang=rowIndex-1, lie=i+1;hang>=0&&lie<n;hang--,lie++){
+                    if (chars[hang][lie]=='Q'){
+                        flag=false;
+                    }
+                }
+
+                if(flag){
+                    chars[rowIndex][i]='Q';
+                    huisu(rowIndex+1,n,chars);
+                    chars[rowIndex][i]='.';
+                }
+            }
+        }
+    }
+
+    //BM60 括号生成
+    public class Solution60 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param n int整型
+         * @return string字符串ArrayList
+         */
+        public ArrayList<String> generateParenthesis (int n) {
+            // write code here
+            ArrayList<String> res = new ArrayList<>();
+            huisu(n,n,res,new StringBuilder());
+            return res;
+        }
+
+        private void huisu(int left, int right, ArrayList<String> res, StringBuilder path) {
+            if(left==0&&right==0){
+                StringBuilder stringBuilder = new StringBuilder(path);
+                res.add(stringBuilder.toString());
+            }
+            if(left>0){
+                path.append('(');
+                huisu(left-1,right,res,path);
+                path.deleteCharAt(path.length()-1);
+            }
+            if(right>0 && right>left){
+                path.append(')');
+                huisu(left,right-1,res,path);
+                path.deleteCharAt(path.length()-1);
+            }
+        }
+    }
 }

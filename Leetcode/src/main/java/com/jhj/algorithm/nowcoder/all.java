@@ -1432,6 +1432,74 @@ public class all {
 
 
     }
+
+    //NC38 螺旋矩阵
+    public class Solution38 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param matrix int整型二维数组
+         * @return int整型ArrayList
+         */
+        public ArrayList<Integer> spiralOrder (int[][] matrix) {
+            // write code here
+            ArrayList<Integer> res = new ArrayList<>();
+            int m=matrix.length;
+            if(m==0){
+                return res;
+            }
+            int n=matrix[0].length;
+            int min=Math.min(n,m);
+            int start=0;
+            int count=0;
+            while (start<min/2){
+                int i=start;
+                while (i<n-start){
+                    res.add(matrix[start][i]);
+                    i++;
+                    count++;
+                }
+                i--;
+                int j=start+1;
+                while (j<m-start){
+                    res.add(matrix[j][i]);
+                    j++;
+                    count++;
+                }
+                j--;
+                int k=i-1;
+                while (k>=start){
+                    res.add(matrix[j][k]);
+                    k--;
+                    count++;
+                }
+
+                int s=j-1;
+                k++;
+                while (s>start){
+                    res.add(matrix[s][k]);
+                    s--;
+                    count++;
+                }
+                start++;
+            }
+            if(count<n*m){
+                if(n>m){
+                    for(int i=start; i < n - start;i++){
+                        res.add(matrix[start][i]);
+                    }
+                }else if(n<m){
+                    for(int i=start; i < m - start;i++){
+                        res.add(matrix[i][start]);
+                    }
+                }else{
+                    res.add(matrix[start][start]);
+                }
+            }
+            return res;
+        }
+    }
 }
 
 
