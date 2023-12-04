@@ -160,3 +160,6 @@ awk -F':' '{ans[$2":"$3]++}END{for (i in ans){print ans[i],i }}' | sort -r
 
 #SHELL29 netstat练习1-查看各个状态的连接数
 grep tcp|awk '{arr[$6]++} END {for (i in arr){print i,arr[i]}}' | sort -rn -k2
+
+#SHELL30 netstat练习2-查看和3306端口建立的连接
+grep 3306 | grep ESTABLISHED | awk '{print($5)}' | awk -F':' '{print($1)}' | sort | uniq -c| sort -nr| awk '{print($1,$2)}'
