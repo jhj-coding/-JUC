@@ -1867,7 +1867,7 @@ public class All {
     }
 
     //56. 合并区间
-    class Solution {
+    class Solution56 {
         public int[][] merge(int[][] intervals) {
             Arrays.sort(intervals, new Comparator<int[]>() {
                 @Override
@@ -1902,6 +1902,50 @@ public class All {
                 res[i][1]=arrayLists.get(i).get(1);
             }
             return res;
+        }
+    }
+
+    //57. 插入区间
+    class Solution57 {
+        public int[][] insert(int[][] intervals, int[] newInterval) {
+            ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+            for(int i=0;i<intervals.length;i++){
+                ArrayList<Integer> add = new ArrayList<>();
+                add.add(intervals[i][0]);
+                add.add(intervals[i][1]);
+                arrayLists.add(add);
+            }
+            ArrayList<Integer> add = new ArrayList<>();
+            add.add(newInterval[0]);
+            add.add(newInterval[1]);
+            arrayLists.add(add);
+            arrayLists.sort(new Comparator<ArrayList<Integer>>() {
+                @Override
+                public int compare(ArrayList<Integer> o1, ArrayList<Integer> o2) {
+                    if(o1.get(0)==o2.get(0)){
+                        return o1.get(1)-o2.get(1);
+                    }
+                    return o1.get(0)-o2.get(0);
+                }
+            });
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            res.add(arrayLists.get(0));
+            for(int i=1;i<arrayLists.size();i++){
+                if(arrayLists.get(i).get(0)<=res.get(res.size()-1).get(1)){
+                    if(arrayLists.get(i).get(1)>res.get(res.size()-1).get(1)){
+                        res.get(res.size()-1).remove(1);
+                        res.get(res.size()-1).add(arrayLists.get(i).get(1));
+                    }
+                }else{
+                    res.add(arrayLists.get(i));
+                }
+            }
+            int[][] resInt = new int[res.size()][2];
+            for(int i=0;i<res.size();i++){
+                resInt[i][0]=res.get(i).get(0);
+                resInt[i][1]=res.get(i).get(1);
+            }
+            return resInt;
         }
     }
 }
