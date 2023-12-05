@@ -30,3 +30,17 @@ select prod_name,prod_price from Products where prod_price between 3 and 6 order
 
 #SQL70 返回更多的产品
 select distinct order_num from OrderItems where quantity>=100
+
+#SQL71 检索供应商名称
+select vend_name from Vendors where vend_country='USA' and vend_state='CA'
+
+#SQL72 检索并列出已订购产品的清单
+select order_num, prod_id, quantity from OrderItems where quantity>=100 and prod_id in ('BR01','BR02','BR03')
+
+#SQL73 返回所有价格在 3美元到 6美元之间的产品的名称和价格
+select prod_name, prod_price from Products where prod_price between 3 and 6 order by prod_price
+
+#SQL74 纠错2
+SELECT vend_name
+FROM Vendors
+WHERE vend_country = 'USA' AND vend_state = 'CA' ORDER BY vend_name;

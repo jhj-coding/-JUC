@@ -190,3 +190,9 @@ where
 
 #SQL254 统计salary的累计和running_total
 select emp_no,salary,sum(salary)over(order by emp_no) as running_total from salaries where to_date = '9999-01-01'
+
+#SQL255 给出employees表中排名为奇数行的first_name
+select first_name from (select *,rank() over (order by first_name) as rankNum from employees order by emp_no) as c where c.rankNum %2=1 ;
+
+#SQL256 出现三次以上相同积分的情况
+select number from grade group by number having count(number)>=3;
