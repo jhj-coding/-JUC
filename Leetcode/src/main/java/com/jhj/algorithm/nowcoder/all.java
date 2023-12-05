@@ -1500,6 +1500,62 @@ public class all {
             return res;
         }
     }
+
+    //NC39 N皇后问题
+    public class Solution39 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param n int整型 the n
+         * @return int整型
+         */
+        int res=0;
+        public int Nqueen (int n) {
+            // write code here
+            char[][] chars = new char[n][n];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    chars[i][j]='.';
+                }
+            }
+            huisu(0,n,chars);
+            return res;
+        }
+        void huisu(int rowIndex,int n,char[][] chars){
+            if(rowIndex==n){
+                res++;
+                return;
+            }
+            // 列
+            for (int i=0;i<n;i++){
+                boolean flag=true;
+                //看看之前的行有没有
+                for (int j=0;j<rowIndex;j++){
+                    if(chars[j][i]=='Q'){
+                        flag=false;
+                    }
+                }
+                //45
+                for(int hang=rowIndex-1,lie=i-1;hang>=0&& lie>=0;hang--,lie--){
+                    if(chars[hang][lie]=='Q'){
+                        flag=false;
+                    }
+                }
+                //135
+                for(int hang=rowIndex-1,lie=i+1;hang>=0&& lie<n;hang--,lie++){
+                    if(chars[hang][lie]=='Q'){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    chars[rowIndex][i]='Q';
+                    huisu(rowIndex+1,n,chars);
+                    chars[rowIndex][i]='.';
+                }
+            }
+        }
+    }
 }
 
 

@@ -2478,4 +2478,50 @@ public class top101 {
             }
         }
     }
+
+    //BM61 矩阵最长递增路径
+    public class Solution61 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 递增路径的最大长度
+         * @param matrix int整型二维数组 描述矩阵的每个数
+         * @return int整型
+         */
+        int maxStep = 0;
+        public int solve (int[][] matrix) {
+            //因为不知道起始点，所以所有的点都要试一遍
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    count(1,i,j,matrix,-1);
+                }
+            }
+
+            return maxStep;
+        }
+
+        private void count( int steps,int i, int j, int[][] matrix, int last){
+
+            //边界判定，以及小于上一个值的也属于走不通的
+            if (i < 0 || i >= matrix.length
+                    || j < 0 || j >= matrix[0].length
+                    || matrix[i][j] <= last) return;
+            //记录备份当前值
+            int cur = matrix[i][j];
+            //将走过的路涂黑，这里就是变成-1
+            matrix[i][j] = -1;
+            maxStep = Math.max(steps, maxStep);
+            //向下
+            count(steps + 1, i+ 1, j, matrix, cur);
+            //向上
+            count(steps + 1,i - 1, j, matrix, cur);
+            //向右
+            count(steps + 1,i, j + 1, matrix, cur);
+            //向左
+            count(steps + 1,i, j - 1, matrix, cur);
+
+            //走完上面以后说明要回退了，重新给这个点赋值回去
+            matrix[i][j] = cur;
+        }
+    }
 }
