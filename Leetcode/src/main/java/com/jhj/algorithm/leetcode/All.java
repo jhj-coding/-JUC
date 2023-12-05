@@ -1948,4 +1948,27 @@ public class All {
             return resInt;
         }
     }
+
+    //58. 最后一个单词的长度
+    class Solution58 {
+        public int lengthOfLastWord(String s) {
+            int i=s.length()-1;
+            while (s.charAt(i)==' '&&i>=0){
+                i--;
+            }
+            int k=i;
+            int j=-1;
+            for(;i>=0;i--){
+                if(s.charAt(i)==' '){
+                    j=i;
+                    break;
+                }
+            }
+            if(j==-1){
+                return k+1;
+            }else{
+                return k-j;
+            }
+        }
+    }
 }
