@@ -2524,4 +2524,50 @@ public class top101 {
             matrix[i][j] = cur;
         }
     }
+
+    //BM62 斐波那契数列
+    public class Solution62 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param n int整型
+         * @return int整型
+         */
+        public int Fibonacci (int n) {
+            if(n==1){
+                return 1;
+            }
+            int a=1;
+            int b=1;
+            for(int i=3;i<=n;i++){
+                int temp=a+b;
+                a=b;
+                b=temp;
+            }
+            return b;
+        }
+    }
+
+    //BM63 跳台阶
+    public class Solution63 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param number int整型
+         * @return int整型
+         */
+        public int jumpFloor (int number) {
+            // write code here
+            int a=1;
+            int b=1;
+            for(int i=2;i<=number;i++){
+                int temp = a + b;
+                a=b;
+                b=temp;
+            }
+            return b;
+        }
+    }
 }
