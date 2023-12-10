@@ -44,3 +44,16 @@ select prod_name, prod_price from Products where prod_price between 3 and 6 orde
 SELECT vend_name
 FROM Vendors
 WHERE vend_country = 'USA' AND vend_state = 'CA' ORDER BY vend_name;
+
+#SQL75 检索产品名称和描述（一）
+select * from  Products where prod_desc like "%toy%";
+
+#SQL76 检索产品名称和描述（二）
+select * from Products where prod_desc not like '%toy%'
+
+#SQL77 检索产品名称和描述（三）
+select * from Products  where prod_desc like '%toy%' and prod_desc like '%carrots%';
+
+#SQL78 检索产品名称和描述（四）
+select * from Products where prod_desc like "%toy%carrots%";
+
