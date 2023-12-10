@@ -1406,24 +1406,24 @@ public class all {
             intervals.sort(new Comparator<Interval>() {
                 @Override
                 public int compare(Interval o1, Interval o2) {
-                    if(o1.start==o2.start){
-                        return o1.end-o2.end;
-                    }else {
-                        return o1.start-o2.start;
+                    if (o1.start == o2.start) {
+                        return o1.end - o2.end;
+                    } else {
+                        return o1.start - o2.start;
                     }
                 }
             });
             ArrayList<Interval> res = new ArrayList<>();
-            if(intervals.size()==0){
+            if (intervals.size() == 0) {
                 return res;
             }
             res.add(intervals.get(0));
-            for(int i=1;i<intervals.size();i++){
-                if(intervals.get(i).start<=res.get(res.size()-1).end){
-                    if(intervals.get(i).end>res.get(res.size()-1).end){
+            for (int i = 1; i < intervals.size(); i++) {
+                if (intervals.get(i).start <= res.get(res.size() - 1).end) {
+                    if (intervals.get(i).end > res.get(res.size() - 1).end) {
                         res.get(res.size() - 1).end = intervals.get(i).end;
                     }
-                }else{
+                } else {
                     res.add(intervals.get(i));
                 }
             }
@@ -1438,62 +1438,61 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param matrix int整型二维数组
          * @return int整型ArrayList
          */
-        public ArrayList<Integer> spiralOrder (int[][] matrix) {
+        public ArrayList<Integer> spiralOrder(int[][] matrix) {
             // write code here
             ArrayList<Integer> res = new ArrayList<>();
-            int m=matrix.length;
-            if(m==0){
+            int m = matrix.length;
+            if (m == 0) {
                 return res;
             }
-            int n=matrix[0].length;
-            int min=Math.min(n,m);
-            int start=0;
-            int count=0;
-            while (start<min/2){
-                int i=start;
-                while (i<n-start){
+            int n = matrix[0].length;
+            int min = Math.min(n, m);
+            int start = 0;
+            int count = 0;
+            while (start < min / 2) {
+                int i = start;
+                while (i < n - start) {
                     res.add(matrix[start][i]);
                     i++;
                     count++;
                 }
                 i--;
-                int j=start+1;
-                while (j<m-start){
+                int j = start + 1;
+                while (j < m - start) {
                     res.add(matrix[j][i]);
                     j++;
                     count++;
                 }
                 j--;
-                int k=i-1;
-                while (k>=start){
+                int k = i - 1;
+                while (k >= start) {
                     res.add(matrix[j][k]);
                     k--;
                     count++;
                 }
 
-                int s=j-1;
+                int s = j - 1;
                 k++;
-                while (s>start){
+                while (s > start) {
                     res.add(matrix[s][k]);
                     s--;
                     count++;
                 }
                 start++;
             }
-            if(count<n*m){
-                if(n>m){
-                    for(int i=start; i < n - start;i++){
+            if (count < n * m) {
+                if (n > m) {
+                    for (int i = start; i < n - start; i++) {
                         res.add(matrix[start][i]);
                     }
-                }else if(n<m){
-                    for(int i=start; i < m - start;i++){
+                } else if (n < m) {
+                    for (int i = start; i < m - start; i++) {
                         res.add(matrix[i][start]);
                     }
-                }else{
+                } else {
                     res.add(matrix[start][start]);
                 }
             }
@@ -1506,54 +1505,150 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param n int整型 the n
          * @return int整型
          */
-        int res=0;
-        public int Nqueen (int n) {
+        int res = 0;
+
+        public int Nqueen(int n) {
             // write code here
             char[][] chars = new char[n][n];
-            for(int i=0;i<n;i++){
-                for(int j=0;j<n;j++){
-                    chars[i][j]='.';
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    chars[i][j] = '.';
                 }
             }
-            huisu(0,n,chars);
+            huisu(0, n, chars);
             return res;
         }
-        void huisu(int rowIndex,int n,char[][] chars){
-            if(rowIndex==n){
+
+        void huisu(int rowIndex, int n, char[][] chars) {
+            if (rowIndex == n) {
                 res++;
                 return;
             }
             // 列
-            for (int i=0;i<n;i++){
-                boolean flag=true;
+            for (int i = 0; i < n; i++) {
+                boolean flag = true;
                 //看看之前的行有没有
-                for (int j=0;j<rowIndex;j++){
-                    if(chars[j][i]=='Q'){
-                        flag=false;
+                for (int j = 0; j < rowIndex; j++) {
+                    if (chars[j][i] == 'Q') {
+                        flag = false;
                     }
                 }
                 //45
-                for(int hang=rowIndex-1,lie=i-1;hang>=0&& lie>=0;hang--,lie--){
-                    if(chars[hang][lie]=='Q'){
-                        flag=false;
+                for (int hang = rowIndex - 1, lie = i - 1; hang >= 0 && lie >= 0; hang--, lie--) {
+                    if (chars[hang][lie] == 'Q') {
+                        flag = false;
                     }
                 }
                 //135
-                for(int hang=rowIndex-1,lie=i+1;hang>=0&& lie<n;hang--,lie++){
-                    if(chars[hang][lie]=='Q'){
-                        flag=false;
+                for (int hang = rowIndex - 1, lie = i + 1; hang >= 0 && lie < n; hang--, lie++) {
+                    if (chars[hang][lie] == 'Q') {
+                        flag = false;
                     }
                 }
-                if(flag){
-                    chars[rowIndex][i]='Q';
-                    huisu(rowIndex+1,n,chars);
-                    chars[rowIndex][i]='.';
+                if (flag) {
+                    chars[rowIndex][i] = 'Q';
+                    huisu(rowIndex + 1, n, chars);
+                    chars[rowIndex][i] = '.';
                 }
             }
+        }
+    }
+
+    //NC40 链表相加(二)
+    public class Solution40 {
+        class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head1 ListNode类
+         * @param head2 ListNode类
+         * @return ListNode类
+         */
+        public ListNode addInList(ListNode head1, ListNode head2) {
+            // write code here
+            ArrayDeque<Integer> d1 = new ArrayDeque<>();
+            ArrayDeque<Integer> d2 = new ArrayDeque<>();
+            ListNode cur1=head1;
+            ListNode cur2=head2;
+            while (cur1!=null){
+                d1.addLast(cur1.val);
+                cur1=cur1.next;
+            }
+            while (cur2!=null){
+                d2.addLast(cur2.val);
+                cur2=cur2.next;
+            }
+            ListNode pre=new ListNode(-1);
+            ListNode cur3=pre;
+            int m=0;
+            while (!d1.isEmpty() || !d2.isEmpty()){
+                if(!d1.isEmpty() && !d2.isEmpty()){
+                    int i = d1.removeLast() + d2.removeLast() + m;
+                    m=i/10;
+                    cur3.next=new ListNode(i%10);
+                }else if(!d1.isEmpty()){
+                    int i = d1.removeLast() + m;
+                    m=i/10;
+                    cur3.next=new ListNode(i%10);
+                }else if(!d2.isEmpty()){
+                    int i = d2.removeLast() + m;
+                    m=i/10;
+                    cur3.next=new ListNode(i%10);
+                }
+                cur3=cur3.next;
+            }
+            if(m!=0) cur3.next=new ListNode(m);
+            ListNode next = pre.next;
+            ListNode curr=next;
+            ListNode pp=null;
+            while (next != null) {
+                ListNode temp = next.next;
+                next.next = pp;
+                pp = next;
+                next = temp;
+            }
+            return pp;
+        }
+    }
+
+    //NC41 最长无重复子数组
+    public class Solution41 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param arr int整型一维数组 the array
+         * @return int整型
+         */
+        public int maxLength (int[] arr) {
+            // write code here
+            HashSet<Integer> set = new HashSet<>();
+            int left=0;
+            int right=0;
+            int res=0;
+            while (right<arr.length){
+                if(set.contains(arr[right])){
+                    res=Math.max(res,right-left);
+                    set.remove(arr[left]);
+                    left++;
+                }else{
+                    set.add(arr[right]);
+                    right++;
+                }
+            }
+            res=Math.max(res,right-left);
+            return res;
         }
     }
 }
