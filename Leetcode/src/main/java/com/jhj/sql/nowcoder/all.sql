@@ -196,3 +196,12 @@ select first_name from (select *,rank() over (order by first_name) as rankNum fr
 
 #SQL256 出现三次以上相同积分的情况
 select number from grade group by number having count(number)>=3;
+
+#SQL257 刷题通过的题目排名
+select id
+     ,number
+     ,dense_rank()over(order by number desc) as t_rank
+from passing_number;
+
+#SQL258 找到每个人的任务
+select person.id,name,content from person left join task on task.person_id=person.id

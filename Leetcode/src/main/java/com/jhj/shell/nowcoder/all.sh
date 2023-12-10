@@ -166,3 +166,7 @@ grep 3306 | grep ESTABLISHED | awk '{print($5)}' | awk -F':' '{print($1)}' | sor
 
 #SHELL31 netstat练习3-输出每个IP的连接数
 grep tcp|awk '{print($5)}' | awk -F':' '{print($1)}'| sort | uniq -c| sort -nr |awk '{print($2,$1)}'
+
+
+#SHELL32 netstat练习4-输出和3306端口建立连接总的各个状态的数目
+grep ':3306' nowcoder.txt | awk 'BEGIN{} {a[$6]++; b[$5]++} END{printf("TOTAL_IP %d\nESTABLISHED %d\nTOTAL_LINK %d", length(b), a["ESTABLISHED"], NR)}'
