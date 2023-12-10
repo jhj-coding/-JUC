@@ -1971,4 +1971,75 @@ public class All {
             }
         }
     }
+
+    //59. 螺旋矩阵 II
+    class Solution59 {
+        public int[][] generateMatrix(int n) {
+            int[][] ints = new int[n][n];
+            int hang=0;
+            int val=1;
+            while (hang<n){
+                int i=hang;
+                for(;i<n-hang;i++){
+                    ints[hang][i]=val;
+                    val++;
+                }
+                int lie=i-1;
+                int j=hang+1;
+                for (;j<n-hang;j++){
+                    ints[j][lie]=val;
+                    val++;
+                }
+                int bh=j-1;
+                int bl=lie-1;
+                for(;bl>=hang;bl--){
+                    ints[bh][bl]=val;
+                    val++;
+                }
+                int rl=bl+1;
+                int rh=bh-1;
+                for (;rh>hang;rh--){
+                    ints[rh][rl]=val;
+                    val++;
+                }
+                hang++;
+            }
+            return ints;
+        }
+    }
+
+    //60. 排列序列
+    class Solution60 {
+        public String getPermutation(int n, int k) {
+            int[] ints = new int[n];
+            for(int i=1;i<=n;i++){
+                ints[i-1]=i;
+            }
+            HashSet<Integer> set = new HashSet<>();
+            StringBuilder path = new StringBuilder();
+            huisu(ints,set,path,k);
+            return path.toString();
+        }
+        public void huisu(int[] nums,HashSet<Integer> set,StringBuilder path,int k){
+            if(path.length()==nums.length){
+                return;
+            }
+            int m=1;
+            for (int i=1;i<=nums.length-1-path.length();i++){
+                m*=i;
+            }
+
+            for(int i=0;i<nums.length;i++){
+                if(!set.contains(nums[i])){
+                    if(m<k){
+                        k-=m;
+                        continue;
+                    }
+                    path.append(nums[i]);
+                    set.add(nums[i]);
+                    huisu(nums,set,path,k);
+                }
+            }
+        }
+    }
 }
