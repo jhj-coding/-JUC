@@ -1579,39 +1579,39 @@ public class all {
             // write code here
             ArrayDeque<Integer> d1 = new ArrayDeque<>();
             ArrayDeque<Integer> d2 = new ArrayDeque<>();
-            ListNode cur1=head1;
-            ListNode cur2=head2;
-            while (cur1!=null){
+            ListNode cur1 = head1;
+            ListNode cur2 = head2;
+            while (cur1 != null) {
                 d1.addLast(cur1.val);
-                cur1=cur1.next;
+                cur1 = cur1.next;
             }
-            while (cur2!=null){
+            while (cur2 != null) {
                 d2.addLast(cur2.val);
-                cur2=cur2.next;
+                cur2 = cur2.next;
             }
-            ListNode pre=new ListNode(-1);
-            ListNode cur3=pre;
-            int m=0;
-            while (!d1.isEmpty() || !d2.isEmpty()){
-                if(!d1.isEmpty() && !d2.isEmpty()){
+            ListNode pre = new ListNode(-1);
+            ListNode cur3 = pre;
+            int m = 0;
+            while (!d1.isEmpty() || !d2.isEmpty()) {
+                if (!d1.isEmpty() && !d2.isEmpty()) {
                     int i = d1.removeLast() + d2.removeLast() + m;
-                    m=i/10;
-                    cur3.next=new ListNode(i%10);
-                }else if(!d1.isEmpty()){
+                    m = i / 10;
+                    cur3.next = new ListNode(i % 10);
+                } else if (!d1.isEmpty()) {
                     int i = d1.removeLast() + m;
-                    m=i/10;
-                    cur3.next=new ListNode(i%10);
-                }else if(!d2.isEmpty()){
+                    m = i / 10;
+                    cur3.next = new ListNode(i % 10);
+                } else if (!d2.isEmpty()) {
                     int i = d2.removeLast() + m;
-                    m=i/10;
-                    cur3.next=new ListNode(i%10);
+                    m = i / 10;
+                    cur3.next = new ListNode(i % 10);
                 }
-                cur3=cur3.next;
+                cur3 = cur3.next;
             }
-            if(m!=0) cur3.next=new ListNode(m);
+            if (m != 0) cur3.next = new ListNode(m);
             ListNode next = pre.next;
-            ListNode curr=next;
-            ListNode pp=null;
+            ListNode curr = next;
+            ListNode pp = null;
             while (next != null) {
                 ListNode temp = next.next;
                 next.next = pp;
@@ -1627,32 +1627,140 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param arr int整型一维数组 the array
          * @return int整型
          */
-        public int maxLength (int[] arr) {
+        public int maxLength(int[] arr) {
             // write code here
             HashSet<Integer> set = new HashSet<>();
-            int left=0;
-            int right=0;
-            int res=0;
-            while (right<arr.length){
-                if(set.contains(arr[right])){
-                    res=Math.max(res,right-left);
+            int left = 0;
+            int right = 0;
+            int res = 0;
+            while (right < arr.length) {
+                if (set.contains(arr[right])) {
+                    res = Math.max(res, right - left);
                     set.remove(arr[left]);
                     left++;
-                }else{
+                } else {
                     set.add(arr[right]);
                     right++;
                 }
             }
-            res=Math.max(res,right-left);
+            res = Math.max(res, right - left);
             return res;
         }
     }
 
+    //NC42 有重复项数字的全排列
+    public class Solution42 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param num int整型一维数组
+         * @return int整型ArrayList<ArrayList <>>
+         */
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
 
+        public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+            // write code here
+            Arrays.sort(num);
+            HashSet<Integer> set = new HashSet<>();
+            ArrayList<Integer> path = new ArrayList<>();
+            huisu(set, path, num);
+            return res;
+        }
+
+        private void huisu(HashSet<Integer> set, ArrayList<Integer> path, int[] num) {
+            if (path.size() == num.length) {
+                ArrayList<Integer> integers = new ArrayList<>(path);
+                res.add(integers);
+            }
+            for (int i = 0; i < num.length; i++) {
+                if (i > 0 && !set.contains(i) && num[i] == num[i - 1]) {
+                    continue;
+                }
+                if (!set.contains(i)) {
+                    set.add(i);
+                    path.add(num[i]);
+                    huisu(set, path, num);
+                    set.remove(i);
+                    path.remove(path.size() - 1);
+                }
+            }
+        }
+    }
+
+    //NC43 没有重复项数字的全排列
+    public class Solution43 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param num int整型一维数组
+         * @return int整型ArrayList<ArrayList <>>
+         */
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+
+        public ArrayList<ArrayList<Integer>> permute(int[] num) {
+            // write code here
+            Arrays.sort(num);
+            HashSet<Integer> set = new HashSet<>();
+            ArrayList<Integer> path = new ArrayList<>();
+            huisu(set, path, num);
+            return res;
+        }
+
+        private void huisu(HashSet<Integer> set, ArrayList<Integer> path, int[] num) {
+            if (path.size() == num.length) {
+                ArrayList<Integer> integers = new ArrayList<>(path);
+                res.add(integers);
+                return;
+            }
+            for (int i = 0; i < num.length; i++) {
+                if (!set.contains(i)) {
+                    set.add(i);
+                    path.add(num[i]);
+                    huisu(set, path, num);
+                    set.remove(i);
+                    path.remove(path.size() - 1);
+                }
+            }
+        }
+    }
+
+    //NC44 通配符匹配
+    public class Solution44 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param s string字符串
+         * @param p string字符串
+         * @return bool布尔型
+         */
+        public boolean isMatch(String s, String p) {
+            // write code here
+            int slen = s.length();
+            int plen = p.length();
+            boolean[][] booleans = new boolean[slen + 1][plen + 1];
+            booleans[0][0] = true;
+            for (int j = 1; j <= plen; j += 1) {
+                if (p.charAt(j - 1) == '*') {
+                    booleans[0][j] = true;
+                } else {
+                    break;
+                }
+            }
+            for (int i = 1; i <= slen; i++) {
+                for (int j = 1; j <= plen; j++) {
+                    if (p.charAt(j - 1) != '*') {
+                        booleans[i][j] = booleans[i - 1][j - 1] && (p.charAt(j - 1) == s.charAt(i - 1) || p.charAt(j - 1) == '?');
+                    } else {
+                        booleans[i][j] = booleans[i - 1][j] || booleans[i][j - 1];
+                    }
+                }
+            }
+            return booleans[slen][plen];
+        }
+    }
 }
 
 
