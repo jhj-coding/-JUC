@@ -2597,5 +2597,85 @@ public class top101 {
         }
     }
 
+    //BM65 最长公共子序列(二)
+    public class Solution65 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * longest common subsequence
+         * @param s1 string字符串 the string
+         * @param s2 string字符串 the string
+         * @return string字符串
+         */
+        public String LCS (String s1, String s2) {
+            // write code here
+            int len1 = s1.length();
+            int len2 = s2.length();
+            int[][] f = new int[len1 + 1][len2 + 1];
+            for(int i=1;i<=len1;i++){
+                for(int j=1;j<=len2;j++){
+                    if(s1.charAt(i-1)==s2.charAt(j-1)){
+                        f[i][j]=f[i-1][j-1]+1;
+                    }else{
+                        f[i][j]=Math.max(f[i-1][j],f[i][j-1]);
+                    }
+                }
+            }
+            StringBuilder res = new StringBuilder();
+            int i=len1;
+            int j=len2;
+            while (i>0 && j>0){
+                if(s1.charAt(i-1)==s2.charAt(j-1)){
+                    res.append(s1.charAt(i-1));
+                    i--;
+                    j--;
+                }else{
+                    if(f[i][j-1]>f[i-1][j]){
+                        j--;
+                    }else{
+                        i--;
+                    }
+                }
+            }
+            if(res.length()==0){
+                return "-1";
+            }
+            return res.reverse().toString();
+        }
+    }
 
+    //BM66 最长公共子串
+    public class Solution66 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * longest common substring
+         * @param str1 string字符串 the string
+         * @param str2 string字符串 the string
+         * @return string字符串
+         */
+        public String LCS (String str1, String str2) {
+            // write code here
+            int len1=str1.length();
+            int len2=str2.length();
+            int[][] f = new int[len1 + 1][len2 + 1];
+            f[0][0]=0;
+            int maxLength=0;
+            int maxIndex=0;
+            for(int i=1;i<=len1;i++){
+                for (int j=1;j<=len2;j++){
+                    if(str1.charAt(i-1)==str2.charAt(j-1)){
+                        f[i][j]=f[i-1][j-1]+1;
+                        if(f[i][j]>maxLength){
+                            maxLength=f[i][j];
+                            maxIndex=j;
+                        }
+                    }else{
+                        f[i][j]=0;
+                    }
+                }
+            }
+            return str2.substring(maxIndex-maxLength,maxIndex);
+        }
+    }
 }
