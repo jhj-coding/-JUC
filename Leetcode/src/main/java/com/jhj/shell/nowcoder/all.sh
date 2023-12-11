@@ -170,3 +170,12 @@ grep tcp|awk '{print($5)}' | awk -F':' '{print($1)}'| sort | uniq -c| sort -nr |
 
 #SHELL32 netstat练习4-输出和3306端口建立连接总的各个状态的数目
 grep ':3306' nowcoder.txt | awk 'BEGIN{} {a[$6]++; b[$5]++} END{printf("TOTAL_IP %d\nESTABLISHED %d\nTOTAL_LINK %d", length(b), a["ESTABLISHED"], NR)}'
+
+#SHELL33 业务分析-提取值
+awk '{for (i=6;i<=NF;i++) printf $i" ";print ""}' nowcoder.txt |
+	awk -F":|," '{switch(NR){
+    case 1 : print "serverVersion:"$2;break
+    case 3 : print "serverName:"$2;break
+    case 4 : print "osName:"$2;print "osVersion:"$4;break
+    default: break;
+}}'
