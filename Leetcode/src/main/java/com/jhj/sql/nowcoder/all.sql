@@ -205,3 +205,6 @@ from passing_number;
 
 #SQL258 找到每个人的任务
 select person.id,name,content from person left join task on task.person_id=person.id
+
+#SQL259 异常的邮件概率
+select b.date,round(sum(if(b.type='no_completed',1,0))/count(*),3)  from (select * from email where send_id in (select id from user where is_blacklist =0) and receive_id in (select id from user where is_blacklist =0)) as b group by b.date order by b.date;

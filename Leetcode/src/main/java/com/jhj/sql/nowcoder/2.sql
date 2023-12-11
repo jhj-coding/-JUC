@@ -45,15 +45,26 @@ SELECT vend_name
 FROM Vendors
 WHERE vend_country = 'USA' AND vend_state = 'CA' ORDER BY vend_name;
 
-#SQL75 检索产品名称和描述（一）
+#SQL75 检索产品名称和描述(一)
 select * from  Products where prod_desc like "%toy%";
 
-#SQL76 检索产品名称和描述（二）
+#SQL76 检索产品名称和描述(二)
 select * from Products where prod_desc not like '%toy%'
 
-#SQL77 检索产品名称和描述（三）
+#SQL77 检索产品名称和描述(三)
 select * from Products  where prod_desc like '%toy%' and prod_desc like '%carrots%';
 
-#SQL78 检索产品名称和描述（四）
+#SQL78 检索产品名称和描述(四)
 select * from Products where prod_desc like "%toy%carrots%";
 
+#SQL79 别名
+select vend_id,vend_name as vname,vend_address as vaddress,vend_city as vcity from Vendors  order by vname
+
+#SQL80 打折
+select prod_id,prod_price,0.9*prod_price as sale_price from Products
+
+#SQL81 顾客登录名
+select cust_id,cust_name, upper(concat(substring(cust_contact,1,2),substring(cust_city,1,3))) as user_login from Customers
+
+#SQL82 返回 2020 年 1 月的所有订单的订单号和订单日期
+select * from Orders where year(order_date)=2020 and month(order_date)=1 order by order_date
