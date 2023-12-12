@@ -68,3 +68,12 @@ select cust_id,cust_name, upper(concat(substring(cust_contact,1,2),substring(cus
 
 #SQL82 返回 2020 年 1 月的所有订单的订单号和订单日期
 select * from Orders where year(order_date)=2020 and month(order_date)=1 order by order_date
+
+#SQL83 确定已售出产品的总数
+select sum(quantity) as items_ordered from OrderItems
+
+#SQL84 确定已售出产品项 BR01 的总数
+select sum(quantity) as items_ordered from OrderItems where prod_id="BR01"
+
+#SQL85 确定 Products 表中价格不超过 10 美元的最贵产品的价格
+select max(prod_price) as max_price from Products where prod_price<=10;
