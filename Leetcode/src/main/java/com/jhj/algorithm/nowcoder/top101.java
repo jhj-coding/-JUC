@@ -2678,4 +2678,62 @@ public class top101 {
             return str2.substring(maxIndex-maxLength,maxIndex);
         }
     }
+
+    //BM67 不同路径的数目(一)
+    public class Solution67 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param m int整型
+         * @param n int整型
+         * @return int整型
+         */
+        public int uniquePaths (int m, int n) {
+            // write code here
+            int[][] ints = new int[m][n];
+            for(int i=0;i<m;i++){
+                ints[i][0]=1;
+            }
+            for(int i=0;i<n;i++){
+                ints[0][i]=1;
+            }
+            for(int i=1;i<m;i++){
+                for (int j=1;j<n;j++){
+                    ints[i][j]=ints[i-1][j]+ints[i][j-1];
+                }
+            }
+            return ints[m-1][n-1];
+        }
+    }
+
+    //BM68 矩阵的最小路径和
+    public class Solution68 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param matrix int整型二维数组 the matrix
+         * @return int整型
+         */
+        public int minPathSum (int[][] matrix) {
+            // write code here
+            int m = matrix.length;
+            int n=matrix[0].length;
+            int[][] f = new int[m][n];
+            f[0][0]=matrix[0][0];
+            for(int i=1;i<m;i++){
+                f[i][0]=f[i-1][0]+matrix[i][0];
+            }
+            for(int i=1;i<n;i++){
+                f[0][i]=f[0][i-1]+matrix[0][i];
+            }
+            for (int i=1;i<m;i++){
+                for (int j=1;j<n;j++){
+                    f[i][j]=Math.min(f[i-1][j],f[i][j-1])+matrix[i][j];
+                }
+            }
+            return f[m-1][n-1];
+        }
+    }
 }

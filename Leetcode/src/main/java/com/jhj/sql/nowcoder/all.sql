@@ -208,3 +208,6 @@ select person.id,name,content from person left join task on task.person_id=perso
 
 #SQL259 异常的邮件概率
 select b.date,round(sum(if(b.type='no_completed',1,0))/count(*),3)  from (select * from email where send_id in (select id from user where is_blacklist =0) and receive_id in (select id from user where is_blacklist =0)) as b group by b.date order by b.date;
+
+#SQL260 牛客每个人最近的登录日期(一)
+select user_id, max(date) as id from login group by user_id order by user_id

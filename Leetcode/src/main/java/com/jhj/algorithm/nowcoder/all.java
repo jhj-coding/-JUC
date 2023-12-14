@@ -1761,6 +1761,67 @@ public class all {
             return booleans[slen][plen];
         }
     }
+
+    //NC45 实现二叉树先序，中序和后序遍历
+    public class Solution45 {
+        public class TreeNode {
+            int val = 0;
+            TreeNode left = null;
+            TreeNode right = null;
+
+            public TreeNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param root TreeNode类 the root of binary tree
+         * @return int整型二维数组
+         */
+        ArrayList<Integer> front=new ArrayList<>();
+        ArrayList<Integer> mid=new ArrayList<>();
+        ArrayList<Integer> back=new ArrayList<>();
+        public int[][] threeOrders(TreeNode root) {
+            // write code here
+            frontF(root);
+            midF(root);
+            backF(root);
+            int[][] ints = new int[3][];
+            ints[0]=front.stream().mapToInt(Integer::intValue).toArray();
+            ints[1]=mid.stream().mapToInt(Integer::intValue).toArray();
+            ints[2]=back.stream().mapToInt(Integer::intValue).toArray();
+            return ints;
+        }
+
+        public void frontF(TreeNode root){
+            if(root==null){
+                return;
+            }
+            front.add(root.val);
+            frontF(root.left);
+            frontF(root.right);
+        }
+
+        public void midF(TreeNode root){
+            if(root==null){
+                return;
+            }
+            midF(root.left);
+            mid.add(root.val);
+            midF(root.right);
+        }
+
+        public void backF(TreeNode root){
+            if(root==null){
+                return;
+            }
+            backF(root.left);
+            backF(root.right);
+            back.add(root.val);
+        }
+    }
 }
 
 

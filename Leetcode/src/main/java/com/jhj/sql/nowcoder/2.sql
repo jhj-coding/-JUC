@@ -77,3 +77,22 @@ select sum(quantity) as items_ordered from OrderItems where prod_id="BR01"
 
 #SQL85 确定 Products 表中价格不超过 10 美元的最贵产品的价格
 select max(prod_price) as max_price from Products where prod_price<=10;
+
+#SQL86 返回每个订单号各有多少行数
+select order_num, count(order_num) as order_lines from OrderItems group by order_num order by order_lines
+
+#SQL87 每个供应商成本最低的产品
+select vend_id,min(prod_price) as cheapest_item from Products group by vend_id order by cheapest_item
+
+#SQL88 返回订单数量总和不小于100的所有订单的订单号
+select order_num from OrderItems group by order_num having sum(quantity) >=100 order by order_num
+
+#SQL89 计算总和
+select order_num,sum(item_price*quantity) from OrderItems group by order_num having sum(item_price*quantity)>=1000 order by order_num
+
+#SQL90 纠错3
+SELECT order_num, COUNT(*) AS items
+FROM OrderItems
+GROUP BY order_num
+HAVING COUNT(*) >= 3
+ORDER BY items, order_num;
