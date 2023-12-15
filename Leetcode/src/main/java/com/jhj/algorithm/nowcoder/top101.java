@@ -2736,4 +2736,45 @@ public class top101 {
             return f[m-1][n-1];
         }
     }
+
+    //BM69 把数字翻译成字符串
+    public class Solution69 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 解码
+         * @param nums string字符串 数字串
+         * @return int整型
+         */
+        public int solve (String nums) {
+            // write code here
+            if (nums.equals("0")) {
+                return 0;
+            }
+            if (nums == "10" || nums == "20") {
+                return 1;
+            }
+            for (int i = 1; i < nums.length(); i++) {
+                if (nums.charAt(i) == 0) {
+                    if (nums.charAt(i - 1) != '2' && nums.charAt(i - 1) != '1') {
+                        return 0;
+                    }
+                }
+            }
+
+            int len = nums.length();
+            int[] f = new int[len + 1];
+            f[0] = 1;
+            f[1] = 1;
+            for (int i = 2; i <= len; i++) {
+                if ((nums.charAt(i - 2) == '1' && nums.charAt(i - 1) != '0') ||
+                        (nums.charAt(i - 2) == '2' && nums.charAt(i - 1) > '0' &&
+                                nums.charAt(i - 1) < '7'))
+                    f[i] = f[i - 1] + f[i - 2];
+                else
+                    f[i] = f[i - 1];
+            }
+            return f[len];
+        }
+    }
 }
