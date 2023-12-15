@@ -211,3 +211,25 @@ select b.date,round(sum(if(b.type='no_completed',1,0))/count(*),3)  from (select
 
 #SQL260 牛客每个人最近的登录日期(一)
 select user_id, max(date) as id from login group by user_id order by user_id
+
+#SQL261 牛客每个人最近的登录日期(二)
+SELECT
+    u.name AS u_n,
+    c.name AS c_n,
+    l.date
+FROM
+    login l
+        JOIN user u ON l.user_id = u.id
+        JOIN client c ON l.client_id = c.id
+WHERE
+        (l.user_id, l.date) IN (
+        SELECT
+            user_id,
+            MAX(date)
+        FROM
+            login
+        GROUP BY
+            user_id
+    )
+ORDER BY
+    u_n;

@@ -96,3 +96,19 @@ FROM OrderItems
 GROUP BY order_num
 HAVING COUNT(*) >= 3
 ORDER BY items, order_num;
+
+#SQL91 返回购买价格为 10 美元或以上产品的顾客列表
+select cust_id from Orders where  order_num in (select order_num from OrderItems where item_price>=10);
+
+#SQL92 确定哪些订单购买了 prod_id 为 BR01 的产品(一)
+select cust_id,order_date from Orders where order_num in (select order_num from OrderItems where prod_id="BR01") order by order_date
+
+#SQL93 返回购买 prod_id 为 BR01 的产品的所有顾客的电子邮件(一)
+select cust_email from Customers where cust_id in (select cust_id from Orders where order_num in (select order_num from OrderItems where prod_id="BR01"))
+
+#SQL94 返回每个顾客不同订单的总金额
+select Orders.cust_id,sum(item_price*quantity) as total_ordered  from OrderItems,Orders where OrderItems.order_num=Orders.order_num group by Orders.cust_id order by total_ordered desc
+
+#SQL95 从 Products 表中检索所有的产品名称以及对应的销售总数
+select Products.prod_name,b.quant_sold from Products,(select prod_id,sum(quantity) as quant_sold from OrderItems group by OrderItems.prod_id) as b where Products.prod_id=b.prod_id
+
