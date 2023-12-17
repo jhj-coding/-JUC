@@ -112,3 +112,17 @@ select Orders.cust_id,sum(item_price*quantity) as total_ordered  from OrderItems
 #SQL95 从 Products 表中检索所有的产品名称以及对应的销售总数
 select Products.prod_name,b.quant_sold from Products,(select prod_id,sum(quantity) as quant_sold from OrderItems group by OrderItems.prod_id) as b where Products.prod_id=b.prod_id
 
+#SQL96 返回顾客名称和相关订单号
+select Customers.cust_name,Orders.order_num from Customers,Orders where Customers.cust_id=Orders.cust_id order by Customers.cust_name,Orders.order_num
+
+#SQL97 返回顾客名称和相关订单号以及每个订单的总价
+select Customers.cust_name,Orders.order_num,OrderItems.quantity*OrderItems.item_price from Customers,Orders,OrderItems where Customers.cust_id=Orders.cust_id and Orders.order_num=OrderItems.order_num order by Customers.cust_name,Orders.order_num
+
+#SQL98 确定哪些订单购买了 prod_id 为 BR01 的产品(二)
+select Orders.cust_id,Orders.order_date from OrderItems,Orders where OrderItems.order_num=Orders.order_num and OrderItems.prod_id="BR01" order by Orders.order_date
+
+#SQL99 返回购买 prod_id 为 BR01 的产品的所有顾客的电子邮件(二)
+select Customers.cust_email from OrderItems,Orders,Customers where OrderItems.prod_id="BR01" and OrderItems.order_num=Orders.order_num and Orders.cust_id =Customers.cust_id
+
+#SQL100 确定最佳顾客的另一种方式(二)
+select Customers.cust_name,b.total from Orders,Customers,(select order_num,sum(item_price*quantity) as total from OrderItems group by order_num) as b where b.order_num=Orders.order_num and Orders.cust_id=Customers.cust_id and b.total>=1000
