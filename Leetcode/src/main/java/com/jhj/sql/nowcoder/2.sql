@@ -126,3 +126,22 @@ select Customers.cust_email from OrderItems,Orders,Customers where OrderItems.pr
 
 #SQL100 确定最佳顾客的另一种方式(二)
 select Customers.cust_name,b.total from Orders,Customers,(select order_num,sum(item_price*quantity) as total from OrderItems group by order_num) as b where b.order_num=Orders.order_num and Orders.cust_id=Customers.cust_id and b.total>=1000
+
+#SQL101 检索每个顾客的名称和所有的订单号(一)
+select Customers.cust_name,Orders.order_num from Customers inner join Orders on Customers.cust_id=Orders.cust_id order by Customers.cust_name
+
+#SQL102 检索每个顾客的名称和所有的订单号(二)
+select Customers.cust_name,Orders.order_num from Customers left join Orders on Customers.cust_id=Orders.cust_id order by Customers.cust_name
+
+#SQL103 返回产品名称和与之相关的订单号
+select Products.prod_name,OrderItems.order_num from OrderItems right join Products on OrderItems.prod_id=Products.prod_id order by Products.prod_name
+
+#SQL104 返回产品名称和每一项产品的总订单数
+select Products.prod_name,count(OrderItems.order_num) as orders
+from Products
+         left join OrderItems on OrderItems.prod_id=Products.prod_id
+group by Products.prod_name
+order by Products.prod_name
+
+#SQL105 列出供应商及其可供产品的数量
+select Vendors.vend_id,count(Products.prod_id) from Vendors left join Products on Vendors.vend_id=Products.vend_id group by Vendors.vend_id order by Vendors.vend_id

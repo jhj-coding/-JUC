@@ -241,3 +241,6 @@ FROM login
 WHERE (user_id, date)
           IN
       (SELECT user_id, DATE_ADD(MIN(date),INTERVAL 1 DAY) FROM login GROUP BY user_id);
+
+#SQL263 牛客每个人最近的登录日期(四)
+select a.date,count(b.user_id) from (select distinct login.date as date from login) as a left join (select user_id,min(date) as d from login group by user_id) as b on a.date=b.d group by a.date order by a.date
