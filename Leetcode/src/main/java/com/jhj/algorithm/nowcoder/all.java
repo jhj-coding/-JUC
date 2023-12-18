@@ -1822,6 +1822,85 @@ public class all {
             back.add(root.val);
         }
     }
+
+    //NC46 加起来和为目标值的组合(二)
+    public class Solution46 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param num int整型一维数组
+         * @param target int整型
+         * @return int整型ArrayList<ArrayList<>>
+         */
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        public ArrayList<ArrayList<Integer>> combinationSum2 (int[] num, int target) {
+            // write code here
+            Arrays.sort(num);
+            huisu(new ArrayList<Integer>(),0, num, target);
+            return res;
+        }
+        public void huisu(ArrayList<Integer> path,int start, int[] num, int target) {
+            if (target == 0) {
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for (int i = start; i < num.length; i++) {
+                if(num[i]>target){
+                    return;
+                }
+                if(i>start&&num[i]==num[i-1]){
+                    continue;
+                }
+                path.add(num[i]);
+                huisu(path,i+1, num, target - num[i]);
+                path.remove(path.size()-1);
+            }
+        }
+
+    }
+
+    //NC47 数独
+    public class Solution {
+        boolean[][] hang = new boolean[9][9];
+        boolean[][] lie = new boolean[9][9];
+        boolean[][][] fangkuai = new boolean[3][3][9];
+        ArrayList<int[]> ints = new ArrayList<>();
+        boolean vaild = false;
+
+        public void solveSudoku(char[][] board) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (board[i][j] == '.') {
+                        ints.add(new int[]{i, j});
+                    } else {
+                        int i1 = board[i][j] - '0' - 1;
+                        hang[i][i1] = lie[j][i1] = fangkuai[i / 3][j / 3][i1] = true;
+                    }
+                }
+            }
+            dfs(board, 0);
+        }
+
+        private void dfs(char[][] board, int i) {
+            if (i == ints.size()) {
+                vaild = true;
+                return;
+            }
+            int[] ints = this.ints.get(i);
+            int anInt = ints[0];
+            int anInt1 = ints[1];
+            for (int di = 0; di < 9 && !vaild; di++) {
+                if (!hang[anInt][di] && !lie[anInt1][di] && !fangkuai[anInt / 3][anInt1 / 3][di]) {
+                    hang[anInt][di] = lie[anInt1][di] = fangkuai[anInt / 3][anInt1 / 3][di] = true;
+                    board[anInt][anInt1] = (char) (di + 1 + '0');
+                    dfs(board, i + 1);
+                    hang[anInt][di] = lie[anInt1][di] = fangkuai[anInt / 3][anInt1 / 3][di] = false;
+                }
+
+            }
+        }
+    }
 }
 
 
