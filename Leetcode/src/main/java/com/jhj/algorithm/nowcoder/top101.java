@@ -2755,7 +2755,7 @@ public class top101 {
                 return 1;
             }
             for (int i = 1; i < nums.length(); i++) {
-                if (nums.charAt(i) == 0) {
+                if (nums.charAt(i) == '0') {
                     if (nums.charAt(i - 1) != '2' && nums.charAt(i - 1) != '1') {
                         return 0;
                     }
@@ -2775,6 +2775,35 @@ public class top101 {
                     f[i] = f[i - 1];
             }
             return f[len];
+        }
+    }
+
+    //BM70 兑换零钱(一)
+    public class Solution70 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 最少货币数
+         * @param arr int整型一维数组 the array
+         * @param aim int整型 the target
+         * @return int整型
+         */
+        public int minMoney (int[] arr, int aim) {
+            // write code here
+            if(aim<1){
+                return 0;
+            }
+            int[] f = new int[aim + 1];
+            Arrays.fill(f,aim+1);
+            f[0]=0;
+            for(int i=1;i<=aim;i++){
+                for (int j=0;j<arr.length;j++){
+                    if(arr[j]<=i){
+                        f[i]=Math.min(f[i],f[i-arr[j]]+1);
+                    }
+                }
+            }
+            return f[aim]>aim?-1:f[aim];
         }
     }
 }
