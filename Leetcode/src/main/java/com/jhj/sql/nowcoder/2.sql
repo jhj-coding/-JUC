@@ -145,3 +145,21 @@ order by Products.prod_name
 
 #SQL105 列出供应商及其可供产品的数量
 select Vendors.vend_id,count(Products.prod_id) from Vendors left join Products on Vendors.vend_id=Products.vend_id group by Vendors.vend_id order by Vendors.vend_id
+
+#SQL106 将两个 SELECT 语句结合起来(一)
+select * from OrderItems where quantity=100 union select * from OrderItems where prod_id like 'BNBG%' order by prod_id
+
+#SQL107 将两个 SELECT 语句结合起来(二)
+select * from OrderItems where quantity=100 union select * from OrderItems where prod_id like 'BNBG%' order by prod_id
+
+#SQL108 组合 Products 表中的产品名称和 Customers 表中的顾客名称
+select prod_name as a from Products union select cust_name as a from Customers order by a
+
+#SQL109 纠错4
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state = 'MI'
+UNION
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state = 'IL'ORDER BY cust_name;
