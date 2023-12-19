@@ -2806,4 +2806,30 @@ public class top101 {
             return f[aim]>aim?-1:f[aim];
         }
     }
+
+    //BM71 最长上升子序列(一)
+    public class Solution71 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 给定数组的最长严格上升子序列的长度。
+         * @param arr int整型一维数组 给定的数组
+         * @return int整型
+         */
+        public int LIS (int[] arr) {
+            // write code here
+            int len = arr.length;
+            int[] f = new int[len];
+            for(int i=0;i<len;i++){
+                f[i]=1;
+                for(int j=0;j<i;j++){
+                    if(arr[i]>arr[j]){
+                        f[i]=Math.max(f[i],f[j]+1);
+                    }
+                }
+            }
+            Arrays.sort(f);
+            return f[len-1];
+        }
+    }
 }
