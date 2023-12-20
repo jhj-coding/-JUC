@@ -1939,6 +1939,45 @@ public class all {
             return -1;
         }
     }
+
+    //NC49 最长的括号子串
+    public class Solution49 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @return int整型
+         */
+        public int longestValidParentheses (String s) {
+            int res = 0;
+            //记录上一次连续括号结束的位置
+            int start = -1;
+            Stack<Integer> st = new Stack<Integer>();
+            for(int i = 0; i < s.length(); i++){
+                //左括号入栈
+                if(s.charAt(i) == '(')
+                    st.push(i);
+                    //右括号
+                else{
+                    //如果右括号时栈为空，不合法，设置为结束位置
+                    if(st.isEmpty())
+                        start = i;
+                    else{
+                        //弹出左括号
+                        st.pop();
+                        //栈中还有左括号，说明右括号不够，减去栈顶位置就是长度
+                        if(!st.empty())
+                            res = Math.max(res, i - st.peek());
+                            //栈中没有括号，说明左右括号行号，减去上一次结束的位置就是长度
+                        else
+                            res = Math.max(res, i - start);
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
 
 
