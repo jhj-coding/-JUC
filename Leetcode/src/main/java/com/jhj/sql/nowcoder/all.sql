@@ -247,3 +247,11 @@ select a.date,count(b.user_id) from (select distinct login.date as date from log
 
 #SQL264 牛客每个人最近的登录日期(五)
 select tt2.date,if(tt.num is null,0.000,tt.num) from (select distinct date from login) as tt2 left join (select t1.a as date,Round(t2.b/t1.b,3) as num from (select a, count(user_id) as b from (select user_id,min(date) as a from login group by user_id) as b group by a) as t1,(select date_sub(date,InTERVAL 1 DAY) as a,COUNT(*) as b from login where (user_id,date) in (select user_id, date_add(min(date),INTERVAL 1 DAY) from login group by user_id) GROUP BY a) as t2 where t1.a=t2.a) as tt on tt2.date=tt.date
+
+#SQL265 牛客每个人最近的登录日期(六)
+select u.name as u_n
+     ,p.date as date
+        ,sum(p.number)over(partition by u.name order by date)as ps_num
+from passing_number p,user u
+where p.user_id=u.id
+order by p.date,u.name;
