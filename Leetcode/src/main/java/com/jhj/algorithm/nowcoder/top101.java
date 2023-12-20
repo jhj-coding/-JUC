@@ -2832,4 +2832,27 @@ public class top101 {
             return f[len-1];
         }
     }
+
+    //BM72 连续子数组的最大和
+    public class Solution72 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param array int整型一维数组
+         * @return int整型
+         */
+        public int FindGreatestSumOfSubArray (int[] array) {
+            // write code here
+            int res=array[0];
+            int res1=array[0];
+            for(int i=1;i<array.length;i++){
+                res1+=array[i];
+                res1=Math.max(res1,array[i]);
+                res=Math.max(res,res1);
+            }
+
+            return res;
+        }
+    }
 }
