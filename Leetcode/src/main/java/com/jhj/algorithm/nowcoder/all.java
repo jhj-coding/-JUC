@@ -1780,23 +1780,24 @@ public class all {
          * @param root TreeNode类 the root of binary tree
          * @return int整型二维数组
          */
-        ArrayList<Integer> front=new ArrayList<>();
-        ArrayList<Integer> mid=new ArrayList<>();
-        ArrayList<Integer> back=new ArrayList<>();
+        ArrayList<Integer> front = new ArrayList<>();
+        ArrayList<Integer> mid = new ArrayList<>();
+        ArrayList<Integer> back = new ArrayList<>();
+
         public int[][] threeOrders(TreeNode root) {
             // write code here
             frontF(root);
             midF(root);
             backF(root);
             int[][] ints = new int[3][];
-            ints[0]=front.stream().mapToInt(Integer::intValue).toArray();
-            ints[1]=mid.stream().mapToInt(Integer::intValue).toArray();
-            ints[2]=back.stream().mapToInt(Integer::intValue).toArray();
+            ints[0] = front.stream().mapToInt(Integer::intValue).toArray();
+            ints[1] = mid.stream().mapToInt(Integer::intValue).toArray();
+            ints[2] = back.stream().mapToInt(Integer::intValue).toArray();
             return ints;
         }
 
-        public void frontF(TreeNode root){
-            if(root==null){
+        public void frontF(TreeNode root) {
+            if (root == null) {
                 return;
             }
             front.add(root.val);
@@ -1804,8 +1805,8 @@ public class all {
             frontF(root.right);
         }
 
-        public void midF(TreeNode root){
-            if(root==null){
+        public void midF(TreeNode root) {
+            if (root == null) {
                 return;
             }
             midF(root.left);
@@ -1813,8 +1814,8 @@ public class all {
             midF(root.right);
         }
 
-        public void backF(TreeNode root){
-            if(root==null){
+        public void backF(TreeNode root) {
+            if (root == null) {
                 return;
             }
             backF(root.left);
@@ -1828,33 +1829,34 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param num int整型一维数组
          * @param target int整型
-         * @return int整型ArrayList<ArrayList<>>
+         * @return int整型ArrayList<ArrayList <>>
          */
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
-        public ArrayList<ArrayList<Integer>> combinationSum2 (int[] num, int target) {
+
+        public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
             // write code here
             Arrays.sort(num);
-            huisu(new ArrayList<Integer>(),0, num, target);
+            huisu(new ArrayList<Integer>(), 0, num, target);
             return res;
         }
-        public void huisu(ArrayList<Integer> path,int start, int[] num, int target) {
+
+        public void huisu(ArrayList<Integer> path, int start, int[] num, int target) {
             if (target == 0) {
                 res.add(new ArrayList<>(path));
                 return;
             }
             for (int i = start; i < num.length; i++) {
-                if(num[i]>target){
+                if (num[i] > target) {
                     return;
                 }
-                if(i>start&&num[i]==num[i-1]){
+                if (i > start && num[i] == num[i - 1]) {
                     continue;
                 }
                 path.add(num[i]);
-                huisu(path,i+1, num, target - num[i]);
-                path.remove(path.size()-1);
+                huisu(path, i + 1, num, target - num[i]);
+                path.remove(path.size() - 1);
             }
         }
 
@@ -1907,32 +1909,31 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
-         * @param nums int整型一维数组
+         * @param nums   int整型一维数组
          * @param target int整型
          * @return int整型
          */
-        public int search (int[] nums, int target) {
+        public int search(int[] nums, int target) {
             // write code here
-            int left=0;
+            int left = 0;
             int len = nums.length;
-            int right=len-1;
-            while (left<=right){
-                int mid=(left+right)/2;
-                if(nums[mid]==target){
+            int right = len - 1;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if (nums[mid] == target) {
                     return mid;
                 }
-                if(nums[0]<=nums[mid]){
-                    if(target>=nums[0] && target<nums[mid]){
-                        right=mid-1;
-                    }else{
-                        left=mid+1;
+                if (nums[0] <= nums[mid]) {
+                    if (target >= nums[0] && target < nums[mid]) {
+                        right = mid - 1;
+                    } else {
+                        left = mid + 1;
                     }
-                }else{
-                    if(target>nums[mid]&&target<=nums[len-1]){
-                        left=mid+1;
-                    }else {
-                        right=mid-1;
+                } else {
+                    if (target > nums[mid] && target <= nums[len - 1]) {
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
                     }
                 }
             }
@@ -1945,29 +1946,28 @@ public class all {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
          *
-         *
          * @param s string字符串
          * @return int整型
          */
-        public int longestValidParentheses (String s) {
+        public int longestValidParentheses(String s) {
             int res = 0;
             //记录上一次连续括号结束的位置
             int start = -1;
             Stack<Integer> st = new Stack<Integer>();
-            for(int i = 0; i < s.length(); i++){
+            for (int i = 0; i < s.length(); i++) {
                 //左括号入栈
-                if(s.charAt(i) == '(')
+                if (s.charAt(i) == '(')
                     st.push(i);
                     //右括号
-                else{
+                else {
                     //如果右括号时栈为空，不合法，设置为结束位置
-                    if(st.isEmpty())
+                    if (st.isEmpty())
                         start = i;
-                    else{
+                    else {
                         //弹出左括号
                         st.pop();
                         //栈中还有左括号，说明右括号不够，减去栈顶位置就是长度
-                        if(!st.empty())
+                        if (!st.empty())
                             res = Math.max(res, i - st.peek());
                             //栈中没有括号，说明左右括号行号，减去上一次结束的位置就是长度
                         else
@@ -1976,6 +1976,53 @@ public class all {
                 }
             }
             return res;
+        }
+    }
+
+    //NC50 链表中的节点每k个一组翻转
+    public class Solution50 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param head ListNode类
+         * @param k    int整型
+         * @return ListNode类
+         */
+        public ListNode reverseKGroup(ListNode head, int k) {
+            // write code here
+            ListNode cur=head;
+            int count=0;
+            while (cur!=null){
+                count++;
+                cur=cur.next;
+            }
+            ListNode pre=new ListNode(-1);
+            pre.next=head;
+            ListNode cpp=pre;
+            ListNode cp=null;
+            ListNode ch=head;
+            for (;count>=k;count-=k){
+                for(int i=0;i<k;i++) {
+                    ListNode next = ch.next;
+                    ch.next = cp;
+                    cp = ch;
+                    ch = next;
+                }
+                ListNode next = cpp.next;
+                cpp.next.next=ch;
+                cpp.next=cp;
+                cpp=next;
+            }
+            return pre.next;
         }
     }
 }

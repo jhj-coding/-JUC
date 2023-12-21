@@ -2855,4 +2855,41 @@ public class top101 {
             return res;
         }
     }
+
+    //BM73 最长回文子串
+    public class Solution73 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param A string字符串
+         * @return int整型
+         */
+        public int getLongestPalindrome (String A) {
+            // write code here
+            int len = A.length();
+            int[][] f = new int[len][len];
+            for (int i=0;i<len;i++){
+                f[i][i]=1;
+            }
+            int res=1;
+            for (int j = 0; j < len; j++) {
+                for (int i = 0; i < j; i++) {
+                    if (A.charAt(i) == A.charAt(j)) {
+                        if (j - i >= 3) {
+                            f[i][j] = f[i + 1][j - 1];
+                        } else {
+                            f[i][j] = 1;
+                        }
+                        if (f[i][j] == 1) {
+                            res = Math.max(res, j - i + 1);
+                        }
+                    } else {
+                        f[i][j] = 0;
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
