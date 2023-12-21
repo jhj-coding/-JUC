@@ -6,3 +6,6 @@ insert into exam_record_before_2021 (uid,exam_id,start_time,submit_time,score) s
 
 #SQL112 插入记录(三)
 replace into examination_info (exam_id,tag,difficulty,duration,release_time) values(9003,"SQL","hard",90,'2021-01-01 00:00:00')
+
+#SQL113 更新记录(一)
+update examination_info set tag="Python" where tag="PYTHON"

@@ -255,3 +255,5 @@ select u.name as u_n
 from passing_number p,user u
 where p.user_id=u.id
 order by p.date,u.name;
+
+select job, round(sum(score)/count(job),3) as avg from grade group by job order by avg desc
