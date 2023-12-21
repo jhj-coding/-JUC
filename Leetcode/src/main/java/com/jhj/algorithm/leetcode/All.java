@@ -2204,4 +2204,72 @@ public class All {
             return f[m-1][n-1];
         }
     }
+
+    //65. 有效数字
+    class Solution65 {
+        public boolean isNumber(String s) {
+            int indexE=-1;
+            for(int i=0;i<s.length();i++){
+                if(s.charAt(i)=='e'||s.charAt(i)=='E'){
+                    if(indexE==-1){
+                        indexE=i;
+                    }else{
+                        return false;
+                    }
+                }
+            }
+            if(indexE==-1){
+                return check(s,0,s.length(),false);
+            }else{
+                return check(s,0,indexE,false)&&check(s,indexE+1,s.length(),true);
+            }
+        }
+        boolean check(String s,int start,int end,boolean must){
+            if(start>=end){
+                return false;
+            }
+            if(s.charAt(start)=='+'||s.charAt(start)=='-'){
+                start++;
+            }
+            boolean hasDot=false;
+            boolean hasNum=false;
+            for(int i=start;i<end;i++){
+                if(s.charAt(i)=='.'){
+                    if(must||hasDot) return false;
+                    hasDot=true;
+                }else if(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                    hasNum=true;
+                }else {
+                    return false;
+                }
+            }
+            return hasNum;
+        }
+    }
+
+    //66. 加一
+    class Solution66 {
+        public int[] plusOne(int[] digits) {
+            int len=digits.length-1;
+            int val=1;
+            while (len>=0){
+                val+=digits[len];
+                digits[len] = val % 10;
+                val/=10;
+                if(val==0){
+                    break;
+                }
+                len--;
+            }
+            if(val==0){
+                return digits;
+            }
+            else{
+                int[] ints = new int[digits.length+1];
+                Arrays.fill(ints,0);
+                ints[0]=val;
+                return ints;
+            }
+        }
+    }
 }
