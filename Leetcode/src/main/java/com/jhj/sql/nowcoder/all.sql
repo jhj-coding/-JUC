@@ -256,4 +256,8 @@ from passing_number p,user u
 where p.user_id=u.id
 order by p.date,u.name;
 
+#SQL266 考试分数(一)
 select job, round(sum(score)/count(job),3) as avg from grade group by job order by avg desc
+
+#SQL267 考试分数(二)
+select id,job,score from grade left join (select job as a1,avg(score) as a2 from grade group by job) as a on grade.job=a.a1 where grade.score>a.a2 order by id

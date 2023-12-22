@@ -9,3 +9,6 @@ replace into examination_info (exam_id,tag,difficulty,duration,release_time) val
 
 #SQL113 更新记录(一)
 update examination_info set tag="Python" where tag="PYTHON"
+
+#SQL114 更新记录(二)
+update exam_record set score=0,submit_time='2099-01-01' where start_time<'2021-09-01' and submit_time is null
