@@ -1999,30 +1999,88 @@ public class all {
          */
         public ListNode reverseKGroup(ListNode head, int k) {
             // write code here
-            ListNode cur=head;
-            int count=0;
-            while (cur!=null){
+            ListNode cur = head;
+            int count = 0;
+            while (cur != null) {
                 count++;
-                cur=cur.next;
+                cur = cur.next;
             }
-            ListNode pre=new ListNode(-1);
-            pre.next=head;
-            ListNode cpp=pre;
-            ListNode cp=null;
-            ListNode ch=head;
-            for (;count>=k;count-=k){
-                for(int i=0;i<k;i++) {
+            ListNode pre = new ListNode(-1);
+            pre.next = head;
+            ListNode cpp = pre;
+            ListNode cp = null;
+            ListNode ch = head;
+            for (; count >= k; count -= k) {
+                for (int i = 0; i < k; i++) {
                     ListNode next = ch.next;
                     ch.next = cp;
                     cp = ch;
                     ch = next;
                 }
                 ListNode next = cpp.next;
-                cpp.next.next=ch;
-                cpp.next=cp;
-                cpp=next;
+                cpp.next.next = ch;
+                cpp.next = cp;
+                cpp = next;
             }
             return pre.next;
+        }
+    }
+
+    //NC51 合并k个已排序的链表
+    public class Solution51 {
+        public class ListNode {
+            int val;
+            ListNode next = null;
+
+            public ListNode(int val) {
+                this.val = val;
+            }
+        }
+
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * @param lists ListNode类ArrayList
+         * @return ListNode类
+         */
+        public ListNode mergeKLists(ArrayList<ListNode> lists) {
+            // write code here
+            return mergeT(lists,0,lists.size()-1);
+        }
+        public ListNode mergeT(ArrayList<ListNode> lists,int l,int r){
+            if(l==r){
+                return lists.get(l);
+            }
+            if(l>r){
+                return null;
+            }
+            int mid=(l+r)/2;
+            return merge2(mergeT(lists,l,mid),mergeT(lists,mid+1,r));
+        }
+        public ListNode merge2(ListNode l1, ListNode l2){
+            ListNode listNode = new ListNode(-1);
+            ListNode pre=listNode;
+            ListNode ll1=l1;
+            ListNode ll2=l2;
+            while (ll1!=null || ll2!=null){
+                if(ll1!=null&&ll2!=null){
+                    if(ll1.val<ll2.val){
+                        pre.next=new ListNode(ll1.val);
+                        ll1=ll1.next;
+                    }else{
+                        pre.next=new ListNode(ll2.val);
+                        ll2=ll2.next;
+                    }
+                }else if(ll1!=null){
+                    pre.next=new ListNode(ll1.val);
+                    ll1=ll1.next;
+                }else{
+                    pre.next=new ListNode(ll2.val);
+                    ll2=ll2.next;
+                }
+                pre=pre.next;
+            }
+            return listNode.next;
         }
     }
 }

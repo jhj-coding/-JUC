@@ -2892,4 +2892,47 @@ public class top101 {
             return res;
         }
     }
+
+    //BM74 数字字符串转化成IP地址
+    public class Solution74 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @return string字符串ArrayList
+         */
+        public ArrayList<String> restoreIpAddresses (String s) {
+            // write code here
+            ArrayList<String> res = new ArrayList<>();
+            huisu(s,res,new StringBuilder(),0,0);
+            return res;
+        }
+        public void huisu(String s,ArrayList<String> res,StringBuilder path,int step,int index){
+            if(step==4) {
+                if (
+                        index == s.length()) {
+                    res.add(new String(path));
+                } else {
+                    return;
+                }
+            }else {
+                for (int i = index; i < index + 3 && i < s.length(); i++) {
+                    String substring = s.substring(index, i + 1);
+                    Integer integer = Integer.valueOf(substring);
+                    if (integer <= 255 && (substring.length() == 1 || substring.charAt(0) != '0')) {
+                        if (step < 3) {
+                            path.append(substring+".");
+                            huisu(s, res, path, step + 1, i + 1);
+                            path.delete(path.length() - substring.length() - 1, path.length());
+                        } else {
+                            path.append(substring);
+                            huisu(s, res, path, step + 1, i + 1);
+                            path.delete(path.length() - substring.length(), path.length());
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
