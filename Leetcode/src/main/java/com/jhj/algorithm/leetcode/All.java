@@ -2272,4 +2272,41 @@ public class All {
             }
         }
     }
+
+    //67. 二进制求和
+    class Solution67 {
+        public String addBinary(String a, String b) {
+            int lena = a.length()-1;
+            int lenb = b.length()-1;
+            StringBuilder res = new StringBuilder();
+            int s=0;
+            while (lenb>=0 || lena>=0){
+                if(lena>=0&&lenb>=0){
+                    int i = a.charAt(lena) - '0';
+                    int i1 = b.charAt(lenb) - '0';
+                    int i2 = i + i1 + s;
+                    res.append(i2%2);
+                    s=i2/2;
+                    lena--;
+                    lenb--;
+                }else if(lena>=0){
+                    int i = a.charAt(lena) - '0';
+                    int i2 = i + s;
+                    res.append(i2%2);
+                    s=i2/2;
+                    lena--;
+                }else{
+                    int i1 = b.charAt(lenb) - '0';
+                    int i2 = i1 + s;
+                    res.append(i2%2);
+                    s=i2/2;
+                    lenb--;
+                }
+            }
+            if(s!=0){
+                res.append(s);
+            }
+            return res.reverse().toString();
+        }
+    }
 }
