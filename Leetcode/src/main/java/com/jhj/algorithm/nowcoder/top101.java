@@ -2935,4 +2935,39 @@ public class top101 {
             }
         }
     }
+
+    //编辑距离(一)
+    public class Solution75 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param str1 string字符串
+         * @param str2 string字符串
+         * @return int整型
+         */
+        public int editDistance (String str1, String str2) {
+            // write code here
+            int len1=str1.length();
+            int len2=str2.length();
+            int[][] f = new int[len1 + 1][len2 + 1];
+            f[0][0]=0;
+            for(int i=1;i<=len1;i++){
+                f[i][0]=f[i-1][0]+1;
+            }
+            for(int j=1;j<=len2;j++){
+                f[0][j]=f[0][j-1]+1;
+            }
+            for (int i=1;i<=len1;i++){
+                for(int j=1;j<=len2;j++){
+                    if(str1.charAt(i-1)==str2.charAt(j-1)){
+                        f[i][j]=f[i-1][j-1];
+                    }else{
+                        f[i][j]=Math.min(f[i-1][j],Math.min(f[i][j-1], f[i-1][j-1]))+1;
+                    }
+                }
+            }
+            return f[len1][len2];
+        }
+    }
 }
