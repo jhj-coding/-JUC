@@ -2936,7 +2936,7 @@ public class top101 {
         }
     }
 
-    //编辑距离(一)
+    //BM75 编辑距离(一)
     public class Solution75 {
         /**
          * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
@@ -2968,6 +2968,28 @@ public class top101 {
                 }
             }
             return f[len1][len2];
+        }
+    }
+
+    //BM78 打家劫舍(一)
+    public class Solution78 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        public int rob (int[] nums) {
+            // write code here
+            int len=nums.length;
+            int[] f = new int[len];
+            f[0]=0;
+            f[1]=nums[0];
+            for(int i=2;i<=len;i++){
+                f[i]=Math.max(f[i-1],f[i-2]+nums[i-1]);
+            }
+            return Math.max(f[len],f[len-1]);
         }
     }
 }
