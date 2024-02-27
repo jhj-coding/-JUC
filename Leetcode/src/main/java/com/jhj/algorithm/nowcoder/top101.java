@@ -2992,4 +2992,31 @@ public class top101 {
             return Math.max(f[len],f[len-1]);
         }
     }
+    //BM79 打家劫舍(二)
+    public class Solution79 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param nums int整型一维数组
+         * @return int整型
+         */
+        public int rob (int[] nums) {
+            // write code here
+            int len = nums.length;
+            int[] f = new int[len+1];
+            f[0]=0;
+            f[1]=nums[0];
+            for(int i=2;i<=len;i++){
+                f[i]=Math.max(f[i-1],f[i-2]+nums[i-1]);
+            }
+            int res=f[len-1];
+            Arrays.fill(f,0);
+            for(int i=2;i<=len;i++){
+                f[i]=Math.max(f[i-1],f[i-2]+nums[i-1]);
+            }
+            int res1 = f[len];
+            return Math.max(res,res1);
+        }
+    }
 }
