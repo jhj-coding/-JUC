@@ -3019,4 +3019,233 @@ public class top101 {
             return Math.max(res,res1);
         }
     }
+
+    //BM83 字符串变形
+    public class Solution83 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @param n int整型
+         * @return string字符串
+         */
+        public String trans (String s, int n) {
+            // write code here
+            int i=0;
+            int j=s.length()-1;
+            StringBuilder s1 = new StringBuilder(s);
+            while (i<=j){
+                char c = s1.charAt(i);
+                s1.setCharAt(i, (char) (s1.charAt(j)>96?s1.charAt(j)-32:s1.charAt(j)+32));
+                s1.setCharAt(j,(char) (c>96?c-32:c+32));
+                i++;
+                j--;
+            }
+            System.out.println(s1.toString());
+            i=0;
+            j=0;
+            for(;i<s.length();i++){
+                if(s1.charAt(i)=='@'){
+                    int k=i-1;
+                    while (j<k){
+                        char c = s1.charAt(j);
+                        s1.setCharAt(j,s1.charAt(k));
+                        s1.setCharAt(k,c);
+                        k--;
+                        j++;
+                    }
+                    j=i+1;
+                    s1.setCharAt(i,' ');
+                }
+            }
+            int k=i-1;
+            while (j<=k){
+                char c = s1.charAt(j);
+                s1.setCharAt(j,s1.charAt(k));
+                s1.setCharAt(k,c);
+                k--;
+                j++;
+            }
+            return s1.toString();
+        }
+    }
+
+    //BM84 最长公共前缀
+    public class Solution84 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param strs string字符串一维数组
+         * @return string字符串
+         */
+        public String longestCommonPrefix (String[] strs) {
+            // write code here
+            int len = strs.length;
+            if(len==0){
+                return "";
+            }
+            String str = strs[0];
+            boolean flag=true;
+            int i=0;
+            for(;i<str.length();i++){
+
+                for(int j=1;j<len;j++){
+                    if(strs[j].length()==i||strs[j].charAt(i)!=str.charAt(i)){
+                        flag=false;
+                        break;
+                    }
+                }
+                if(!flag){
+                    break;
+                }
+            }
+            return str.substring(0,i);
+        }
+    }
+
+    //BM85 验证IP地址
+    public class Solution85 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 验证IP地址
+         * @param IP string字符串 一个IP地址字符串
+         * @return string字符串
+         */
+        public String solve (String IP) {
+            // write code here
+            if(ipv4(IP)){
+                return "IPv4";
+            };
+            if(ipv6(IP)){
+                return "IPv6";
+            }
+            return "Neither";
+        }
+        public boolean ipv4(String ip){
+            int i=0;
+            int len = ip.length();
+            ArrayList<String> strs = new ArrayList<>();
+            for(int j=0;j<len;j++){
+                if(ip.charAt(j)=='.'){
+                    strs.add(ip.substring(i,j));
+                    i=j+1;
+                }
+            }
+            strs.add(ip.substring(i,len));
+            if(strs.size()!=4){
+                return false;
+            }else{
+                for(String s:strs){
+                    if(s.length()>3||s.length()<1){
+                        return false;
+                    }else{
+                        if(s.length()==3){
+                            int c1 = s.charAt(0)-'0';
+                            int c2 = s.charAt(1)-'0';
+                            int c3 = s.charAt(2)-'0';
+                            int i1 = c1 * 100 + c2 * 10 + c3;
+                            if(i1>255||i1<100){
+                                return false;
+                            }
+                        }
+                        if(s.length()==2){
+                            int c1 = s.charAt(0)-'0';
+                            int c2 = s.charAt(1)-'0';
+                            int i1 = c1 * 10 + c2;
+                            if(i1>99||i1<10){
+                                return false;
+                            }
+                        }
+                        if(s.length()==1){
+                            int c1 = s.charAt(0)-'0';
+                            int i1 = c1;
+                            if(i1>9||i1<0){
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        public boolean ipv6(String ip){
+            int i=0;
+            int len = ip.length();
+            ArrayList<String> strs = new ArrayList<>();
+            for(int j=0;j<len;j++){
+                if(ip.charAt(j)==':'){
+                    strs.add(ip.substring(i,j));
+                    i=j+1;
+                }
+            }
+            strs.add(ip.substring(i,len));
+            if(strs.size()!=8){
+                return false;
+            }else{
+                for(String s:strs){
+                    if(s.length()>4||s.length()<1){
+                        return false;
+                    }else{
+                        for(int k=0;k<s.length();k++){
+                            if((s.charAt(k)>='0'&&s.charAt(k)<='9')||(s.charAt(k)>='a'&&s.charAt(k)<='e')||(s.charAt(k)>='A'&&s.charAt(k)<='E')){
+
+                            }else{
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    //BM86 大数加法
+    public class Solution86 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 计算两个数之和
+         * @param s string字符串 表示第一个整数
+         * @param t string字符串 表示第二个整数
+         * @return string字符串
+         */
+        public String solve (String s, String t) {
+            // write code here
+            int slen = s.length()-1;
+            int tlen = t.length()-1;
+            int res=0;
+            StringBuilder stringBuilder = new StringBuilder();
+            while (slen>=0||tlen>=0){
+                if(slen>=0&&tlen>=0){
+                    int i = s.charAt(slen) - '0';
+                    int i1 = t.charAt(tlen) - '0';
+                    res=res+i+i1;
+                    stringBuilder.insert(0,res%10);
+                    res/=10;
+                    slen--;
+                    tlen--;
+                }else if(slen>=0){
+                    int i = s.charAt(slen) - '0';
+                    res=res+i;
+                    stringBuilder.insert(0,res%10);
+                    res/=10;
+                    slen--;
+                }else{
+                    int i1 = t.charAt(tlen) - '0';
+                    res=res+i1;
+                    stringBuilder.insert(0,res%10);
+                    res/=10;
+                    tlen--;
+                }
+            }
+            if(res!=0){
+                stringBuilder.insert(0,res%10);
+            }
+            return stringBuilder.toString();
+        }
+    }
 }
