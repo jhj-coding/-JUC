@@ -3248,4 +3248,263 @@ public class top101 {
             return stringBuilder.toString();
         }
     }
+
+    //BM88 判断是否为回文字符串
+    public class Solution88 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param str string字符串 待判断的字符串
+         * @return bool布尔型
+         */
+        public boolean judge (String str) {
+            // write code here
+            int i=0;
+            int j=str.length()-1;
+            while (i<j){
+                if(str.charAt(i)!=str.charAt(j)){
+                    return false;
+                }
+                i++;
+                j--;
+            }
+            return true;
+        }
+    }
+
+    //BM89 合并区间
+    public class Solution89 {
+        public class Interval {
+            int start;
+            int end;
+            public Interval(int start, int end) {
+                this.start = start;
+                this.end = end;
+            }
+        }
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param intervals Interval类ArrayList
+         * @return Interval类ArrayList
+         */
+        public ArrayList<Interval> merge (ArrayList<Interval> intervals) {
+            // write code here
+            ArrayList<Interval> res = new ArrayList<>();
+            intervals.sort(new Comparator<Interval>() {
+                @Override
+                public int compare(Interval o1, Interval o2) {
+                    return o1.start-o2.start;
+                }
+            });
+            if(intervals.size()==0){
+                return res;
+            }
+            res.add(intervals.get(0));
+            for(int j=1;j<intervals.size();j++){
+                int end = res.get(res.size()-1).end;
+                if(intervals.get(j).start<=end){
+                    res.get(res.size()-1).end=Math.max(intervals.get(j).end,res.get(res.size()-1).end);
+                }else{
+                    res.add(intervals.get(j));
+                }
+            }
+            return res;
+        }
+    }
+    //BM91 反转字符串
+    public class Solution91 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 反转字符串
+         * @param str string字符串
+         * @return string字符串
+         */
+        public String solve (String str) {
+            // write code here
+            StringBuilder res = new StringBuilder();
+            for(int i=str.length()-1;i>=0;i--){
+                res.append(str.charAt(i));
+            }
+            return res.toString();
+        }
+    }
+
+    //BM92 最长无重复子数组
+    public class Solution92 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param arr int整型一维数组 the array
+         * @return int整型
+         */
+        public int maxLength (int[] arr) {
+            // write code here
+            HashSet<Integer> set = new HashSet<>();
+            int i=0;
+            int res=0;
+            int j=0;
+            for(;j<arr.length;j++){
+                if(set.contains(arr[j])){
+                    set.remove(arr[i]);
+                    res=Math.max(res,j-i);
+                    i++;
+                    j--;
+                }else{
+                    set.add(arr[j]);
+                }
+            }
+            res=Math.max(res,j-i);
+            return res;
+        }
+    }
+
+    //BM93 盛水最多的容器
+    public class Solution93 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param height int整型一维数组
+         * @return int整型
+         */
+        public int maxArea (int[] height) {
+            // write code here
+            int right = height.length - 1;
+            int left=0;
+            int res=0;
+            while (left<right){
+                if(height[right]>height[left]){
+                    res=Math.max(res,(right-left)*height[left]);
+                    left++;
+                }else{
+                    res=Math.max(res,(right-left)*height[right]);
+                    right--;
+                }
+            }
+            return res;
+        }
+    }
+
+    //BM96 主持人调度（二）
+    public class Solution96 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 计算成功举办活动需要多少名主持人
+         * @param n int整型 有n个活动
+         * @param startEnd int整型二维数组 startEnd[i][0]用于表示第i个活动的开始时间，startEnd[i][1]表示第i个活动的结束时间
+         * @return int整型
+         */
+        public int minmumNumberOfHost (int n, int[][] startEnd) {
+            // write code here
+            Arrays.sort(startEnd, new Comparator<int[]>() {
+                @Override
+                public int compare(int[] o1, int[] o2) {
+                    if(o1[0]>o2[0]) return 1;
+                    if(o1[0]==o2[0]) return 0;
+                    else return -1;
+                }
+            });
+            PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    if(o1>o2) return 1;
+                    if(o1==o2) return 0;
+                    else return -1;
+                }
+            });
+            queue.add(Integer.MIN_VALUE);
+            for(int i=0;i<startEnd.length;i++){
+                if(queue.peek()<=startEnd[i][0]){
+                    queue.poll();
+                }
+                queue.add(startEnd[i][1]);
+            }
+            return queue.size();
+        }
+    }
+
+    //BM97 旋转数组
+    public class Solution97 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         * 旋转数组
+         * @param n int整型 数组长度
+         * @param m int整型 右移距离
+         * @param a int整型一维数组 给定数组
+         * @return int整型一维数组
+         */
+        public int[] solve (int n, int m, int[] a) {
+            // write code here
+            int i=0;
+            int j=n-1;
+            while (i<j){
+                int temp=a[i];
+                a[i]=a[j];
+                a[j]=temp;
+                i++;
+                j--;
+            }
+            m=m%n;
+            i=0;
+            j=m-1;
+            while (i<j){
+                int temp=a[i];
+                a[i]=a[j];
+                a[j]=temp;
+                i++;
+                j--;
+            }
+            i=m;
+            j=n-1;
+            while (i<j){
+                int temp=a[i];
+                a[i]=a[j];
+                a[j]=temp;
+                i++;
+                j--;
+            }
+            return a;
+        }
+    }
+
+    //BM99 顺时针旋转矩阵
+    public class Solution99 {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param mat int整型二维数组
+         * @param n int整型
+         * @return int整型二维数组
+         */
+        public int[][] rotateMatrix (int[][] mat, int n) {
+            // write code here
+            for(int i=0;i<n;i++){
+                for(int j=i;j<n;j++){
+                    int temp=mat[i][j];
+                    mat[i][j]=mat[j][i];
+                    mat[j][i]=temp;
+                }
+            }
+            for(int i=0;i<n;i++){
+                int left=0;
+                int right=n-1;
+                while (left<right){
+                    int temp=mat[i][left];
+                    mat[i][left]=mat[i][right];
+                    mat[i][right]=temp;
+                    left++;
+                    right--;
+                }
+            }
+            return mat;
+        }
+    }
 }
