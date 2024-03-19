@@ -1,35 +1,53 @@
 package com.jhj.algorithm.leetcode;
 
 
+import java.util.ArrayDeque;
+
 public class Leetcode {
-    public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }
+    class Node {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    };
     class Solution {
-        TreeNode head=new TreeNode(-100);
-        TreeNode cur=head;
-        public void flatten(TreeNode root) {
+        public Node connect(Node root) {
             if(root==null){
-                return;
+                return null;
             }
-            TreeNode left = root.left;
-            TreeNode right = root.right;
-            root.left=null;
-            root.right=null;
-            cur.right=root;
-            cur=cur.right;
-            flatten(left);
-            flatten(right);
-            root=head.right;
+            ArrayDeque<Node> queue = new ArrayDeque<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int n = queue.size();
+                Node last = null;
+                for (int i = 1; i <= n; ++i) {
+                    Node f = queue.poll();
+                    if (f.left != null) {
+                        queue.offer(f.left);
+                    }
+                    if (f.right != null) {
+                        queue.offer(f.right);
+                    }
+                    if (i != 1) {
+                        last.next = f;
+                    }
+                    last = f;
+                }
+            }
+            return root;
         }
     }
 }
