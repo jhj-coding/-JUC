@@ -15,7 +15,7 @@ public class Leetcode {
       }
   }
     class Solution {
-        TreeNode head=new TreeNode(-1);
+        TreeNode head=new TreeNode(-100);
         TreeNode cur=head;
         public void flatten(TreeNode root) {
             if(root==null){
