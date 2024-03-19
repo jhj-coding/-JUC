@@ -1,53 +1,54 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.ArrayDeque;
+import java.util.Arrays;
 
 public class Leetcode {
-    class Node {
-        public int val;
-        public Node left;
-        public Node right;
-        public Node next;
-
-        public Node() {}
-
-        public Node(int _val) {
-            val = _val;
-        }
-
-        public Node(int _val, Node _left, Node _right, Node _next) {
-            val = _val;
-            left = _left;
-            right = _right;
-            next = _next;
-        }
-    };
-    class Solution {
-        public Node connect(Node root) {
-            if(root==null){
-                return null;
+    public class Solution {
+        /**
+         * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+         *
+         *
+         * @param s string字符串
+         * @param k int整型
+         * @return int整型
+         */
+        public int numKLenSubstrRepeats (String s, int k) {
+            // write code here
+            int[] a = new int[26];
+            Arrays.fill(a,0);
+            if(k>s.length()){
+                return 0;
             }
-            ArrayDeque<Node> queue = new ArrayDeque<>();
-            queue.add(root);
-            while (!queue.isEmpty()) {
-                int n = queue.size();
-                Node last = null;
-                for (int i = 1; i <= n; ++i) {
-                    Node f = queue.poll();
-                    if (f.left != null) {
-                        queue.offer(f.left);
-                    }
-                    if (f.right != null) {
-                        queue.offer(f.right);
-                    }
-                    if (i != 1) {
-                        last.next = f;
-                    }
-                    last = f;
+            int i=0;
+            int j=k;
+            for(int l=i;l<j;l++){
+                a[s.charAt(l)-'a']++;
+            }
+            int res=0;
+            if(panduan(a)){
+                res++;
+            }
+            while (j<s.length()){
+                a[s.charAt(i)-'a']--;
+                a[s.charAt(j)-'a']++;
+                if(panduan(a)){
+                    res++;
+                }
+                i++;
+                j++;
+            }
+            return res;
+        }
+
+        public boolean panduan(int a[]){
+
+            for(int i=0;i<26;i++){
+                if(a[i]>=2){
+                    return true;
                 }
             }
-            return root;
+            return false;
         }
     }
 }
