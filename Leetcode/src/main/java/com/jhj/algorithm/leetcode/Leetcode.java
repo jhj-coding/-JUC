@@ -1,8 +1,6 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.HashMap;
-
 public class Leetcode {
     public class TreeNode {
       int val;
@@ -17,23 +15,21 @@ public class Leetcode {
       }
   }
     class Solution {
-        public TreeNode buildTree(int[] inorder, int[] postorder) {
-            HashMap<Integer, Integer> map = new HashMap<>();
-            for(int i=0;i<inorder.length;i++){
-                map.put(inorder[i],i);
+        TreeNode head=new TreeNode(-1);
+        TreeNode cur=head;
+        public void flatten(TreeNode root) {
+            if(root==null){
+                return;
             }
-            return build(inorder,postorder,0,inorder.length-1,0,postorder.length-1,map);
-        }
-        public TreeNode build(int[] inorder, int[] postorder,int istart,int iend,int pstart,int pend,HashMap<Integer,Integer> map){
-            if(istart>iend||pstart>pend){
-                return null;
-            }
-            int rv = postorder[pend];
-            Integer index = map.get(rv);
-            TreeNode root = new TreeNode(rv);
-            root.left= build(inorder,postorder,istart,index-1,pstart,index-1-istart+pstart,map);
-            root.right= build(inorder,postorder,index+1,iend,pend-iend+index,pend-1,map);
-            return root;
+            TreeNode left = root.left;
+            TreeNode right = root.right;
+            root.left=null;
+            root.right=null;
+            cur.right=root;
+            cur=cur.right;
+            flatten(left);
+            flatten(right);
+            root=head.right;
         }
     }
 }
