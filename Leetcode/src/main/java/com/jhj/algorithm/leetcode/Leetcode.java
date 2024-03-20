@@ -1,7 +1,9 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Leetcode {
 
@@ -20,26 +22,34 @@ public class Leetcode {
       }
 
     class Solution {
-          ArrayList<Integer> list=new ArrayList<Integer>();
-        public int countNodes(TreeNode root) {
-
-            dfs(root);
-            return list.size();
-        }
-        public void dfs(TreeNode root){
-            if(root==null){
-                return;
+        public String[] findRelativeRanks(int[] score) {
+            String[] strings = new String[score.length];
+            TreeMap<Integer, Integer> map = new TreeMap<>(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o2-o1;
+                }
+            });
+            for(int i=0;i<score.length;i++) {
+                map.put(score[i],i);
             }
-            list.add(root.val);
-            dfs(root.left);
-            dfs(root.right);
+            int i=1;
+            for(Map.Entry<Integer,Integer> e:map.entrySet()) {
+                if(i==1) {
+                    strings[e.getValue()] = String.valueOf("Gold Medal");
+                }else if(i==2) {
+                    strings[e.getValue()] = String.valueOf("Bronze Medal");
+
+                }else if(i==3) {
+                    strings[e.getValue()] = String.valueOf("Silver Medal");
+
+                }else {
+                    strings[e.getValue()] = String.valueOf(i);
+                }
+                i++;
+            }
+            return strings;
         }
     }
 
-/**
- * Your BSTIterator object will be instantiated and called as such:
- * BSTIterator obj = new BSTIterator(root);
- * int param_1 = obj.next();
- * boolean param_2 = obj.hasNext();
- */
 }
