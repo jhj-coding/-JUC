@@ -15,29 +15,21 @@ public class Leetcode {
       }
   }
     class Solution {
-        int res = 0;
-        int path = 0;
-
-        public int sumNumbers(TreeNode root) {
+        int max=Integer.MIN_VALUE;
+        public int maxPathSum(TreeNode root) {
             dfs(root);
-            return res;
+            return max;
         }
+        public int dfs(TreeNode root){
+            if(root==null){
+                return 0;
+            }
 
-        public void dfs(TreeNode root) {
-            if (root == null) {
-                return;
-            }
-            if (root.left == null && root.right == null) {
-                System.out.println(path*10+root.val);
-                res += path*10+root.val;
-                return;
-            }
-            path = path*10 + root.val;
-            if(root.left!=null)
-                dfs(root.left);
-            if(root.right!=null)
-                dfs(root.right);
-            path/=10;
+            int left = Math.max(dfs(root.left), 0);
+            int right = Math.max(dfs(root.right), 0);
+            int i = root.val + left + right;
+            max=Math.max(max,i);
+            return root.val+Math.max(left,right);
         }
     }
 }
