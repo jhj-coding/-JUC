@@ -1,6 +1,10 @@
 package com.jhj.algorithm.leetcode;
 
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Leetcode {
     public class TreeNode {
       int val;
@@ -10,22 +14,30 @@ public class Leetcode {
   }
 
     class Solution {
-        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            if(root==null||root==p||root==q){
-                return root;
+        public List<Integer> rightSideView(TreeNode root) {
+            ArrayList<Integer> res = new ArrayList<>();
+            if(root==null){
+                return res;
             }
-            TreeNode left = lowestCommonAncestor(root.left, p, q);
-            TreeNode right =lowestCommonAncestor(root.right,p,q);
-            if(left!=null&&right!=null){
-                return root;
+            ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+            deque.addLast(root);
+            while (!deque.isEmpty()){
+                int size = deque.size();
+                while (size-->0){
+                    TreeNode treeNode = deque.removeFirst();
+
+                    if(treeNode.left!=null){
+                        deque.addLast(treeNode.left);
+                    }
+                    if(treeNode.right!=null){
+                        deque.addLast(treeNode.right);
+                    }
+                    if(size==0){
+                        res.add(treeNode.val);
+                    }
+                }
             }
-            if (left!=null&&right==null){
-                return left;
-            }
-            if(right!=null && left==null){
-                return right;
-            }
-            return null;
+            return res;
         }
     }
 }
