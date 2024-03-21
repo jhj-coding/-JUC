@@ -1,36 +1,31 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.HashMap;
-
 public class Leetcode {
+    public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+  }
 
-    class FrequencyTracker {
-        HashMap<Integer, Integer> map; // 数字
-        HashMap<Integer, Integer> map1; // 次数
-
-        public FrequencyTracker() {
-            this.map = new HashMap<Integer, Integer>();
-            this.map1 = new HashMap<Integer, Integer>();
-        }
-
-        public void add(int number) {
-            if(map.getOrDefault(number, 0)>0)
-                map1.put(map.get(number), map1.get(map.get(number)) - 1);
-            map.put(number, map.getOrDefault(number, 0) + 1);
-            map1.put(map.get(number), map1.getOrDefault(map.get(number),0) + 1);
-        }
-
-        public void deleteOne(int number) {
-            if (map.getOrDefault(number, 0) > 0) {
-                map1.put(map.get(number), map1.get(map.get(number)) - 1);
-                map.put(number, map.get(number) - 1);
-                map1.put(map.get(number), map1.getOrDefault(map.getOrDefault(number, 0), 0) + 1);
+    class Solution {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if(root==null||root==p||root==q){
+                return root;
             }
-        }
-
-        public boolean hasFrequency(int frequency) {
-            return map1.getOrDefault(frequency, 0) > 0;
+            TreeNode left = lowestCommonAncestor(root.left, p, q);
+            TreeNode right =lowestCommonAncestor(root.right,p,q);
+            if(left!=null&&right!=null){
+                return root;
+            }
+            if (left!=null&&right==null){
+                return left;
+            }
+            if(right!=null && left==null){
+                return right;
+            }
+            return null;
         }
     }
 }
