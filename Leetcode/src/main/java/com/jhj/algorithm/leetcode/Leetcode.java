@@ -14,29 +14,31 @@ public class Leetcode {
   }
 
     class Solution {
-        public List<Double> averageOfLevels(TreeNode root) {
-            ArrayList<Double> res = new ArrayList<>();
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            ArrayList<List<Integer>> res = new ArrayList<>();
             if(root==null){
                 return res;
             }
             ArrayDeque<TreeNode> deque = new ArrayDeque<>();
             deque.addLast(root);
             while (!deque.isEmpty()){
+                ArrayList<Integer> list = new ArrayList<>();
                 int size = deque.size();
-                long sum=0;
-                int n=size;
-                while (size-->0){
+                while (size-->0) {
+
                     TreeNode treeNode = deque.removeFirst();
-                    if(treeNode.left!=null){
+                    list.add(treeNode.val);
+                    if (treeNode.left != null) {
                         deque.addLast(treeNode.left);
                     }
-                    if(treeNode.right!=null){
+                    if (treeNode.right != null) {
                         deque.addLast(treeNode.right);
                     }
-                    sum+=treeNode.val;
                 }
-                res.add(sum*1.0/n);
+                res.add(list);
             }
+
+
             return res;
         }
     }
