@@ -1,10 +1,9 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Leetcode {
     public class TreeNode {
@@ -15,35 +14,18 @@ public class Leetcode {
   }
 
     class Solution {
-        public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-            ArrayList<List<Integer>> res = new ArrayList<>();
-            if(root==null){
-                return res;
-            }
-            ArrayDeque<TreeNode> deque = new ArrayDeque<>();
-            deque.addLast(root);
-            int count=0;
-            while (!deque.isEmpty()){
-                LinkedList<Integer> list = new LinkedList<>();
-                int size=deque.size();
-                while (size-->0) {
-                    TreeNode treeNode = deque.removeFirst();
-                    if(count%2==0) {
-                        list.addLast(treeNode.val);
-                    }else {
-                        list.addFirst(treeNode.val);
-                    }
-                    if (treeNode.left != null) {
-                        deque.addLast(treeNode.left);
-                    }
-                    if (treeNode.right != null) {
-                        deque.addLast(treeNode.right);
-                    }
+        public int[] nextGreaterElements(int[] nums) {
+            int n = nums.length;
+            int[] ret = new int[n];
+            Arrays.fill(ret, -1);
+            Deque<Integer> stack = new LinkedList<Integer>();
+            for (int i = 0; i < n * 2 - 1; i++) {
+                while (!stack.isEmpty() && nums[stack.peek()] < nums[i % n]) {
+                    ret[stack.pop()] = nums[i % n];
                 }
-                count++;
-                res.add(list);
+                stack.push(i % n);
             }
-            return res;
+            return ret;
         }
     }
 }
