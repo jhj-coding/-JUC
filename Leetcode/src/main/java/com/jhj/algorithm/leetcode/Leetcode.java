@@ -10,19 +10,29 @@ public class Leetcode {
   }
 
     class Solution {
-        TreeNode pre=null;
-        public boolean isValidBST(TreeNode root) {
-            if(root==null){
-                return true;
+        public int numIslands(char[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            int res=0;
+            for(int i=0;i<m;i++){
+                for(int j=0;j<n;j++){
+                    if(grid[i][j]=='1'){
+                      res++;
+                      dfs(grid,i,j);
+                    }
+                }
             }
-            if(!isValidBST(root.left)){
-                return false;
-            };
-            if(pre!=null&&root.val<=pre.val){
-                return false;
+            return res;
+        }
+        private void dfs(char[][] grid, int i, int j) {
+            if(i<0||i>=grid.length||j<0||j>= grid[0].length||grid[i][j]=='0'){
+                return;
             }
-            pre=root;
-            return isValidBST(root.right);
+            grid[i][j]='0';
+            dfs(grid,i+1,j);
+            dfs(grid,i-1,j);
+            dfs(grid,i,j+1);
+            dfs(grid,i,j-1);
         }
     }
 }
