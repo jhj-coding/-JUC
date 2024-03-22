@@ -10,29 +10,55 @@ public class Leetcode {
   }
 
     class Solution {
-        public int numIslands(char[][] grid) {
-            int m = grid.length;
-            int n = grid[0].length;
-            int res=0;
-            for(int i=0;i<m;i++){
-                for(int j=0;j<n;j++){
-                    if(grid[i][j]=='1'){
-                      res++;
-                      dfs(grid,i,j);
+        public void solve(char[][] board) {
+            int m = board.length;
+            int n = board[0].length;
+            int i=0;
+            int j=0;
+            for(;j<n;j++){
+                if(board[i][j]=='O'){
+                    dfs(board,i,j);
+                }
+            }
+            j=j-1;
+            for(;i<m;i++){
+                if(board[i][j]=='O'){
+                    dfs(board,i,j);
+                }
+            }
+            i--;
+            for(;j>=0;j--){
+                if(board[i][j]=='O'){
+                    dfs(board,i,j);
+                }
+            }
+            j++;
+            for(;i>=0;i--){
+                if(board[i][j]=='O'){
+                    dfs(board,i,j);
+                }
+            }
+
+            for(int k=0;k<m;k++){
+                for (int l=0;l<n;l++){
+                    if(board[k][l]=='O'){
+                        board[k][l]='X';
+                    } if(board[k][l]=='I'){
+                        board[k][l]='O';
                     }
                 }
             }
-            return res;
         }
-        private void dfs(char[][] grid, int i, int j) {
-            if(i<0||i>=grid.length||j<0||j>= grid[0].length||grid[i][j]=='0'){
+
+        private void dfs(char[][] board, int i, int j) {
+            if(i<0||i>=board.length||j<0||j>=board[0].length||board[i][j]!='O'){
                 return;
             }
-            grid[i][j]='0';
-            dfs(grid,i+1,j);
-            dfs(grid,i-1,j);
-            dfs(grid,i,j+1);
-            dfs(grid,i,j-1);
+            board[i][j]='I';
+            dfs(board,i+1,j);
+            dfs(board,i-1,j);
+            dfs(board,i,j+1);
+            dfs(board,i,j-1);
         }
     }
 }
