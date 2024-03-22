@@ -1,6 +1,8 @@
 package com.jhj.algorithm.leetcode;
 
 
+import java.util.ArrayDeque;
+
 public class Leetcode {
     public class TreeNode {
       int val;
@@ -10,55 +12,58 @@ public class Leetcode {
   }
 
     class Solution {
-        public void solve(char[][] board) {
-            int m = board.length;
-            int n = board[0].length;
-            int i=0;
-            int j=0;
-            for(;j<n;j++){
-                if(board[i][j]=='O'){
-                    dfs(board,i,j);
-                }
-            }
-            j=j-1;
-            for(;i<m;i++){
-                if(board[i][j]=='O'){
-                    dfs(board,i,j);
-                }
-            }
-            i--;
-            for(;j>=0;j--){
-                if(board[i][j]=='O'){
-                    dfs(board,i,j);
-                }
-            }
-            j++;
-            for(;i>=0;i--){
-                if(board[i][j]=='O'){
-                    dfs(board,i,j);
-                }
-            }
+        public int numIslands(char[][] grid) {
+            ArrayDeque<int[]> deque = new ArrayDeque<>();
+            int m=grid.length;
+            int n=grid[0].length;
+            int res=0;
+            for (int i=0;i<m;i++){
+                for (int j=0;j<n;j++){
+                    if(grid[i][j]=='1'){
+                        grid[i][j]='0';
+                        deque.add(new int[]{i,j});
+                        res++;
+                        while (!deque.isEmpty()){
+                            int[] ints = deque.removeFirst();
+                            int h = ints[0];
+                            int l = ints[1];
+                            int k=h+1;
+                            int p=l;
+                            if(k<0||k>=m||p<0||p>=n||grid[k][p]!='1'){
 
-            for(int k=0;k<m;k++){
-                for (int l=0;l<n;l++){
-                    if(board[k][l]=='O'){
-                        board[k][l]='X';
-                    } if(board[k][l]=='I'){
-                        board[k][l]='O';
+                            }else{
+                                grid[k][p]='0';
+                                deque.add(new int[]{k,p});
+                            }
+                            k=h-1;
+                            p=l;
+                            if(k<0||k>=m||p<0||p>=n||grid[k][p]!='1'){
+
+                            }else{
+                                grid[k][p]='0';
+                                deque.add(new int[]{k,p});
+                            }
+                            k=h;
+                            p=l+1;
+                            if(k<0||k>=m||p<0||p>=n||grid[k][p]!='1'){
+
+                            }else{
+                                grid[k][p]='0';
+                                deque.add(new int[]{k,p});
+                            }
+                            k=h;
+                            p=l-1;
+                            if(k<0||k>=m||p<0||p>=n||grid[k][p]!='1'){
+
+                            }else{
+                                grid[k][p]='0';
+                                deque.add(new int[]{k,p});
+                            }
+                        }
                     }
                 }
             }
-        }
-
-        private void dfs(char[][] board, int i, int j) {
-            if(i<0||i>=board.length||j<0||j>=board[0].length||board[i][j]!='O'){
-                return;
-            }
-            board[i][j]='I';
-            dfs(board,i+1,j);
-            dfs(board,i-1,j);
-            dfs(board,i,j+1);
-            dfs(board,i,j-1);
+            return res;
         }
     }
 }
