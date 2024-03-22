@@ -20,32 +20,34 @@ public class Leetcode {
          */
         public String minWindow (String s, String t) {
             // write code here
-            int[] hash = new int[128];
+            int[] ts = new int[128];
             for(int i=0;i<t.length();i++){
-                hash[t.charAt(i)]--;
+                ts[t.charAt(i)]++;
             }
-            int left =0;
+            int left=0;
             int right=0;
-            boolean isFind=false;
             String res=s;
+            boolean flag=false;
             while (right<s.length()){
-                hash[s.charAt(right)]++;
-                while (check(hash)){
-                    isFind=true;
-                    if(res.length() > right - left + 1){
-                        res = s.substring(left , right + 1);
-                    }
-                    hash[s.charAt(left)]--;
+                char c = s.charAt(right);
+                ts[c]--;
+                while (check(ts)){
+                    flag=true;
+                    res=res.length()>right-left+1?s.substring(left,right+1):res;
+                    char c1 = s.charAt(left);
+                    ts[c1]++;
                     left++;
                 }
                 right++;
             }
-            return isFind ? res : "";
+            return flag?res:"";
         }
-        boolean check(int[] hash){
-            for (int i : hash) {
-                if(i < 0)
+
+        private boolean check(int[] ts) {
+            for(int i=0;i<ts.length;i++){
+                if(ts[i]>0){
                     return false;
+                }
             }
             return true;
         }
