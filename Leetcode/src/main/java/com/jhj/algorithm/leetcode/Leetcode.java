@@ -10,25 +10,23 @@ public class Leetcode {
   }
 
     class Solution {
-
-        int res=Integer.MAX_VALUE;
-        TreeNode pre=null;
-        public int getMinimumDifference(TreeNode root) {
-            dfs(root);
+        int res=0;
+        int count=0;
+        public int kthSmallest(TreeNode root, int k) {
+            dfs(root,k);
             return res;
         }
-
-        public void dfs(TreeNode root){
+        public void dfs(TreeNode root,int k){
             if(root==null){
                 return;
             }
-            dfs(root.left);
-            if(pre!=null){
-                res=Math.min(root.val-pre.val,res);
+            dfs(root.left,k);
+            count++;
+            if(count==k){
+                res=root.val;
+                return;
             }
-            pre=root;
-            dfs(root.right);
+            dfs(root.right,k);
         }
-
     }
 }
