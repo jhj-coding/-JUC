@@ -1,43 +1,23 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class Leetcode {
-    class Node {
-        public int val;
-        public List<Node> neighbors;
-        public Node() {
-            val = 0;
-            neighbors = new ArrayList<Node>();
-        }
-        public Node(int _val) {
-            val = _val;
-            neighbors = new ArrayList<Node>();
-        }
-        public Node(int _val, ArrayList<Node> _neighbors) {
-            val = _val;
-            neighbors = _neighbors;
-        }
-    }
-
     class Solution {
-        HashMap<Node, Node> map = new HashMap<>();
-        public Node cloneGraph(Node node) {
-            if(node==null){
-                return node;
+        public String convertToBase7(int num) {
+            if(num==0){
+                return "0";
             }
-            if (map.containsKey(node)){
-                return map.get(node);
+            boolean flag=true;
+            if(num<0){
+                flag=false;
+                num=-num;
             }
-            Node node1 = new Node(node.val, new ArrayList<>());
-            map.put(node,node1);
-            for(Node n:node.neighbors){
-                node1.neighbors.add(cloneGraph(n));
+            StringBuilder res = new StringBuilder();
+            while (num!=0){
+                res.insert(0,num%7);
+                num/=7;
             }
-            return node1;
+            return flag?res.toString():res.insert(0,"-").toString();
         }
     }
 }
