@@ -7,25 +7,26 @@ import java.util.List;
 public class Leetcode {
     class Solution {
         ArrayList<List<Integer>> res=new ArrayList<List<Integer>>();
-        public List<List<Integer>> permute(int[] nums) {
-            huisu(nums,new ArrayList<Integer>());
+        public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            huisu(candidates,target,0,new ArrayList<>());
             return res;
         }
 
-        private void huisu(int[] nums, ArrayList<Integer> set) {
-            if(set.size()==nums.length){
-                res.add(new ArrayList<>(set));
+        private void huisu(int[] candidates, int target, int start, ArrayList<Integer> path) {
+            if(target<0){
+                return;
+            }
+            if(target==0){
+                res.add(new ArrayList<>(path));
                 return;
             }
 
-            for(int i=0;i<nums.length;i++){
-                if(!set.contains(nums[i])){
-                    set.add(nums[i]);
-                    huisu(nums,set);
-                    set.remove(set.size()-1);
-                }
+            for(int i=start;i<candidates.length;i++){
+                path.add(candidates[i]);
+                huisu(candidates,target-candidates[i],i,path);
+                path.remove(path.size()-1);
             }
-
         }
+
     }
 }
