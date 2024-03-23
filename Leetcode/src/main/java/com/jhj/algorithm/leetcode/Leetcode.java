@@ -6,27 +6,26 @@ import java.util.List;
 
 public class Leetcode {
     class Solution {
-        ArrayList<List<Integer>> res=new ArrayList<List<Integer>>();
-        public List<List<Integer>> combinationSum(int[] candidates, int target) {
-            huisu(candidates,target,0,new ArrayList<>());
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        public List<List<Integer>> combinationSum3(int k, int n) {
+
+            huisu(k,n,new ArrayList<>(),1);
             return res;
         }
-
-        private void huisu(int[] candidates, int target, int start, ArrayList<Integer> path) {
-            if(target<0){
+        public void huisu(int k,int n,ArrayList<Integer> path,int start){
+            if(n<0||path.size()>k){
                 return;
             }
-            if(target==0){
+            if(n==0 && path.size()==k){
                 res.add(new ArrayList<>(path));
                 return;
             }
 
-            for(int i=start;i<candidates.length;i++){
-                path.add(candidates[i]);
-                huisu(candidates,target-candidates[i],i,path);
+            for(int i=start;i<=9;i++){
+                path.add(i);
+                huisu(k,n-i,path,i+1);
                 path.remove(path.size()-1);
             }
         }
-
     }
 }
