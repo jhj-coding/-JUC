@@ -1,30 +1,50 @@
 package com.jhj.algorithm.leetcode;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Leetcode {
     class Solution {
-        List<List<Integer>> res=new ArrayList<List<Integer>>();
-        public List<List<Integer>> combinationSum3(int k, int n) {
-
-            huisu(k,n,new ArrayList<>(),1);
+        int res=0;
+        public int totalNQueens(int n) {
+            char[][] chars = new char[n][n];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    chars[i][j]='.';
+                }
+            }
+            huisu(n,0,chars);
             return res;
         }
-        public void huisu(int k,int n,ArrayList<Integer> path,int start){
-            if(n<0||path.size()>k){
+        public void huisu(int n,int rowIndex,char[][] chars){
+            if(n==rowIndex){
+                res++;
                 return;
             }
-            if(n==0 && path.size()==k){
-                res.add(new ArrayList<>(path));
-                return;
-            }
+            for(int i=0;i<n;i++){
+                boolean flag=true;
+                for(int j=0;j<rowIndex;j++){
+                    if(chars[j][i]=='Q'){
+                        flag=false;
+                        break;
+                    }
+                }
+                for (int h = rowIndex - 1, l = i - 1; l >= 0 && h >= 0; l--, h--) {
+                    if (chars[h][l] == 'Q') {
+                        flag = false;
+                        break;
+                    }
+                }
 
-            for(int i=start;i<=9;i++){
-                path.add(i);
-                huisu(k,n-i,path,i+1);
-                path.remove(path.size()-1);
+                for (int h = rowIndex - 1, l = i + 1; h >= 0 && l < n; l++, h--) {
+                    if (chars[h][l] == 'Q') {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    chars[rowIndex][i] = 'Q';
+                    huisu(n, rowIndex + 1, chars);
+                    chars[rowIndex][i] = '.';
+                }
             }
         }
     }
