@@ -1,33 +1,36 @@
 package com.jhj.algorithm.leetcode;
 
 
-public class Leetcode {
-    class Solution {
-        public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }
-        public TreeNode sortedArrayToBST(int[] nums) {
-            return sortedArrayToBST(nums,0,nums.length-1);
-        }
+import java.util.ArrayList;
+import java.util.Comparator;
 
-        public TreeNode sortedArrayToBST(int[] nums,int left,int right) {
-            if(left>right){
-                return null;
-            }
-            int mid=(left+right)>>1;
-            TreeNode root = new TreeNode(nums[mid]);
-            root.left=sortedArrayToBST(nums,left,mid-1);
-            root.right=sortedArrayToBST(nums,mid+1,right);
-            return root;
+class Solution {
+    public class ListNode {
+  int val;
+  ListNode next;
+  ListNode() {}
+  ListNode(int val) { this.val = val; }
+  ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+  }
+    public ListNode sortList(ListNode head) {
+        ArrayList<Integer> res = new ArrayList<>();
+        ListNode cur = head;
+        while (cur != null) {
+            res.add(cur.val);
+            cur = cur.next;
         }
+        res.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+        ListNode pre = new ListNode(-1);
+        ListNode curr = pre;
+        for (int i = 0; i < res.size(); i++) {
+            curr.next = new ListNode(res.get(i));
+            curr = curr.next;
+        }
+        return pre.next;
     }
 }
