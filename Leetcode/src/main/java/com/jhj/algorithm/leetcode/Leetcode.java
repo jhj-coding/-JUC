@@ -1,20 +1,25 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-  public boolean searchMatrix(int[][] matrix, int target) {
-    int n=matrix.length;
-    int m=matrix[0].length;
-    int starthang=0;
-    int startlie=m-1;
-    while (startlie>=0&&starthang<n){
-      if(matrix[starthang][startlie]==target){
-        return true;
-      }else if(matrix[starthang][startlie]>target){
-        startlie--;
-      }else{
-        starthang++;
+  public int findPeakElement(int[] nums) {
+    if(nums.length==1){
+      return 0;
+    }
+    for (int i = 0; i < nums.length; i++) {
+      if (i == 0) {
+        if (nums[i] > nums[i + 1]) {
+          return i;
+        }
+      } else if (i == nums.length - 1) {
+        if (nums[i] > nums[i - 1]) {
+          return i;
+        }
+      } else {
+        if (nums[i] > nums[i - 1] && nums[i] > nums[i + 1]) {
+          return i;
+        }
       }
     }
-    return false;
+    return -1;
   }
 }
