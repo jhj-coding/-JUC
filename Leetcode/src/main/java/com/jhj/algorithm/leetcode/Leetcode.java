@@ -1,73 +1,52 @@
 package com.jhj.algorithm.leetcode;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 
 class Solution {
-  class Node {
-    public boolean val;
-    public boolean isLeaf;
-    public Node topLeft;
-    public Node topRight;
-    public Node bottomLeft;
-    public Node bottomRight;
-
-
-    public Node() {
-      this.val = false;
-      this.isLeaf = false;
-      this.topLeft = null;
-      this.topRight = null;
-      this.bottomLeft = null;
-      this.bottomRight = null;
+  public int countWays(int[][] ranges) {
+    ArrayList<int[]> ints = new ArrayList<>();
+    for (int i = 0; i < ranges.length; i++) {
+      ints.add(ranges[i]);
     }
-
-    public Node(boolean val, boolean isLeaf) {
-      this.val = val;
-      this.isLeaf = isLeaf;
-      this.topLeft = null;
-      this.topRight = null;
-      this.bottomLeft = null;
-      this.bottomRight = null;
+    ints.sort(new Comparator<int[]>() {
+      @Override
+      public int compare(int[] o1, int[] o2) {
+        if (o1[0] == o2[0]) {
+          return o1[1] - o2[1];
+        }
+        return o1[0] - o2[0];
+      }
+    });
+    ArrayList<int[]> res = new ArrayList<>();
+    res.add(ints.get(0));
+    for (int i = 1; i < ints.size(); i++) {
+      if (ints.get(i)[0] <= res.get(res.size() - 1)[1]) {
+        res.get(res.size() - 1)[1] = Math.max(res.get(res.size() - 1)[1], ints.get(i)[1]);
+      } else {
+        res.add(ints.get(i));
+      }
     }
-
-    public Node(boolean val, boolean isLeaf, Node topLeft, Node topRight, Node bottomLeft, Node bottomRight) {
-      this.val = val;
-      this.isLeaf = isLeaf;
-      this.topLeft = topLeft;
-      this.topRight = topRight;
-      this.bottomLeft = bottomLeft;
-      this.bottomRight = bottomRight;
-    }
+    System.out.print(quickPow(res.size()));
+    return (int)quickPow(res.size());
   }
-    public Node construct(int[][] grid) {
-      return dfs(grid, 0, 0, grid.length, grid.length);
-    }
 
-    public Node dfs(int[][] grid, int r0, int c0, int r1, int c1) {
-      boolean same = true;
-      for (int i = r0; i < r1; ++i) {
-        for (int j = c0; j < c1; ++j) {
-          if (grid[i][j] != grid[r0][c0]) {
-            same = false;
-            break;
-          }
-        }
-        if (!same) {
-          break;
-        }
+  public long quickPow(int n) {
+    long mod = 1000000007;
+    long res = 1;
+    long x = 2;
+    while (n != 0) {
+      if (n % 2 == 1) {
+        res *= x;
+        res %= mod;
+        x *= x;
+        x %= mod;
+      } else {
+        x *= x;
+        x %= mod;
       }
-
-      if (same) {
-        return new Node(grid[r0][c0] == 1, true);
-      }
-
-      Node ret = new Node(
-              true,
-              false,
-              dfs(grid, r0, c0, (r0 + r1) / 2, (c0 + c1) / 2),
-              dfs(grid, r0, (c0 + c1) / 2, (r0 + r1) / 2, c1),
-              dfs(grid, (r0 + r1) / 2, c0, r1, (c0 + c1) / 2),
-              dfs(grid, (r0 + r1) / 2, (c0 + c1) / 2, r1, c1)
-      );
-      return ret;
+      n /= 2;
     }
+    return res;
+  }
 }
