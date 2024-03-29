@@ -1,23 +1,22 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 class Solution {
-  public int findKthLargest(int[] nums, int k) {
-    PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2-o1;
+  public int minimumSum(int[] nums) {
+    int sum = Integer.MAX_VALUE;
+    int len = nums.length;
+    for (int i = 0; i < len - 2; i++) {
+      for (int j = i + 1; j < len - 1; j++) {
+        for (int k = j + 1; k < len; k++) {
+          if (nums[i] < nums[j] && nums[k] < nums[j]) {
+            sum = Math.min(sum, nums[i] + nums[j] + nums[k]);
+          }
+        }
       }
-    });
-    for(int i=0;i<nums.length;i++){
-      priorityQueue.add(nums[i]);
     }
-    for (int i=1;i<k;i++){
-      priorityQueue.remove();
-
+    if (sum == Integer.MAX_VALUE) {
+      return -1;
+    } else {
+      return sum;
     }
-    return priorityQueue.remove();
   }
 }
