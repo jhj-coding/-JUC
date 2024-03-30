@@ -1,22 +1,19 @@
 package com.jhj.algorithm.leetcode;
 
+import java.util.Arrays;
+
 class Solution {
-  public int minimumSum(int[] nums) {
-    int sum = Integer.MAX_VALUE;
-    int len = nums.length;
-    for (int i = 0; i < len - 2; i++) {
-      for (int j = i + 1; j < len - 1; j++) {
-        for (int k = j + 1; k < len; k++) {
-          if (nums[i] < nums[j] && nums[k] < nums[j]) {
-            sum = Math.min(sum, nums[i] + nums[j] + nums[k]);
-          }
-        }
+  public int minimumAddedCoins(int[] coins, int target) {
+    Arrays.sort(coins);
+    int ans=0,s=1,i=0;
+    while (s <= target) {
+      if (i < coins.length && coins[i] <= s) {
+        s += coins[i++];
+      } else {
+        s *= 2; // 必须添加 s
+        ans++;
       }
     }
-    if (sum == Integer.MAX_VALUE) {
-      return -1;
-    } else {
-      return sum;
-    }
+    return ans;
   }
 }
