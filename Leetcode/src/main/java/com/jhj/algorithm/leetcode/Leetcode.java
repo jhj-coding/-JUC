@@ -2,32 +2,38 @@ package com.jhj.algorithm.leetcode;
 
 import java.util.*;
 
-class Solution {
-  public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
-    int n=profits.length;
-    int[][] arr = new int[n][2];
-    for(int i=0;i<n;i++){
-      arr[i]=new int[]{capital[i],profits[i]};
-    }
-    Arrays.sort(arr, new Comparator<int[]>() {
+class MedianFinder {
+  PriorityQueue<Integer> leftQueue;
+  PriorityQueue<Integer> rightQueue;
+  public MedianFinder() {
+    leftQueue=new PriorityQueue<>(new Comparator<Integer>() {
       @Override
-      public int compare(int[] o1, int[] o2) {
-        return o1[0]-o2[0];
+      public int compare(Integer o1, Integer o2) {
+        return o2-o1;
       }
     });
-    PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((x, y) -> y - x);
-    int curr=0;
-    for(int i=0;i<k;i++){
-      while (curr<n&&arr[curr][0]<=w){
-        priorityQueue.add(arr[curr][1]);
-        curr++;
+    rightQueue=new PriorityQueue<>();
+  }
+
+  public void addNum(int num) {
+    if(leftQueue.isEmpty() || num<=leftQueue.peek()){
+      leftQueue.add(num);
+      while (leftQueue.size()-rightQueue.size()>1){
+        rightQueue.add(leftQueue.remove());
       }
-      if (!priorityQueue.isEmpty()) {
-        w += priorityQueue.poll();
-      } else {
-        break;
+    }else {
+      rightQueue.add(num);
+      while (rightQueue.size() - leftQueue.size() > 0) {
+        leftQueue.add(rightQueue.remove());
       }
     }
-    return w;
+  }
+
+  public double findMedian() {
+    if(leftQueue.size()>rightQueue.size()){
+      return leftQueue.peek();
+    }else{
+      return (leftQueue.peek()+rightQueue.peek())/2.0;
+    }
   }
 }
