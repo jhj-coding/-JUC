@@ -1,13 +1,20 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-  public boolean checkPerfectNumber(int num) {
-    int s=0;
-    for(int i=1;i<num;i++){
-      if(num%i==0){
-        s+=i;
-      }
+  public int fib(int n) {
+    if(n==0){
+      return 0;
     }
-    return s==num;
+    if(n<=1){
+      return 1;
+    }
+    int a=0;
+    int b=1;
+    for(int i=0;i<n;i++){
+      int temp=a;
+      a=a+b;
+      b=temp;
+    }
+    return a;
   }
 }
