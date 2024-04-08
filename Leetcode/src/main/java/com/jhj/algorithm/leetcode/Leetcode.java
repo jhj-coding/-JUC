@@ -1,26 +1,26 @@
 package com.jhj.algorithm.leetcode;
+
+import java.util.Arrays;
+
 class Solution {
-  public boolean isValidSerialization(String preorder) {
-    int n = preorder.length();
-    int i = 0;
-    int slots = 1;
-    while (i < n) {
-      if (slots == 0) {
-        return false;
-      }
-      if (preorder.charAt(i) == ',') {
-        i++;
-      } else if (preorder.charAt(i) == '#'){
-        slots--;
-        i++;
-      } else {
-        // 读一个数字
-        while (i < n && preorder.charAt(i) != ',') {
-          i++;
-        }
-        slots++; // slots = slots - 1 + 2
+  public int minOperations(int[] nums) {
+    Arrays.sort(nums);
+    int n = nums.length;
+    int m = 1;
+    for (int i = 1; i < n; i++) {
+      if (nums[i] != nums[i - 1]) {
+        nums[m++] = nums[i]; // 原地去重
       }
     }
-    return slots == 0;
+
+    int ans = 0;
+    int left = 0;
+    for (int i = 0; i < m; i++) {
+      while (nums[left] < nums[i] - n + 1) { // nums[left] 不在窗口内
+        left++;
+      }
+      ans = Math.max(ans, i - left + 1);
+    }
+    return n - ans;
   }
 }
