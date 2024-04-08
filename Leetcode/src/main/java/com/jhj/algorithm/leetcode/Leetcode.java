@@ -1,13 +1,11 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-  public int hammingWeight(int n) {
-    int count=0;
-    for(int i=0;i<=31;i++){
-      if((n&(1<<i))!=0){
-        count++;
-      }
+  public int singleNumber(int[] nums) {
+    int res=nums[0];
+    for(int i=1;i<nums.length;i++){
+      res^=nums[i];
     }
-    return count;
+    return res;
   }
 }
