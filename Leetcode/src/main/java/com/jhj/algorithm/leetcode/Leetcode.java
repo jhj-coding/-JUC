@@ -1,26 +1,33 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.Arrays;
-
 class Solution {
-  public int minOperations(int[] nums) {
-    Arrays.sort(nums);
-    int n = nums.length;
-    int m = 1;
-    for (int i = 1; i < n; i++) {
-      if (nums[i] != nums[i - 1]) {
-        nums[m++] = nums[i]; // 原地去重
+  public String addBinary(String a, String b) {
+    int lena=a.length();
+    int lenb=b.length();
+    StringBuilder s = new StringBuilder();
+    int res=0;
+    while (lena>0||lenb>0){
+      if(lena>0&&lenb>0){
+        char ca = a.charAt(--lena);
+        char cb = b.charAt(--lenb);
+        res+=(ca-'0')+(cb-'0');
+        s.insert(0,res%2);
+        res/=2;
+      }else if(lena>0){
+        char ca = a.charAt(--lena);
+        res+=(ca-'0');
+        s.insert(0,res%2);
+        res/=2;
+      }else{
+        char cb = b.charAt(--lenb);
+        res+=(cb-'0');
+        s.insert(0,res%2);
+        res/=2;
       }
     }
-
-    int ans = 0;
-    int left = 0;
-    for (int i = 0; i < m; i++) {
-      while (nums[left] < nums[i] - n + 1) { // nums[left] 不在窗口内
-        left++;
-      }
-      ans = Math.max(ans, i - left + 1);
+    if(res!=0){
+      s.insert(0,res%2);
     }
-    return n - ans;
+    return s.toString();
   }
 }
