@@ -1,28 +1,29 @@
 package com.jhj.algorithm.leetcode;
 
-class Solution {
-    public double myPow(double x, int n) {
-        if(n==0){
-            return 1;
-        }
-        boolean flag=true;
-        if(n<0){
-            long m=n;
-            return quick(1.0/x,-m);
-        }else{
-            return quick(x,n);
-        }
-    }
+import java.util.HashMap;
+import java.util.Map;
 
-    public double quick(double x,long n){
-        double res=1;
-        while (n>0){
-            if(n%2==1){
-                res*=x;
+class Solution {
+    public int maxPoints(int[][] points) {
+        int n = points.length, ans = 1;
+        for (int i = 0; i < n; i++) {
+            Map<String, Integer> map = new HashMap<>();
+            // 由当前点 i 发出的直线所经过的最多点数量
+            int max = 0;
+            for (int j = i + 1; j < n; j++) {
+                int x1 = points[i][0], y1 = points[i][1], x2 = points[j][0], y2 = points[j][1];
+                int a = x1 - x2, b = y1 - y2;
+                int k = gcd(a, b);
+                String key = (a / k) + "_" + (b / k);
+                map.put(key, map.getOrDefault(key, 0) + 1);
+                max = Math.max(max, map.get(key));
             }
-            x*=x;
-            n/=2;
+            ans = Math.max(ans, max + 1);
         }
-        return res;
+        return ans;
+    }
+    int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
     }
 }
+
