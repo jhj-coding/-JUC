@@ -1,24 +1,15 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.Arrays;
-
 class Solution {
-    public int coinChange(int[] coins, int amount) {
-        int[] f = new int[amount + 1];
-        Arrays.fill(f, Integer.MAX_VALUE);
-        f[0] = 0;
-        for (int i = 0; i < coins.length; i++) {
-            for (int j = 1; j <= amount; j++) {
-
-                if (coins[i] <= j && f[j - coins[i]] != Integer.MAX_VALUE) {
-                    f[j] = Math.min(f[j - coins[i]] + 1, f[j]);
-                }
-            }
+    public int rob(int[] nums) {
+        int len=nums.length;
+        int[] f = new int[len + 1];
+        f[0]=0;
+        f[1]=nums[0];
+        for(int i=1;i<len;i++){
+            f[i+1]=Math.max(f[i-1]+nums[i],f[i]);
         }
-        if (f[amount] == Integer.MAX_VALUE) {
-            return -1;
-        }
-        return f[amount];
+        return Math.max(f[len],f[len-1]);
     }
 }
 
