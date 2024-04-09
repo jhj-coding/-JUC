@@ -1,14 +1,16 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-  public int rangeBitwiseAnd(int m, int n) {
-    int shift = 0;
-    // 找到公共前缀
-    while (m < n) {
-      m >>= 1;
-      n >>= 1;
-      ++shift;
+    public boolean isPalindrome(int x) {
+        if (x < 0) {
+            return false;
+        }
+        int c = x;
+        int res = 0;
+        while (c != 0) {
+            res = res * 10 + c % 10;
+            c /= 10;
+        }
+        return res == x;
     }
-    return m << shift;
-  }
 }
