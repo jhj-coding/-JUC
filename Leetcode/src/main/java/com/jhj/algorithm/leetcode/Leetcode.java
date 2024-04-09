@@ -1,12 +1,14 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-    public int trailingZeroes(int n) {
-        int ans = 0;
-        while (n != 0) {
-            n /= 5;
-            ans += n;
+    public int mySqrt(int x) {
+        for (int i = 1; i <= x; i++) {
+            if ((long)i * i > x) {
+                return i - 1;
+            }else  if ((long)i * i == x) {
+                return i;
+            }
         }
-        return ans;
+        return 0;
     }
 }
