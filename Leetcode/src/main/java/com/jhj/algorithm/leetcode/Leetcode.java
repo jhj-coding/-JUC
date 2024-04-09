@@ -1,15 +1,34 @@
 package com.jhj.algorithm.leetcode;
 
 class Solution {
-    public int rob(int[] nums) {
+    public int maximumCount(int[] nums) {
+        int left=0;
         int len=nums.length;
-        int[] f = new int[len + 1];
-        f[0]=0;
-        f[1]=nums[0];
-        for(int i=1;i<len;i++){
-            f[i+1]=Math.max(f[i-1]+nums[i],f[i]);
+        if(nums[left]>0){
+            return len;
         }
-        return Math.max(f[len],f[len-1]);
+        int right=len-1;
+        while (left<=right){
+            int mid=(left+right)>>1;
+            if(nums[mid]>=0){
+                right=mid-1;
+            }else{
+                left=mid+1;
+            }
+        }
+        int l0=right;
+        left=0;
+        right=len-1;
+        while (left<=right){
+            int mid=(left+right)>>1;
+            if(nums[mid]<=0){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        int l1=left;
+        return Math.max(l0+1,len-l1);
     }
 }
 
