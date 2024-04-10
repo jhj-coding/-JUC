@@ -1,20 +1,34 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.HashSet;
-import java.util.List;
-
 class Solution {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        HashSet<String> strings = new HashSet<>(wordDict);
-        boolean[] f = new boolean[s.length() + 1];
-        f[0]=true;
-        for(int i=1;i<=s.length();i++){
-            for(int j=0;j<i&&!f[i];j++){
-                if(strings.contains(s.substring(j,i))&&f[j]){
-                    f[i]=true;
-                }
+    public int maximumCount(int[] nums) {
+        int left=0;
+        int len=nums.length;
+        if(nums[left]>0){
+            return len;
+        }
+        int right=len-1;
+        while (left<=right){
+            int mid=(left+right)>>1;
+            if(nums[mid]>=0){
+                right=mid-1;
+            }else{
+                left=mid+1;
             }
         }
-        return f[s.length()];
+        int l0=right;
+        left=0;
+        right=len-1;
+        while (left<=right){
+            int mid=(left+right)>>1;
+            if(nums[mid]<=0){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        int l1=left;
+        return Math.max(l0+1,len-l1);
     }
 }
+
