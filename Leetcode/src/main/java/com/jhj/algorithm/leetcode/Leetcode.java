@@ -1,32 +1,23 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.HashSet;
 import java.util.List;
 
 class Solution {
-    HashSet<String> strings;
-    int[] f;
-    public boolean wordBreak(String s, List<String> wordDict) {
-        strings = new HashSet<>(wordDict);
-        f = new int[s.length()];
-        return huisu(s,0);
-    }
-    public boolean huisu(String s,int startIndex){
-        if(startIndex==s.length()){
-            return true;
-        }
-        if(f[startIndex]==-1){
-            return false;
-        }
-        for(int i=startIndex;i<s.length();i++){
-            String substring = s.substring(startIndex, i + 1);
-            if(!strings.contains(substring)){
-                continue;
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n=triangle.size();
+        int[][] f = new int[n][n];
+        f[0][0]=triangle.get(0).get(0);
+        for(int i=1;i<n;i++){
+            f[i][0]=f[i-1][0]+triangle.get(i).get(0);
+            for(int j=1;j<i;j++){
+                f[i][j]=Math.min(f[i-1][j],f[i-1][j-1])+triangle.get(i).get(j);
             }
-            boolean huisu = huisu(s, i + 1);
-            if(huisu) return true;
+            f[i][i]=f[i-1][i-1]+triangle.get(i).get(i);
         }
-        f[startIndex]=-1;
-        return false;
+        int res=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++){
+            res=Math.min(res,f[n-1][i]);
+        }
+        return res;
     }
 }
