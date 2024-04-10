@@ -1,23 +1,22 @@
 package com.jhj.algorithm.leetcode;
 
-import java.util.List;
-
 class Solution {
-    public int minimumTotal(List<List<Integer>> triangle) {
-        int n=triangle.size();
-        int[][] f = new int[n][n];
-        f[0][0]=triangle.get(0).get(0);
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] f = new int[m][n];
+        f[0][0]=grid[0][0];
         for(int i=1;i<n;i++){
-            f[i][0]=f[i-1][0]+triangle.get(i).get(0);
-            for(int j=1;j<i;j++){
-                f[i][j]=Math.min(f[i-1][j],f[i-1][j-1])+triangle.get(i).get(j);
+            f[0][i]=f[0][i-1]+grid[0][i];
+        }
+        for(int j=1;j<m;j++){
+            f[j][0]=f[j-1][0]+grid[j][0];
+        }
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                f[i][j]=Math.min(f[i-1][j],f[i][j-1])+grid[i][j];
             }
-            f[i][i]=f[i-1][i-1]+triangle.get(i).get(i);
         }
-        int res=Integer.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            res=Math.min(res,f[n-1][i]);
-        }
-        return res;
+        return f[m-1][n-1];
     }
 }
