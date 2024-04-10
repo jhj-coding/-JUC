@@ -4,17 +4,29 @@ import java.util.HashSet;
 import java.util.List;
 
 class Solution {
+    HashSet<String> strings;
+    int[] f;
     public boolean wordBreak(String s, List<String> wordDict) {
-        HashSet<String> strings = new HashSet<>(wordDict);
-        boolean[] f = new boolean[s.length() + 1];
-        f[0]=true;
-        for(int i=1;i<=s.length();i++){
-            for(int j=0;j<i&&!f[i];j++){
-                if(strings.contains(s.substring(j,i))&&f[j]){
-                    f[i]=true;
-                }
-            }
+        strings = new HashSet<>(wordDict);
+        f = new int[s.length()];
+        return huisu(s,0);
+    }
+    public boolean huisu(String s,int startIndex){
+        if(startIndex==s.length()){
+            return true;
         }
-        return f[s.length()];
+        if(f[startIndex]==-1){
+            return false;
+        }
+        for(int i=startIndex;i<s.length();i++){
+            String substring = s.substring(startIndex, i + 1);
+            if(!strings.contains(substring)){
+                continue;
+            }
+            boolean huisu = huisu(s, i + 1);
+            if(huisu) return true;
+        }
+        f[startIndex]=-1;
+        return false;
     }
 }
