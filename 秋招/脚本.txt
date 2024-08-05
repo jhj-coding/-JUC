@@ -1,0 +1,20 @@
+/* SET_PADDING_START */
+.jufe { padding: 19px 40px; }
+/* SET_PADDING_END */
+.jufe .flex-layout-item:nth-child(2){
+  flex:0.5;
+  text-align: left;
+}
+.jufe .flex-layout:nth-child(6){
+  padding-top:0px!important
+}
+.jufe .resume-module:nth-child(5) li:first-child{
+  padding-top:3px !important
+}
+.jufe .resume-module:nth-child(8) li:first-child{
+  padding-top:3px !important
+}
+.jufe .resume-module:nth-child(7) .flex-layout-item:nth-child(2){
+  flex:2;
+  text-align: center;
+}
